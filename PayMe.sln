@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayMe.API", "PayMe.API\PayMe.API.csproj", "{47348079-40AE-4462-A1DE-0847836F3DCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayMe.Application", "PayMe.Application\PayMe.Application.csproj", "{5516A43B-56B8-4140-84A5-D67BF57F2989}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayMe.Core", "PayMe.Core\PayMe.Core.csproj", "{99E36C9F-FD9D-41FC-947D-31A77016351D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{47348079-40AE-4462-A1DE-0847836F3DCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47348079-40AE-4462-A1DE-0847836F3DCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47348079-40AE-4462-A1DE-0847836F3DCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47348079-40AE-4462-A1DE-0847836F3DCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5516A43B-56B8-4140-84A5-D67BF57F2989}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5516A43B-56B8-4140-84A5-D67BF57F2989}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5516A43B-56B8-4140-84A5-D67BF57F2989}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5516A43B-56B8-4140-84A5-D67BF57F2989}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99E36C9F-FD9D-41FC-947D-31A77016351D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99E36C9F-FD9D-41FC-947D-31A77016351D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99E36C9F-FD9D-41FC-947D-31A77016351D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99E36C9F-FD9D-41FC-947D-31A77016351D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
