@@ -9,3 +9,5 @@ The project is going to be with a well structured architecture and a well-config
 # Technologies
 
 Soon!
+
+Updates
