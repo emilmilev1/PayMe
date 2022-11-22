@@ -1,0 +1,17 @@
+.carousel {
+    width: 900px;
+    height: 300px;
+    margin: auto;
+    padding: 50px;
+}
+
+.containerStyle {
+    background-color: rgb(156, 120, 72);
+}
+
+@media (max-width: 900px) {
+    .carousel {
+        width: auto;
+        height: auto;
+    }
+}

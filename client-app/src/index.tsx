@@ -1,10 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter } from "react-router-dom";
 
+import { CssBaseline } from "@mui/material";
 import "./app/layout/index.css";
+import "react-bootstrap/dist/react-bootstrap.min";
+
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
@@ -12,13 +14,12 @@ const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
 );
 root.render(
-    <HelmetProvider>
-        <React.StrictMode>
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
-        </React.StrictMode>
-    </HelmetProvider>
+    <React.StrictMode>
+        <BrowserRouter>
+            <CssBaseline />
+            <App />
+        </BrowserRouter>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

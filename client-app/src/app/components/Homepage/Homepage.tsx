@@ -1,5 +1,18 @@
 import React from "react";
+import { Container, Grid } from "@mui/material";
 
-const Homepage = () => <a href="/test">Test 222</a>;
+import Dashboard from "../Dashboard/Dashboard";
+import Footer from "../Footer/Footer";
+import Navbar from "./Navbar";
+import Header from "./Header";
+
+const Homepage = () => {
+    return (
+        <>
+            <Navbar />
+            <Header />
+        </>
+    );
+};
 
 export default Homepage;
