@@ -5,6 +5,7 @@ import getDesignTokens from "./app/layout/customPalette";
 //import Dashboard from "./app/components/Dashboard/Dashboard";
 //import Footer from "./app/components/Footer/Footer";
 import Homepage from "./app/components/Homepage/Homepage";
+//import Blog from "./app/components/Blog/Blog";
 
 export const ColorModeContext = React.createContext({
     toggleColorMode: () => {},
@@ -29,7 +30,7 @@ function App() {
     );
 
     return (
-        <div className="App">
+        <div className="app">
             <Fragment>
                 <ColorModeContext.Provider value={colorMode}>
                     <ThemeProvider theme={theme}>

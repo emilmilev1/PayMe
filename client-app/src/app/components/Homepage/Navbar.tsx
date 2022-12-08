@@ -9,16 +9,15 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { FormGroup } from "@mui/material";
 import MaterialUISwitch from "../../layout/SwitchDesign";
 import { ColorModeContext } from "../../../App";
 
-const pages = ["Checks", "Pricing", "Blog"];
-//const settings = ["Profile", "Settings", "Logout"]; // Logged in user
-//const settings = ["Profile", "Admin", "Settings", "Logout"]; // Logged in Admin
+const pages = ["Dashboard", "Checks", "Pricing", "Blog"];
+//const settings = ["Dashboard", "Profile", "Settings", "Logout"]; // Logged in user
+//const settings = ["Dashboard", "Profile", "Admin", "Settings", "Logout"]; // Logged in Admin
 const settings = ["Profile", "Newsletter"]; // Home page default user
 
 const Navbar = () => {
@@ -105,21 +104,23 @@ const Navbar = () => {
                                 display: { xs: "block", md: "none" },
                             }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem
-                                    key={page}
-                                    onClick={handleCloseNavMenu}
-                                >
-                                    <Typography
-                                        margin="auto"
-                                        textAlign="center"
-                                        justifyContent="center"
-                                        display="flex"
+                            {pages.map((page) => {
+                                return (
+                                    <MenuItem
+                                        key={page}
+                                        onClick={handleCloseNavMenu}
                                     >
-                                        {page}
-                                    </Typography>
-                                </MenuItem>
-                            ))}
+                                        <Typography
+                                            margin="auto"
+                                            textAlign="center"
+                                            justifyContent="center"
+                                            display="flex"
+                                        >
+                                            {page}
+                                        </Typography>
+                                    </MenuItem>
+                                );
+                            })}
                         </Menu>
                     </Box>
                     <AdbIcon
@@ -168,19 +169,9 @@ const Navbar = () => {
                         </FormGroup>
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip
-                            title="Open settings"
-                            arrow
-                            enterDelay={200}
-                            leaveDelay={200}
-                        >
-                            <IconButton
-                                onClick={handleOpenUserMenu}
-                                sx={{ p: 0 }}
-                            >
-                                <Avatar alt="User" src="/user.png" />
-                            </IconButton>
-                        </Tooltip>
+                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                            <Avatar alt="User" src="/user.png" />
+                        </IconButton>
                         <Menu
                             sx={{ mt: "45px" }}
                             id="menu-appbar"

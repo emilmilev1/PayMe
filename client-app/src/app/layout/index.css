@@ -12,3 +12,11 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
 }
+
+li {
+    color: rgb(20, 56, 93);
+}
+
+.app {
+    background-color: rgb(170, 210, 250);
+}

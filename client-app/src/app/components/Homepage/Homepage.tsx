@@ -1,16 +1,20 @@
 import React from "react";
-import { Container, Grid } from "@mui/material";
 
-import Dashboard from "../Dashboard/Dashboard";
+//import Dashboard from "../Dashboard/Dashboard";
 import Footer from "../Footer/Footer";
 import Navbar from "./Navbar";
-import Header from "./Header";
+//import Header from "./Header";
+//import Pricing from "../Pricing/Pricing";
+import Blog from "../Blog/Blog";
 
 const Homepage = () => {
     return (
         <>
             <Navbar />
-            <Header />
+            {/* <Header /> */}
+            <Blog />
+            {/* <Pricing /> */}
+            <Footer />
         </>
     );
 };
