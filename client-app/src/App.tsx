@@ -2,9 +2,10 @@ import { createTheme, PaletteMode, ThemeProvider } from "@mui/material";
 import React, { Fragment } from "react";
 import getDesignTokens from "./app/layout/customPalette";
 
-//import Dashboard from "./app/components/Dashboard/Dashboard";
+import Dashboard from "./app/components/Dashboard/Dashboard";
 //import Footer from "./app/components/Footer/Footer";
 import Homepage from "./app/components/Homepage/Homepage";
+import { Container } from "semantic-ui-react";
 //import Blog from "./app/components/Blog/Blog";
 
 export const ColorModeContext = React.createContext({
@@ -34,8 +35,8 @@ function App() {
             <Fragment>
                 <ColorModeContext.Provider value={colorMode}>
                     <ThemeProvider theme={theme}>
-                        <Homepage />
-                        {/* <Dashboard /> */}
+                        {/* <Homepage /> */}
+                        <Dashboard />
                         {/* <Footer /> */}
                     </ThemeProvider>
                 </ColorModeContext.Provider>

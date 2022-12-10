@@ -4,6 +4,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 
 import { CssBaseline } from "@mui/material";
+import "semantic-ui-css/semantic.min.css";
 import "./app/layout/index.css";
 import "react-bootstrap/dist/react-bootstrap.min";
 

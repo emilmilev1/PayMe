@@ -5,6 +5,7 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Title from "./Title";
+import { Button } from "@mui/material";
 
 // Generate Order Data
 function createData(
@@ -64,7 +65,7 @@ const rows = [
 export default function Orders() {
     return (
         <React.Fragment>
-            <Title>Recent Orders</Title>
+            <Title>Recent Payments</Title>
             <Table size="small">
                 <TableHead>
                     <TableRow>
@@ -72,7 +73,8 @@ export default function Orders() {
                         <TableCell>Name</TableCell>
                         <TableCell>Ship To</TableCell>
                         <TableCell>Payment Method</TableCell>
-                        <TableCell align="right">Sale Amount</TableCell>
+                        <TableCell align="center">Options</TableCell>
+                        <TableCell align="right">Total</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -82,6 +84,11 @@ export default function Orders() {
                             <TableCell>{row.name}</TableCell>
                             <TableCell>{row.shipTo}</TableCell>
                             <TableCell>{row.paymentMethod}</TableCell>
+                            <TableCell align="center">
+                                <Button>Edit</Button>
+                                <Button>Delete</Button>
+                                <Button>Details</Button>
+                            </TableCell>
                             <TableCell align="right">{`$${row.amount}`}</TableCell>
                         </TableRow>
                     ))}
