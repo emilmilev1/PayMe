@@ -1,7 +1,7 @@
-import { Typography, Button, Stack } from "@mui/material";
+import { Typography, Stack, Link, Button } from "@mui/material";
 import React from "react";
-import { Container, Divider } from "semantic-ui-react";
-import Footer from "../Footer/Footer";
+import { Container } from "semantic-ui-react";
+import Dashboard from "../Dashboard/Dashboard";
 import Carousel from "./Carousel";
 
 const Header = () => {
@@ -23,15 +23,17 @@ const Header = () => {
             >
                 <Button
                     variant="contained"
+                    href="/create"
+                    LinkComponent={Link}
                     color="success"
-                    style={{
+                    sx={{
                         maxWidth: "100px",
                         maxHeight: "50px",
                         minWidth: "100px",
                         minHeight: "40px",
                     }}
                 >
-                    Continue
+                    Create
                 </Button>
             </Stack>
             <Carousel />

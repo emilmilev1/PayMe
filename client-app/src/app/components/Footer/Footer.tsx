@@ -19,7 +19,7 @@ function Footer() {
                     <ul>
                         <li>
                             <Link
-                                href="#"
+                                href="/team"
                                 variant="subtitle1"
                                 color="text.secondary"
                                 underline="hover"
@@ -29,7 +29,7 @@ function Footer() {
                         </li>
                         <li>
                             <Link
-                                href="#"
+                                href="/about-us"
                                 variant="subtitle1"
                                 color="text.secondary"
                                 underline="hover"
@@ -39,7 +39,7 @@ function Footer() {
                         </li>
                         <li>
                             <Link
-                                href="#"
+                                href="/about-us"
                                 variant="subtitle1"
                                 color="text.secondary"
                                 underline="hover"
@@ -56,7 +56,7 @@ function Footer() {
                     <ul>
                         <li>
                             <Link
-                                href="#"
+                                href="/dashboard"
                                 variant="subtitle1"
                                 color="text.secondary"
                                 underline="hover"
@@ -66,7 +66,7 @@ function Footer() {
                         </li>
                         <li>
                             <Link
-                                href="#"
+                                href="/checks"
                                 variant="subtitle1"
                                 color="text.secondary"
                                 underline="hover"
@@ -76,7 +76,7 @@ function Footer() {
                         </li>
                         <li>
                             <Link
-                                href="#"
+                                href="/blog"
                                 variant="subtitle1"
                                 color="text.secondary"
                                 underline="hover"
@@ -98,7 +98,7 @@ function Footer() {
                     <ul>
                         <li>
                             <Link
-                                href="#"
+                                href="/"
                                 variant="subtitle1"
                                 color="text.secondary"
                                 underline="hover"
@@ -108,7 +108,7 @@ function Footer() {
                         </li>
                         <li>
                             <Link
-                                href="#"
+                                href="/"
                                 variant="subtitle1"
                                 color="text.secondary"
                                 underline="hover"
@@ -118,7 +118,7 @@ function Footer() {
                         </li>
                         <li>
                             <Link
-                                href="#"
+                                href="/"
                                 variant="subtitle1"
                                 color="text.secondary"
                                 underline="hover"

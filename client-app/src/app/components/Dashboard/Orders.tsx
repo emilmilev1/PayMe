@@ -66,6 +66,11 @@ export default function Orders() {
     return (
         <React.Fragment>
             <Title>Recent Payments</Title>
+            <TableCell align="right">
+                <Button>Sort by current month</Button>
+                <Button>Sort by Highest</Button>
+                <Button>Sort by Lowest</Button>
+            </TableCell>
             <Table size="small">
                 <TableHead>
                     <TableRow>

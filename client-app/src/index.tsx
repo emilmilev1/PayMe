@@ -10,6 +10,7 @@ import "react-bootstrap/dist/react-bootstrap.min";
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import ScrollToTop from "./app/layout/ScrollToTop";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
@@ -18,6 +19,7 @@ root.render(
     <React.StrictMode>
         <BrowserRouter>
             <CssBaseline />
+            <ScrollToTop />
             <App />
         </BrowserRouter>
     </React.StrictMode>
