@@ -16,14 +16,17 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 const theme = createTheme();
 
 export default function SignUp() {
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get("email"),
-            password: data.get("password"),
-        });
-    };
+    // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    //     event.preventDefault();
+    //     const data = new FormData(event.currentTarget);
+    //     console.log({
+    //         afirstName: data.get("firstName"),
+    //         alastName: data.get("lastName"),
+    //         email: data.get("email"),
+    //         zpassword: data.get("password"),
+    //         zzconfirmPassword: data.get("confirm-password"),
+    //     });
+    // };
 
     return (
         <ThemeProvider theme={theme}>
@@ -43,12 +46,7 @@ export default function SignUp() {
                     <Typography component="h1" variant="h5">
                         Sign up
                     </Typography>
-                    <Box
-                        component="form"
-                        noValidate
-                        onSubmit={handleSubmit}
-                        sx={{ mt: 3 }}
-                    >
+                    <Box component="form" noValidate sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -76,6 +74,7 @@ export default function SignUp() {
                                     required
                                     fullWidth
                                     id="email"
+                                    type="email"
                                     label="Email Address"
                                     name="email"
                                     autoComplete="email"

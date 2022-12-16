@@ -55,13 +55,9 @@ function App() {
                                 <Route path="/profile" element={<Profile />} />
                                 <Route path="/pricing" element={<Pricing />} />
                                 <Route
-                                    path="/create"
+                                    path="/create-payment"
                                     element={<CreateCheckPage />}
                                 />
-                                {/* <Route
-                                    path="/add-payment"
-                                    element={<AddPayment />}
-                                /> */}
                                 <Route path="/login" element={<SignIn />} />
                                 <Route
                                     path="/reset-password"

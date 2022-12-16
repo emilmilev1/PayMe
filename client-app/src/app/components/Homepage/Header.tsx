@@ -1,7 +1,5 @@
 import { Typography, Stack, Link, Button } from "@mui/material";
-import React from "react";
 import { Container } from "semantic-ui-react";
-import Dashboard from "../Dashboard/Dashboard";
 import Carousel from "./Carousel";
 
 const Header = () => {
@@ -23,7 +21,7 @@ const Header = () => {
             >
                 <Button
                     variant="contained"
-                    href="/create"
+                    href="/create-payment"
                     LinkComponent={Link}
                     color="success"
                     sx={{

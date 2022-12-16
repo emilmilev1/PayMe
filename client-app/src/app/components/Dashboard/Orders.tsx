@@ -7,62 +7,18 @@ import TableRow from "@mui/material/TableRow";
 import Title from "./Title";
 import { Button } from "@mui/material";
 
-// Generate Order Data
-function createData(
-    id: number,
-    date: string,
-    name: string,
-    shipTo: string,
-    paymentMethod: string,
-    amount: number
-) {
-    return { id, date, name, shipTo, paymentMethod, amount };
+interface ICreateData {
+    id: number;
+    date: Date;
+    firstName: string;
+    lastName: string;
+    address: string;
+    country: string;
+    total: number;
+    zipCode: number;
 }
 
-const rows = [
-    createData(
-        0,
-        "16 Mar, 2019",
-        "Elvis Presley",
-        "Tupelo, MS",
-        "VISA ⠀•••• 3719",
-        312.44
-    ),
-    createData(
-        1,
-        "16 Mar, 2019",
-        "Paul McCartney",
-        "London, UK",
-        "VISA ⠀•••• 2574",
-        866.99
-    ),
-    createData(
-        2,
-        "16 Mar, 2019",
-        "Tom Scholz",
-        "Boston, MA",
-        "MC ⠀•••• 1253",
-        100.81
-    ),
-    createData(
-        3,
-        "16 Mar, 2019",
-        "Michael Jackson",
-        "Gary, IN",
-        "AMEX ⠀•••• 2000",
-        654.39
-    ),
-    createData(
-        4,
-        "15 Mar, 2019",
-        "Bruce Springsteen",
-        "Long Branch, NJ",
-        "VISA ⠀•••• 5919",
-        212.79
-    ),
-];
-
-export default function Orders() {
+const Orders = () => {
     return (
         <React.Fragment>
             <Title>Recent Payments</Title>
@@ -75,31 +31,35 @@ export default function Orders() {
                 <TableHead>
                     <TableRow>
                         <TableCell>Date</TableCell>
-                        <TableCell>Name</TableCell>
-                        <TableCell>Ship To</TableCell>
-                        <TableCell>Payment Method</TableCell>
+                        <TableCell>First Name</TableCell>
+                        <TableCell>Last Name</TableCell>
+                        <TableCell>Address</TableCell>
+                        <TableCell>Country</TableCell>
+                        <TableCell>Zip Code</TableCell>
                         <TableCell align="center">Options</TableCell>
                         <TableCell align="right">Total</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
-                        <TableRow key={row.id}>
-                            <TableCell>{row.date}</TableCell>
-                            <TableCell>{row.name}</TableCell>
-                            <TableCell>{row.shipTo}</TableCell>
-                            <TableCell>{row.paymentMethod}</TableCell>
-                            <TableCell align="center">
-                                <Button>Edit</Button>
-                                <Button>Delete</Button>
-                                <Button>Details</Button>
-                            </TableCell>
-                            <TableCell align="right">{`$${row.amount}`}</TableCell>
-                        </TableRow>
-                    ))}
+                    <TableRow key={1}>
+                        <TableCell>24.03.2001</TableCell>
+                        <TableCell>Gogo</TableCell>
+                        <TableCell>Gogev</TableCell>
+                        <TableCell>Sofia, 123</TableCell>
+                        <TableCell>Bulgaria</TableCell>
+                        <TableCell>4000</TableCell>
+                        <TableCell align="center">
+                            <Button>Edit</Button>
+                            <Button>Delete</Button>
+                            <Button>Details</Button>
+                        </TableCell>
+                        <TableCell align="right">{`$12334.00`}</TableCell>
+                    </TableRow>
                 </TableBody>
             </Table>
             {/* Pagination */}
         </React.Fragment>
     );
-}
+};
+
+export default Orders;
