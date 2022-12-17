@@ -9,7 +9,55 @@
     <projectFile>PayMe.Infrastructure/PayMe.Infrastructure.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="862aaff2-1b08-4330-8334-effd41a5be6b" name="Changes" comment="" />
+    <list default="true" id="862aaff2-1b08-4330-8334-effd41a5be6b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/PayMe.API/Controllers/FallbackController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.API/Controllers/PhotosController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Application/Core/Result.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Application/Interfaces/IPhotoAccessor.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Application/Photos/AddImage.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Application/Photos/DeleteImage.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Application/Photos/PhotoUpload.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Application/Photos/SetMainImageOnProfile.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217121912_InitialCreateUpdated111.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217121912_InitialCreateUpdated111.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217131210_InitialCreateUpdated122.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217131210_InitialCreateUpdated122.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217132200_InitialCreateUpdated1224.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217132200_InitialCreateUpdated1224.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217134006_InitialCreateUpdated12248.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217134006_InitialCreateUpdated12248.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217141128_InitialCreateUpdated122408.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217141128_InitialCreateUpdated122408.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217141704_InitialCreateUpdated12240348.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217141704_InitialCreateUpdated12240348.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217145854_InitialCreateUpdated12240340098.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217145854_InitialCreateUpdated12240340098.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Infrastructure/Email/EmailSender.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Infrastructure/Photos/CloudinaryData.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Infrastructure/Photos/PhotoAccessor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.PayMe/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PayMe/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.API/AppExtensions/ApplicationServiceExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/AppExtensions/ApplicationServiceExtension.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.API/AppExtensions/IdentityServiceExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/AppExtensions/IdentityServiceExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.API/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/Controllers/AccountController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.API/Controllers/BaseApiController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/Controllers/BaseApiController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.API/Middleware/ExceptionMiddleware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/Middleware/ExceptionMiddleware.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.API/Models/LoginDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/Models/LoginDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.API/Models/ProfileUserDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/Models/ProfileUserDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.API/Models/RegisterDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/Models/RegisterDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.API/PayMe.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/PayMe.API.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.API/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/Properties/launchSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Application/CheckPayments/CheckAttendeeDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Application/CheckPayments/CheckAttendeeDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Application/CheckPayments/CheckPaymentDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Application/CheckPayments/CheckPaymentDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Application/Core/MappedProfiles.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Application/Core/MappedProfiles.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Application/PayMe.Application.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Application/PayMe.Application.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Application/Profiles/Profile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Application/Profiles/Profile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/DataSeed/Seed.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Core/DataSeed/Seed.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/DataContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/DataContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Domain/AppUser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Domain/AppUser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Domain/CheckPayment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Domain/CheckPayment.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Infrastructure/PayMe.Infrastructure.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Infrastructure/PayMe.Infrastructure.csproj" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +65,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/93bf8ca51564b3532dce6442f8ec6d3856e11622b484427b6e965ca60aba4b1/IdentityDbContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/cb95b7b1e6d482339ecabb1a6fa3e9315d56544aab774a0cd184be219fdf9d0/HttpListenerRequest.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -41,7 +90,7 @@
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "swagger",
+    "settings.editor.selected.configurable": "editor.preferences.completion",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -166,7 +215,8 @@
       <updated>1671191019083</updated>
       <workItem from="1671191023881" duration="737000" />
       <workItem from="1671191786880" duration="16770000" />
-      <workItem from="1671222830209" duration="15017000" />
+      <workItem from="1671222830209" duration="15413000" />
+      <workItem from="1671274777365" duration="17426000" />
     </task>
     <servers />
   </component>
