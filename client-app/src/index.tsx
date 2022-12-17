@@ -4,11 +4,13 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 
 import { CssBaseline } from "@mui/material";
+import "semantic-ui-css/semantic.min.css";
 import "./app/layout/index.css";
 import "react-bootstrap/dist/react-bootstrap.min";
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import ScrollToTop from "./app/layout/ScrollToTop";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
@@ -17,6 +19,7 @@ root.render(
     <React.StrictMode>
         <BrowserRouter>
             <CssBaseline />
+            <ScrollToTop />
             <App />
         </BrowserRouter>
     </React.StrictMode>

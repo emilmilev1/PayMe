@@ -9,16 +9,23 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { FormGroup } from "@mui/material";
 import MaterialUISwitch from "../../layout/SwitchDesign";
 import { ColorModeContext } from "../../../App";
+import { Link } from "react-router-dom";
+import { List, ListItem } from "semantic-ui-react";
 
-const pages = ["Checks", "Pricing", "Blog"];
-//const settings = ["Profile", "Settings", "Logout"]; // Logged in user
-//const settings = ["Profile", "Admin", "Settings", "Logout"]; // Logged in Admin
+const pages = [
+    { page: "Dashboard", to: "/dashboard" },
+    { page: "Checks", to: "/checks" },
+    { page: "Pricing", to: "/pricing" },
+    { page: "Blog", to: "/blog" },
+    { page: "About Us", to: "/about-us" },
+];
+//const settings = ["Dashboard", "Profile", "Settings", "Logout"]; // Logged in user
+//const settings = ["Dashboard", "Profile", "Admin", "Settings", "Logout"]; // Logged in Admin
 const settings = ["Profile", "Newsletter"]; // Home page default user
 
 const Navbar = () => {
@@ -87,6 +94,7 @@ const Navbar = () => {
                         >
                             <MenuIcon />
                         </IconButton>
+
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorElNav}
@@ -105,21 +113,50 @@ const Navbar = () => {
                                 display: { xs: "block", md: "none" },
                             }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem
-                                    key={page}
-                                    onClick={handleCloseNavMenu}
+                            <MenuItem>
+                                <Typography
+                                    margin="auto"
+                                    textAlign="center"
+                                    justifyContent="center"
+                                    display="flex"
+                                    sx={{ color: "inherit" }}
                                 >
-                                    <Typography
-                                        margin="auto"
-                                        textAlign="center"
-                                        justifyContent="center"
-                                        display="flex"
-                                    >
-                                        {page}
-                                    </Typography>
-                                </MenuItem>
-                            ))}
+                                    <Link to="/dashboard">Dashboard</Link>
+                                </Typography>
+                            </MenuItem>
+                            <MenuItem>
+                                <Typography
+                                    margin="auto"
+                                    textAlign="center"
+                                    justifyContent="center"
+                                    display="flex"
+                                    sx={{ color: "inherit" }}
+                                >
+                                    <Link to="/pricing">Pricing</Link>
+                                </Typography>
+                            </MenuItem>
+                            <MenuItem>
+                                <Typography
+                                    margin="auto"
+                                    textAlign="center"
+                                    justifyContent="center"
+                                    display="flex"
+                                    sx={{ color: "inherit" }}
+                                >
+                                    <Link to="/blog">Blog</Link>
+                                </Typography>
+                            </MenuItem>
+                            <MenuItem>
+                                <Typography
+                                    margin="auto"
+                                    textAlign="center"
+                                    justifyContent="center"
+                                    display="flex"
+                                    sx={{ color: "inherit" }}
+                                >
+                                    <Link to="/about-us">About Us</Link>
+                                </Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
                     <AdbIcon
@@ -149,15 +186,34 @@ const Navbar = () => {
                             display: { xs: "none", md: "flex" },
                         }}
                     >
-                        {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: "white", display: "block" }}
-                            >
-                                {page}
-                            </Button>
-                        ))}
+                        <Button
+                            onClick={handleCloseNavMenu}
+                            sx={{ my: 2, color: "white", display: "block" }}
+                            href="/dashboard"
+                        >
+                            Dashboard
+                        </Button>
+                        <Button
+                            onClick={handleCloseNavMenu}
+                            sx={{ my: 2, color: "white", display: "block" }}
+                            href="/pricing"
+                        >
+                            Pricing
+                        </Button>
+                        <Button
+                            onClick={handleCloseNavMenu}
+                            sx={{ my: 2, color: "white", display: "block" }}
+                            href="/blog"
+                        >
+                            Blog
+                        </Button>
+                        <Button
+                            onClick={handleCloseNavMenu}
+                            sx={{ my: 2, color: "white", display: "block" }}
+                            href="/about-us"
+                        >
+                            About Us
+                        </Button>
                     </Box>
                     <Box>
                         <FormGroup>
@@ -168,19 +224,9 @@ const Navbar = () => {
                         </FormGroup>
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip
-                            title="Open settings"
-                            arrow
-                            enterDelay={200}
-                            leaveDelay={200}
-                        >
-                            <IconButton
-                                onClick={handleOpenUserMenu}
-                                sx={{ p: 0 }}
-                            >
-                                <Avatar alt="User" src="/user.png" />
-                            </IconButton>
-                        </Tooltip>
+                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                            <Avatar alt="User" src="/user.png" />
+                        </IconButton>
                         <Menu
                             sx={{ mt: "45px" }}
                             id="menu-appbar"
@@ -197,16 +243,28 @@ const Navbar = () => {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem
-                                    key={setting}
-                                    onClick={handleCloseUserMenu}
+                            <MenuItem>
+                                <Typography
+                                    margin="auto"
+                                    textAlign="center"
+                                    justifyContent="center"
+                                    display="flex"
+                                    sx={{ color: "inherit" }}
                                 >
-                                    <Typography textAlign="center">
-                                        {setting}
-                                    </Typography>
-                                </MenuItem>
-                            ))}
+                                    <Link to="/profile">Profile</Link>
+                                </Typography>
+                            </MenuItem>
+                            <MenuItem>
+                                <Typography
+                                    margin="auto"
+                                    textAlign="center"
+                                    justifyContent="center"
+                                    display="flex"
+                                    sx={{ color: "inherit" }}
+                                >
+                                    <Link to="/about-us">Newsletter</Link>
+                                </Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
                 </Toolbar>
