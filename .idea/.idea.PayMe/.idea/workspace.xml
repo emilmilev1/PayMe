@@ -9,7 +9,9 @@
     <projectFile>PayMe.Infrastructure/PayMe.Infrastructure.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="862aaff2-1b08-4330-8334-effd41a5be6b" name="Changes" comment="" />
+    <list default="true" id="862aaff2-1b08-4330-8334-effd41a5be6b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.PayMe/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PayMe/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +19,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/93bf8ca51564b3532dce6442f8ec6d3856e11622b484427b6e965ca60aba4b1/IdentityDbContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/cb95b7b1e6d482339ecabb1a6fa3e9315d56544aab774a0cd184be219fdf9d0/HttpListenerRequest.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -41,7 +44,7 @@
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "swagger",
+    "settings.editor.selected.configurable": "editor.preferences.completion",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -166,7 +169,8 @@
       <updated>1671191019083</updated>
       <workItem from="1671191023881" duration="737000" />
       <workItem from="1671191786880" duration="16770000" />
-      <workItem from="1671222830209" duration="15017000" />
+      <workItem from="1671222830209" duration="15413000" />
+      <workItem from="1671274777365" duration="18021000" />
     </task>
     <servers />
   </component>

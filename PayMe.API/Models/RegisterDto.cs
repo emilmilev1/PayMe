@@ -8,6 +8,8 @@ namespace PayMe.API.Models
 {
     public class RegisterDto
     {
+        public string Username { get; set; } = null!;
+
         [Required] public string FirstName { get; set; } = null!;
 
         [Required] public string LastName { get; set; } = null!;

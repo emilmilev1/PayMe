@@ -27,7 +27,7 @@ namespace PayMe.Core.DataSeed
                     new AppUser
                     {
                         FirstName = "Bobby",
-                        LastName = "Bob",
+                        LastName = "Bones",
                         Email = "bobby@test.com"
                     },
                 };

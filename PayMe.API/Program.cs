@@ -20,13 +20,27 @@ var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
-//app.UseHttpsRedirection();
+app.UseXContentTypeOptions();
+app.UseReferrerPolicy(opt => opt.NoReferrer());
+app.UseXXssProtection(opt => opt.EnabledWithBlockMode());
+app.UseXfo(opt => opt.Deny());
+
+if (!app.Environment.IsDevelopment())
+{
+    app.Use(async (context, next) =>
+    {
+        context.Response.Headers.Add("Strict-Transport-Security", "max-age=31536000");
+        await next.Invoke();
+    });
+}
 
 app.UseCors("CorsPolicy");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapFallbackToController("Index", "Fallback");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;

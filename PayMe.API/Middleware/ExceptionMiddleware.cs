@@ -34,7 +34,7 @@ namespace PayMe.API.Middleware
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-                var response = new AppException(context.Response.StatusCode, "Server Error");
+                var response = new AppException(context.Response.StatusCode, ex.Message, ex.StackTrace?.ToString()!);
 
                 var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 

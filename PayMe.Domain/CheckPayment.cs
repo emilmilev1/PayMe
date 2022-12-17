@@ -10,7 +10,7 @@ namespace PayMe.Domain
     {
         public Guid Id { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
         
         public string Title { get; set; } = null!;
 
