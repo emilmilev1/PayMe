@@ -1,7 +1,6 @@
 import React from "react";
 import { Tab } from "semantic-ui-react";
 import { ProfileAbout } from "./ProfileAbout";
-import { ProfileMyChecks } from "./ProfileMyChecks";
 import { ProfilePhotos } from "./ProfilePhotos";
 
 export const ProfileContent = () => {
@@ -10,10 +9,6 @@ export const ProfileContent = () => {
         {
             menuItem: "Photos",
             render: () => <ProfilePhotos />,
-        },
-        {
-            menuItem: "My Checks",
-            render: () => <ProfileMyChecks />,
         },
     ];
 

@@ -7,7 +7,7 @@ import TableRow from "@mui/material/TableRow";
 import Title from "./Title";
 import { Button } from "@mui/material";
 
-interface ICreateData {
+/*interface ICreateData {
     id: number;
     date: Date;
     firstName: string;
@@ -16,7 +16,7 @@ interface ICreateData {
     country: string;
     total: number;
     zipCode: number;
-}
+}*/
 
 const Orders = () => {
     return (
