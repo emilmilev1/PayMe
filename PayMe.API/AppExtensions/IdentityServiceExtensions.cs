@@ -59,7 +59,7 @@ namespace PayMe.API.AppExtensions
 
             services.AddAuthorization(opt =>
             {
-                opt.AddPolicy("IsActivityHost", policy =>
+                opt.AddPolicy("IsPaymentCheckHost", policy =>
                 {
                     policy.Requirements.Add(new IsHostRequirement());
                 });

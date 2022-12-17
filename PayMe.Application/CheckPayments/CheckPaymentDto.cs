@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using PayMe.Domain;
 
 namespace PayMe.Application.CheckPayments
@@ -11,7 +12,7 @@ namespace PayMe.Application.CheckPayments
         public Guid Id { get; set; }
 
         [Required]
-        public DateTimeFormat Date { get; set; }
+        public DateTime Date { get; set; }
         
         [Required]
         [MaxLength(30)]
@@ -37,6 +38,7 @@ namespace PayMe.Application.CheckPayments
         [Range(0.00, 100000.00)]
         public double Total { get; set; }
         
+        [JsonIgnore]
         public string HostUsername { get; set; } = null!;
     }
 }

@@ -1,13 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace PayMe.API.Models
+﻿namespace PayMe.API.Models
 {
     public class LoginDto
     {
-        [Required]
-        public string Email { get; set; } = null!;
+        public string? Email { get; set; }
 
-        [Required]
-        public string Password { get; set; } = null!;
+        public string? Password { get; set; }
     }
 }
