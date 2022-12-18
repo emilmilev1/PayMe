@@ -6,19 +6,13 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Title from "./Title";
 import { Button } from "@mui/material";
-
-/*interface ICreateData {
-    id: number;
-    date: Date;
-    firstName: string;
-    lastName: string;
-    address: string;
-    country: string;
-    total: number;
-    zipCode: number;
-}*/
+import { useStore } from "../../stores/store";
+import { format } from "date-fns";
 
 const Orders = () => {
+    const { checkPaymentStore } = useStore();
+    const { checkPaymentsByDate } = checkPaymentStore;
+
     return (
         <React.Fragment>
             <Title>Recent Payments</Title>
@@ -41,20 +35,26 @@ const Orders = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    <TableRow key={1}>
-                        <TableCell>24.03.2001</TableCell>
-                        <TableCell>Gogo</TableCell>
-                        <TableCell>Gogev</TableCell>
-                        <TableCell>Sofia, 123</TableCell>
-                        <TableCell>Bulgaria</TableCell>
-                        <TableCell>4000</TableCell>
-                        <TableCell align="center">
-                            <Button>Edit</Button>
-                            <Button>Delete</Button>
-                            <Button>Details</Button>
-                        </TableCell>
-                        <TableCell align="right">{`$12334.00`}</TableCell>
-                    </TableRow>
+                    {checkPaymentsByDate.map((payment) => (
+                        <TableRow key={1}>
+                            <TableCell>
+                                {format(payment.date!, "dd MMM yyyy h:mm aa")}
+                            </TableCell>
+                            <TableCell>{payment.firstName}</TableCell>
+                            <TableCell>{payment.lastName}</TableCell>
+                            <TableCell>{payment.address}</TableCell>
+                            <TableCell>{payment.country}</TableCell>
+                            <TableCell>{payment.zipCode}</TableCell>
+                            <TableCell align="center">
+                                <Button>Edit</Button>
+                                <Button>Delete</Button>
+                                <Button>Details</Button>
+                            </TableCell>
+                            <TableCell align="right">
+                                {payment.total.toFixed(2)}
+                            </TableCell>
+                        </TableRow>
+                    ))}
                 </TableBody>
             </Table>
             {/* Pagination */}

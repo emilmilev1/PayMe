@@ -1,6 +1,5 @@
-import { Container } from "@mui/material";
-import React, { useState } from "react";
-import { Button, Grid, Header, Tab } from "semantic-ui-react";
+import React from "react";
+import { Grid, Header, Tab } from "semantic-ui-react";
 
 export const ProfileAbout = () => {
     return (

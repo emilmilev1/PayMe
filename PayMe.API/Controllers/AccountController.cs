@@ -53,7 +53,7 @@ namespace PayMe.API.Controllers
             if (user == null) return Unauthorized("Invalid email");
 
             // Test purpose only:
-            if (user.Email == "wca63623@cdfaq.com") user.EmailConfirmed = true;
+            if (user.Email == "emil.milev.2012@gmail.com") user.EmailConfirmed = true;
 
             if (!user.EmailConfirmed) return Unauthorized("Email not confirmed");
 
@@ -67,7 +67,7 @@ namespace PayMe.API.Controllers
 
             return Unauthorized("Invalid password");
         }
-        
+
         /// <summary>
         /// Register Service with email confirmation
         /// </summary>
@@ -101,13 +101,14 @@ namespace PayMe.API.Controllers
             token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
             var verifyUrl = $"{origin}/account/verifyEmail?token={token}&email={user.Email}";
-            var message = $"<p>Please click the link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify email</a></p>";
+            var message =
+                $"<p>Please click the link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify email</a></p>";
 
             await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
 
             return Ok("Registration success - please verify email");
         }
-        
+
         /// <summary>
         /// Verification of the email used to register
         /// </summary>
@@ -132,6 +133,31 @@ namespace PayMe.API.Controllers
         }
         
         /// <summary>
+        /// Resend the verification of the email used to register again
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet("resendEmailConfirmationLink")]
+        public async Task<IActionResult> ResendEmailConfirmationLink(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null) return Unauthorized();
+
+            var origin = Request.Headers["origin"];
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+
+            var verifyUrl = $"{origin}/account/verifyEmail?token={token}&email={user.Email}";
+            var message = $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify email</a></p>";
+
+            await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
+
+            return Ok("Email verification link resent");
+        }
+
+        /// <summary>
         /// Get current user, used in the client app
         /// </summary>
         /// <returns></returns>
@@ -139,9 +165,11 @@ namespace PayMe.API.Controllers
         [HttpGet]
         public async Task<ActionResult<ProfileUserDto>> GetCurrentUser()
         {
-            var user = await _userManager.Users
+            var user = await _userManager.Users.Include(p => p.Photos)
                 .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
 
+            await SetRefreshToken(user);
+            
             return CreateUserObject(user);
         }
 
@@ -152,7 +180,7 @@ namespace PayMe.API.Controllers
         /// <returns></returns>
         private ProfileUserDto CreateUserObject(AppUser user)
         {
-            return new ProfileUserDto()
+            return new ProfileUserDto
             {
                 Username = user.UserName,
                 FirstName = user.FirstName,

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CloudinaryDotNet;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using PayMe.Application.CheckPayments;
 using PayMe.Application.Core;
 using PayMe.Application.Interfaces;
 using PayMe.Core;
@@ -37,6 +39,7 @@ namespace PayMe.API.AppExtensions
                 });
             });
 
+            services.AddMediatR(typeof(List).Assembly);
             services.AddAutoMapper(typeof(MappedProfiles).Assembly);
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();

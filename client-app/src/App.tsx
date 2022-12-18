@@ -1,9 +1,11 @@
 import { createTheme, PaletteMode, ThemeProvider } from "@mui/material";
 import React, { Fragment, lazy, Suspense } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import NotFound from "./app/pages/NotFound/NotFound";
 import getDesignTokens from "./app/layout/customPalette";
 import LoadingComponent from "./app/components/Loading/Loading";
+import GuardedRouteAuth from "./app/components/common/GuardedRouteAuth";
+import GuardedRoutesAuth from "./app/components/common/GuardedRouteAuth";
 
 const Homepage = lazy(() => import("./app/pages/Homepage/Homepage"));
 const Blog = lazy(() => import("./app/pages/Blog/Blog"));
@@ -45,27 +47,42 @@ function App() {
                 <ColorModeContext.Provider value={colorMode}>
                     <ThemeProvider theme={theme}>
                         <Suspense fallback={<LoadingComponent />}>
-                            <Routes>
-                                <Route path="/" element={<Homepage />} />
-                                <Route
-                                    path="/dashboard"
-                                    element={<Dashboard />}
-                                />
-                                <Route path="/blog" element={<Blog />} />
-                                <Route path="/profile" element={<Profile />} />
-                                <Route path="/pricing" element={<Pricing />} />
-                                <Route
-                                    path="/create-payment"
-                                    element={<CreateCheckPage />}
-                                />
-                                <Route path="/login" element={<SignIn />} />
-                                <Route
-                                    path="/reset-password"
-                                    element={<ForgotPassword />}
-                                />
-                                <Route path="/register" element={<SignUp />} />
-                                <Route path="*" element={<NotFound />} />
-                            </Routes>
+                            <Route>
+                                <Switch>
+                                    <Route
+                                        exact
+                                        path="/"
+                                        component={Homepage}
+                                    />
+                                    <GuardedRoutesAuth
+                                        path="/dashboard"
+                                        component={Dashboard}
+                                    />
+                                    <Route path="/blog" component={Blog} />
+                                    <Route
+                                        path="/profile"
+                                        component={Profile}
+                                    />
+                                    <Route
+                                        path="/pricing"
+                                        component={Pricing}
+                                    />
+                                    <Route
+                                        path="/create-payment"
+                                        component={CreateCheckPage}
+                                    />
+                                    <Route path="/login" component={SignIn} />
+                                    <Route
+                                        path="/reset-password"
+                                        component={ForgotPassword}
+                                    />
+                                    <Route
+                                        path="/register"
+                                        component={SignUp}
+                                    />
+                                    <Route path="*" component={NotFound} />
+                                </Switch>
+                            </Route>
                         </Suspense>
                     </ThemeProvider>
                 </ColorModeContext.Provider>

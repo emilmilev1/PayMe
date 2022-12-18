@@ -15,20 +15,13 @@ import { FormGroup } from "@mui/material";
 import MaterialUISwitch from "../../layout/SwitchDesign";
 import { ColorModeContext } from "../../../App";
 import { Link } from "react-router-dom";
-import { List, ListItem } from "semantic-ui-react";
+import { useStore } from "../../stores/store";
 
-const pages = [
-    { page: "Dashboard", to: "/dashboard" },
-    { page: "Checks", to: "/checks" },
-    { page: "Pricing", to: "/pricing" },
-    { page: "Blog", to: "/blog" },
-    { page: "About Us", to: "/about-us" },
-];
 //const settings = ["Dashboard", "Profile", "Settings", "Logout"]; // Logged in user
 //const settings = ["Dashboard", "Profile", "Admin", "Settings", "Logout"]; // Logged in Admin
-const settings = ["Profile", "Newsletter"]; // Home page default user
-
 const Navbar = () => {
+    const { userStore } = useStore();
+
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
     );
@@ -186,13 +179,23 @@ const Navbar = () => {
                             display: { xs: "none", md: "flex" },
                         }}
                     >
-                        <Button
-                            onClick={handleCloseNavMenu}
-                            sx={{ my: 2, color: "white", display: "block" }}
-                            href="/dashboard"
-                        >
-                            Dashboard
-                        </Button>
+                        {userStore.isLoggedIn ? (
+                            <Button
+                                onClick={handleCloseNavMenu}
+                                sx={{ my: 2, color: "white", display: "block" }}
+                                href="/dashboard"
+                            >
+                                Dashboard
+                            </Button>
+                        ) : (
+                            <Button
+                                onClick={handleCloseNavMenu}
+                                sx={{ my: 2, color: "white", display: "block" }}
+                                href="/login"
+                            >
+                                Dashboard
+                            </Button>
+                        )}
                         <Button
                             onClick={handleCloseNavMenu}
                             sx={{ my: 2, color: "white", display: "block" }}

@@ -1,8 +1,11 @@
 import { Typography, Stack, Link, Button } from "@mui/material";
 import { Container } from "semantic-ui-react";
 import Carousel from "./Carousel";
+import { useStore } from "../../stores/store";
 
 const Header = () => {
+    const { userStore } = useStore();
+
     return (
         <Container style={{ paddingBottom: "5rem" }}>
             <Typography
@@ -19,20 +22,37 @@ const Header = () => {
                 justifyContent="center"
                 sx={{ flexGrow: 1, pt: 5 }}
             >
-                <Button
-                    variant="contained"
-                    href="/create-payment"
-                    LinkComponent={Link}
-                    color="success"
-                    sx={{
-                        maxWidth: "100px",
-                        maxHeight: "50px",
-                        minWidth: "100px",
-                        minHeight: "40px",
-                    }}
-                >
-                    Create
-                </Button>
+                {userStore.isLoggedIn ? (
+                    <Button
+                        variant="contained"
+                        href="/create-payment"
+                        LinkComponent={Link}
+                        color="success"
+                        sx={{
+                            maxWidth: "100px",
+                            maxHeight: "50px",
+                            minWidth: "100px",
+                            minHeight: "40px",
+                        }}
+                    >
+                        Create
+                    </Button>
+                ) : (
+                    <Button
+                        variant="contained"
+                        href="/login"
+                        LinkComponent={Link}
+                        color="success"
+                        sx={{
+                            maxWidth: "100px",
+                            maxHeight: "50px",
+                            minWidth: "100px",
+                            minHeight: "40px",
+                        }}
+                    >
+                        Create
+                    </Button>
+                )}
             </Stack>
             <Carousel />
         </Container>

@@ -11,7 +11,7 @@ namespace PayMe.Domain
 
         public string AppUserId { get; set; } = null!;
 
-        public AppUser AppUser { get; set; } = null!;
+        public AppUser? AppUser { get; set; } = null!;
 
         public CheckPayment CheckPayment { get; set; } = null!;
 

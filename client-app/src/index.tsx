@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import { BrowserRouter } from "react-router-dom";
+import { Router } from "react-router-dom";
 
 import { CssBaseline } from "@mui/material";
 import "semantic-ui-css/semantic.min.css";
@@ -11,18 +11,23 @@ import "react-bootstrap/dist/react-bootstrap.min";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import ScrollToTop from "./app/layout/ScrollToTop";
+import { createBrowserHistory } from "history";
+import { StoreContext, store } from "./app/stores/store";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
 );
+
+export const history = createBrowserHistory();
+
 root.render(
-    <React.StrictMode>
-        <BrowserRouter>
+    <StoreContext.Provider value={store}>
+        <Router history={history}>
             <CssBaseline />
             <ScrollToTop />
             <App />
-        </BrowserRouter>
-    </React.StrictMode>
+        </Router>
+    </StoreContext.Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

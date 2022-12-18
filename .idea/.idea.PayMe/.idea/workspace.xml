@@ -10,12 +10,47 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="862aaff2-1b08-4330-8334-effd41a5be6b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/PayMe.API/Controllers/CheckPaymentsController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PayMe.API/Controllers/ProfileController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PayMe.Application/Profiles/DetailsProfileUser.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PayMe.Application/Profiles/UpdateDetailsProfileUser.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Application/CheckPayments/CheckPaymentValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Application/CheckPayments/Create.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Application/CheckPayments/Delete.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Application/CheckPayments/Edit.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Application/CheckPayments/List.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221218020419_InitialCreateUpdated12240098.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221218020419_InitialCreateUpdated12240098.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/api/api.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/components/common/GuardedRouteAuth.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/models/checkPaymentStore.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/models/profile.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/models/serverError.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/models/user.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/stores/checkPaymentStore.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/stores/commonStore.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/stores/profileStore.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/stores/store.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/stores/userStore.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PayMe/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PayMe/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.API/AppExtensions/ApplicationServiceExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/AppExtensions/ApplicationServiceExtension.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.API/AppExtensions/IdentityServiceExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/AppExtensions/IdentityServiceExtensions.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PayMe.API/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/Controllers/AccountController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.API/Controllers/CheckPaymentsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/Controllers/CheckPaymentsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Application/CheckPayments/CheckPaymentDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Application/CheckPayments/CheckPaymentDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Application/Core/Result.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Application/Core/Result.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Domain/CheckAttendee.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Domain/CheckAttendee.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/CreateCheck/CreateCheck.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/CreateCheck/CreateCheck.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Orders.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Orders.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/ForgotPassword/ForgotPassword.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/ForgotPassword/ForgotPassword.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Homepage/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Homepage/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Homepage/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Homepage/Navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Login/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Login/Login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Pricing/Pricing.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Pricing/Pricing.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Profile/ProfileAbout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Profile/ProfileAbout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Profile/ProfilePhotos.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Profile/ProfilePhotos.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/layout/SwitchDesign.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/layout/SwitchDesign.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +60,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/93bf8ca51564b3532dce6442f8ec6d3856e11622b484427b6e965ca60aba4b1/IdentityDbContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/cb95b7b1e6d482339ecabb1a6fa3e9315d56544aab774a0cd184be219fdf9d0/HttpListenerRequest.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/d2b60674f3b5ef49d23f8128ac988fd6c59e49f0c19b383143182268f392/Queryable.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -176,7 +212,7 @@
       <workItem from="1671191786880" duration="16770000" />
       <workItem from="1671222830209" duration="15413000" />
       <workItem from="1671274777365" duration="18021000" />
-      <workItem from="1671300777609" duration="1683000" />
+      <workItem from="1671300777609" duration="17211000" />
     </task>
     <servers />
   </component>
