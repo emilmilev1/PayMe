@@ -1,46 +1,51 @@
-﻿using AutoMapper;
+﻿using System.Collections.ObjectModel;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using PayMe.Application.Core;
 using PayMe.Application.Interfaces;
 using PayMe.Core;
+using PayMe.Domain;
 
 namespace PayMe.Application.CheckPayments
 {
     public class List
     {
-        private readonly DataContext _context;
-
-        public List(DataContext context)
+        public class Query : IRequest<Result<PagedList<CheckPaymentDto>>>
         {
-            _context = context;
+            public CheckPaymentParams Params { get; set; }
         }
 
-        public async Task<List<CheckPaymentDto>> GetAllCheckPayments()
+        public class Handler : IRequestHandler<Query, Result<PagedList<CheckPaymentDto>>>
         {
-            var checkPayments = new List<CheckPaymentDto>();
-            var allCheckPayments = await _context.CheckPayments.ToListAsync();
+            private readonly DataContext _context;
+            private readonly IMapper _mapper;
+            private readonly IUserAccessor _userAccessor;
 
-            if (allCheckPayments?.Any() == true)
+            public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
             {
-                foreach (var checkPayment in allCheckPayments)
-                {
-                    checkPayments.Add(new CheckPaymentDto()
-                    {
-                        Id = checkPayment.Id,
-                        Date = checkPayment.Date,
-                        Title = checkPayment.Title,
-                        FirstName = checkPayment.FirstName,
-                        LastName = checkPayment.LastName,
-                        Address = checkPayment.Address,
-                        Country = checkPayment.Country,
-                        Total = checkPayment.Total
-                    });
-                }
+                _userAccessor = userAccessor;
+                _context = context;
+                _mapper = mapper;
             }
 
-            return checkPayments;
+            public async Task<Result<PagedList<CheckPaymentDto>>> Handle(Query request,
+                CancellationToken cancellationToken)
+            {
+                var query = _context.CheckPayments
+                    //.Where(d => d.Date >= request.Params.StartDate)
+                    .OrderBy(d => d.Date)
+                    .ProjectTo<CheckPaymentDto>(_mapper.ConfigurationProvider)
+                    .AsQueryable();
+
+                return Result<PagedList<CheckPaymentDto>>.Success(
+                    await PagedList<CheckPaymentDto>.CreateAsync(
+                        query,
+                        request.Params.PageNumber,
+                        request.Params.PageSize)
+                );
+            }
         }
     }
 }

@@ -7,14 +7,16 @@ import TableRow from "@mui/material/TableRow";
 import Title from "./Title";
 import { Button } from "@mui/material";
 import { useStore } from "../../stores/store";
-import { format } from "date-fns";
+import TableEachPayment from "./TableEachPayment";
+import { observer } from "mobx-react-lite";
+import { Fragment } from "react";
 
 const Orders = () => {
     const { checkPaymentStore } = useStore();
-    const { checkPaymentsByDate } = checkPaymentStore;
+    const { groupedPayments } = checkPaymentStore;
 
     return (
-        <React.Fragment>
+        <Fragment>
             <Title>Recent Payments</Title>
             <TableCell align="right">
                 <Button>Sort by current month</Button>
@@ -35,31 +37,20 @@ const Orders = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {checkPaymentsByDate.map((payment) => (
-                        <TableRow key={1}>
-                            <TableCell>
-                                {format(payment.date!, "dd MMM yyyy h:mm aa")}
-                            </TableCell>
-                            <TableCell>{payment.firstName}</TableCell>
-                            <TableCell>{payment.lastName}</TableCell>
-                            <TableCell>{payment.address}</TableCell>
-                            <TableCell>{payment.country}</TableCell>
-                            <TableCell>{payment.zipCode}</TableCell>
-                            <TableCell align="center">
-                                <Button>Edit</Button>
-                                <Button>Delete</Button>
-                                <Button>Details</Button>
-                            </TableCell>
-                            <TableCell align="right">
-                                {payment.total.toFixed(2)}
-                            </TableCell>
-                        </TableRow>
+                    {groupedPayments.map(([group, payments]) => (
+                        <Fragment>
+                            {payments.map((payment) => (
+                                <TableEachPayment
+                                    key={payment.id}
+                                    payment={payment}
+                                />
+                            ))}
+                        </Fragment>
                     ))}
                 </TableBody>
             </Table>
-            {/* Pagination */}
-        </React.Fragment>
+        </Fragment>
     );
 };
 
-export default Orders;
+export default observer(Orders);

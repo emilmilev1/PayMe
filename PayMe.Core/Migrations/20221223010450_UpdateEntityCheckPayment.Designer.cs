@@ -12,8 +12,8 @@ using PayMe.Core;
 namespace PayMe.Core.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221216232858_InitialCreateUpdated11")]
-    partial class InitialCreateUpdated11
+    [Migration("20221223010450_UpdateEntityCheckPayment")]
+    partial class UpdateEntityCheckPayment
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -268,9 +268,6 @@ namespace PayMe.Core.Migrations
                     b.Property<Guid>("CheckPaymentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsHost")
-                        .HasColumnType("bit");
-
                     b.HasKey("AppUserId", "CheckPaymentId");
 
                     b.HasIndex("CheckPaymentId");
@@ -312,6 +309,9 @@ namespace PayMe.Core.Migrations
 
                     b.Property<double>("Total")
                         .HasColumnType("float");
+
+                    b.Property<int>("ZipCode")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

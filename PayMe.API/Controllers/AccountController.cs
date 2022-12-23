@@ -19,7 +19,7 @@ namespace PayMe.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AccountController : BaseApiController
+    public class AccountController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
@@ -47,13 +47,14 @@ namespace PayMe.API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<ProfileUserDto>> Login(LoginDto loginDto)
         {
-            var user = await _userManager.Users
+            var user = await _userManager.Users.Include(p => p.Photos)
                 .FirstOrDefaultAsync(y => y.Email == loginDto.Email);
 
             if (user == null) return Unauthorized("Invalid email");
 
-            // Test purpose only:
-            if (user.Email == "emil.milev.2012@gmail.com") user.EmailConfirmed = true;
+            // TODO - Only test mode
+            if (user.UserName == "Emo") user.EmailConfirmed = true;
+            if (user.UserName == "Emo34") user.EmailConfirmed = true;
 
             if (!user.EmailConfirmed) return Unauthorized("Email not confirmed");
 
@@ -79,7 +80,13 @@ namespace PayMe.API.Controllers
         {
             if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
             {
-                ModelState.AddModelError("email", "Email taken");
+                ModelState.AddModelError("email", "Email taken!");
+                return ValidationProblem();
+            }
+            
+            if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
+            {
+                ModelState.AddModelError("username", "Username taken!");
                 return ValidationProblem();
             }
 
@@ -168,9 +175,9 @@ namespace PayMe.API.Controllers
             var user = await _userManager.Users.Include(p => p.Photos)
                 .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
 
-            await SetRefreshToken(user);
+            await SetRefreshToken(user!);
             
-            return CreateUserObject(user);
+            return CreateUserObject(user!);
         }
 
         /// <summary>

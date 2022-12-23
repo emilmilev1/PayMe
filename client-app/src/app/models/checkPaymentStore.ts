@@ -2,7 +2,7 @@ import { Profile } from "./profile";
 
 export interface CheckPayment {
     id: string;
-    date: Date | null;
+    date: Date;
     firstName: string;
     lastName: string;
     address: string;
@@ -38,8 +38,8 @@ export class CheckPaymentFormValues {
             this.lastName = checkPayment.lastName;
             this.address = checkPayment.address;
             this.country = checkPayment.country;
-            this.total = checkPayment.total;
             this.zipCode = checkPayment.zipCode;
+            this.total = checkPayment.total;
         }
     }
 }

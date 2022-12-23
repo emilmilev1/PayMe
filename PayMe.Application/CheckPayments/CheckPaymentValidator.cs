@@ -13,6 +13,7 @@ namespace PayMe.Application.CheckPayments
             RuleFor(x => x.LastName).NotEmpty();
             RuleFor(x => x.Address).NotEmpty();
             RuleFor(x => x.Country).NotEmpty();
+            RuleFor(x => x.ZipCode).NotEmpty();
             RuleFor(x => x.Total).NotEmpty();
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PayMe.Application.CheckPayments;
@@ -11,17 +12,20 @@ namespace PayMe.API.Controllers
     /// <summary>
     /// We use FromQuery attribute
     /// </summary>
-    
-    public class CheckPaymentsController : BaseApiController
+    public class PaymentsController : BaseApiController
     {
-        private readonly List _list = null;
-        
         [HttpGet]
-        public Task<List<CheckPaymentDto>> GetCheckPayments()
+        public async Task<IActionResult> GetCheckPayments([FromQuery] CheckPaymentParams param)
         {
-            var data = _list.GetAllCheckPayments();
-            
-            return data;
+            return HandlePagedResult(await Mediator!.Send(new List.Query { Params = param }));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCheckPayment(Guid id)
+        {
+            var result = await Mediator!.Send(new Details.Query { Id = id });
+
+            return HandleResult(result);
         }
 
         [HttpPost]
@@ -30,7 +34,7 @@ namespace PayMe.API.Controllers
             return HandleResult(await Mediator!.Send(new Create.Command { CheckPayment = checkPayment }));
         }
 
-        [Authorize(Policy = "IsHost")]
+        // [Authorize(Policy = "IsHost")]
         [HttpPut("{id}")]
         public async Task<IActionResult> EditCheckPayment(Guid id, CheckPayment checkPayment)
         {
@@ -39,7 +43,7 @@ namespace PayMe.API.Controllers
             return HandleResult(await Mediator!.Send(new Edit.Command { CheckPayment = checkPayment }));
         }
 
-        [Authorize(Policy = "IsActivityHost")]
+        // [Authorize(Policy = "IsActivityHost")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCheckPayment(Guid id)
         {

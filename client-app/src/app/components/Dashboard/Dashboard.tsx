@@ -18,6 +18,9 @@ import { mainListItems } from "./ListItems";
 import Deposits from "./Deposits";
 import Orders from "./Orders";
 import Footer from "../Footer/Footer";
+import { observer } from "mobx-react-lite";
+import { useStore } from "../../stores/store";
+import { useEffect } from "react";
 
 const drawerWidth: number = 240;
 
@@ -71,11 +74,21 @@ const Drawer = styled(MuiDrawer, {
 
 const mdTheme = createTheme();
 
-function DashboardContent() {
+const Dashboard = () => {
     const [open, setOpen] = React.useState(false);
     const toggleDrawer = () => {
         setOpen(!open);
     };
+
+    const { checkPaymentStore } = useStore();
+
+    const { loadCheckPayments, checkPaymentRegistry } = checkPaymentStore;
+
+    useEffect(() => {
+        if (checkPaymentRegistry.size <= 1) {
+            loadCheckPayments();
+        }
+    }, [checkPaymentRegistry.size, loadCheckPayments]);
 
     return (
         <ThemeProvider theme={mdTheme}>
@@ -176,8 +189,6 @@ function DashboardContent() {
             </Box>
         </ThemeProvider>
     );
-}
+};
 
-export default function Dashboard() {
-    return <DashboardContent />;
-}
+export default observer(Dashboard);

@@ -16,11 +16,11 @@ import MaterialUISwitch from "../../layout/SwitchDesign";
 import { ColorModeContext } from "../../../App";
 import { Link } from "react-router-dom";
 import { useStore } from "../../stores/store";
+import { observer } from "mobx-react-lite";
 
-//const settings = ["Dashboard", "Profile", "Settings", "Logout"]; // Logged in user
-//const settings = ["Dashboard", "Profile", "Admin", "Settings", "Logout"]; // Logged in Admin
 const Navbar = () => {
     const { userStore } = useStore();
+    const { user, logout, isLoggedIn } = userStore;
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
@@ -179,23 +179,13 @@ const Navbar = () => {
                             display: { xs: "none", md: "flex" },
                         }}
                     >
-                        {userStore.isLoggedIn ? (
-                            <Button
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: "white", display: "block" }}
-                                href="/dashboard"
-                            >
-                                Dashboard
-                            </Button>
-                        ) : (
-                            <Button
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: "white", display: "block" }}
-                                href="/login"
-                            >
-                                Dashboard
-                            </Button>
-                        )}
+                        <Button
+                            onClick={handleCloseNavMenu}
+                            sx={{ my: 2, color: "white", display: "block" }}
+                            href="/dashboard"
+                        >
+                            Dashboard
+                        </Button>
                         <Button
                             onClick={handleCloseNavMenu}
                             sx={{ my: 2, color: "white", display: "block" }}
@@ -228,7 +218,10 @@ const Navbar = () => {
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>
                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                            <Avatar alt="User" src="/user.png" />
+                            <Avatar
+                                alt="User"
+                                src={user?.image || "/user.png"}
+                            />
                         </IconButton>
                         <Menu
                             sx={{ mt: "45px" }}
@@ -254,20 +247,40 @@ const Navbar = () => {
                                     display="flex"
                                     sx={{ color: "inherit" }}
                                 >
-                                    <Link to="/profile">Profile</Link>
+                                    <Link to={`/profiles/${user?.username}`}>
+                                        Profile
+                                    </Link>
                                 </Typography>
                             </MenuItem>
-                            <MenuItem>
-                                <Typography
-                                    margin="auto"
-                                    textAlign="center"
-                                    justifyContent="center"
-                                    display="flex"
-                                    sx={{ color: "inherit" }}
-                                >
-                                    <Link to="/about-us">Newsletter</Link>
-                                </Typography>
-                            </MenuItem>
+                            {isLoggedIn ? (
+                                <MenuItem>
+                                    <Typography
+                                        margin="auto"
+                                        textAlign="center"
+                                        justifyContent="center"
+                                        display="flex"
+                                        sx={{ color: "inherit" }}
+                                    >
+                                        <Link to="/" onClick={logout}>
+                                            Logout
+                                        </Link>
+                                    </Typography>
+                                </MenuItem>
+                            ) : (
+                                <MenuItem>
+                                    <Typography
+                                        margin="auto"
+                                        textAlign="center"
+                                        justifyContent="center"
+                                        display="flex"
+                                        sx={{ color: "inherit" }}
+                                    >
+                                        <Link to="/login">
+                                            Login
+                                        </Link>
+                                    </Typography>
+                                </MenuItem>
+                            )}
                         </Menu>
                     </Box>
                 </Toolbar>
@@ -276,4 +289,4 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;
+export default observer(Navbar);

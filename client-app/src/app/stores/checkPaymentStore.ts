@@ -1,19 +1,38 @@
-import { makeAutoObservable, runInAction } from "mobx";
-
+import { makeAutoObservable, reaction, runInAction } from "mobx";
+import { format } from "date-fns";
 import {
     CheckPayment,
     CheckPaymentFormValues,
 } from "../models/checkPaymentStore";
 import api from "../api/api";
 import { store } from "./store";
+import { Pagination, PagingParams } from "../models/pagination";
 
 export default class CheckPaymentStore {
     checkPaymentRegistry = new Map<string, CheckPayment>();
     selectedCheckPayment: CheckPayment | undefined = undefined;
+    editMode = false;
     loading = false;
+    loadingInitial = false;
+    pagingParams = new PagingParams();
+    pagination: Pagination | null = null;
 
     constructor() {
         makeAutoObservable(this);
+
+        reaction(
+            () => (this.pagingParams = new PagingParams()),
+            () => (this.checkPaymentRegistry.clear(), this.loadCheckPayments())
+        );
+    }
+
+    get axiosParams() {
+        const params = new URLSearchParams();
+
+        params.append("pageNumber", this.pagingParams.pageNumber.toString());
+        params.append("pageSize", this.pagingParams.pageSize.toString());
+
+        return params;
     }
 
     get checkPaymentsByDate() {
@@ -22,16 +41,40 @@ export default class CheckPaymentStore {
         );
     }
 
-    loadCheckPayments = async () => {
-        try {
-            const result = await api.CheckPayments.list();
+    get groupedPayments() {
+        return Object.entries(
+            this.checkPaymentsByDate.reduce((payments, payment) => {
+                const date = format(payment.date!, "dd MMM yyyy");
 
-            result.forEach((x) => {
+                payments[date] = payments[date]
+                    ? [...payments[date], payment]
+                    : [payment];
+
+                return payments;
+            }, {} as { [key: string]: CheckPayment[] })
+        );
+    }
+
+    loadCheckPayments = async () => {
+        this.loadingInitial = true;
+
+        try {
+            const result = await api.CheckPayments.list(this.axiosParams);
+
+            result.data.forEach((x) => {
                 this.setCheckPayment(x);
             });
+
+            this.setPagination(result.pagination);
+            this.setLoadingInitial(false);
         } catch (error) {
             console.log(error);
+            this.setLoadingInitial(false);
         }
+    };
+
+    setPagination = (pagination: Pagination) => {
+        this.pagination = pagination;
     };
 
     loadCheckPayment = async (id: string) => {
@@ -41,6 +84,8 @@ export default class CheckPaymentStore {
             this.selectedCheckPayment = checkPayment;
             return checkPayment;
         } else {
+            this.loadingInitial = true;
+
             try {
                 checkPayment = await api.CheckPayments.details(id);
 
@@ -50,26 +95,27 @@ export default class CheckPaymentStore {
                     this.selectedCheckPayment = checkPayment;
                 });
 
+                this.setLoadingInitial(false);
+
                 return checkPayment;
             } catch (error) {
                 console.log(error);
+                this.setLoadingInitial(false);
             }
         }
     };
 
     private setCheckPayment = (checkPayment: CheckPayment) => {
-        const user = store.userStore.user;
-
-        if (user) {
-            checkPayment.isHost = checkPayment.hostUsername === user.username;
-        }
-
         checkPayment.date = new Date(checkPayment.date!);
         this.checkPaymentRegistry.set(checkPayment.id, checkPayment);
     };
 
     private getCheckPayment = (id: string) => {
         return this.checkPaymentRegistry.get(id);
+    };
+
+    setLoadingInitial = (state: boolean) => {
+        this.loadingInitial = state;
     };
 
     createCheckPayment = async (checkPayment: CheckPaymentFormValues) => {
@@ -135,5 +181,9 @@ export default class CheckPaymentStore {
                 this.loading = false;
             });
         }
+    };
+
+    clearSelectedCheckPayment = () => {
+        this.selectedCheckPayment = undefined;
     };
 }

@@ -10,13 +10,13 @@ namespace PayMe.Core
         {
         }
 
-        public DbSet<CheckPayment> CheckPayments { get; set; } = null!;
+        public DbSet<CheckPayment> CheckPayments { get; set; }
 
-        public DbSet<CheckAttendee> CheckAttendees { get; set; } = null!;
+        public DbSet<CheckAttendee> CheckAttendees { get; set; }
 
         public DbSet<Photo> Photos { get; set; } = null!;
 
-        public DbSet<AdminComment> AdminComments { get; set; } = null!;
+        public DbSet<AdminComment> AdminComments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

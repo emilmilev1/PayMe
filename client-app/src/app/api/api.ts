@@ -1,23 +1,20 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
-import { history } from "../..";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import {
     CheckPayment,
     CheckPaymentFormValues,
 } from "../models/checkPaymentStore";
+import { history } from "../..";
 import { store } from "../stores/store";
 import { User, UserFormValues } from "../models/user";
 import { Photo, Profile } from "../models/profile";
+import { PaginatedResult } from "../models/pagination";
 
-const sleep = (delay: number) => {
-    return new Promise((resolve) => {
-        setTimeout(resolve, delay);
-    });
-};
+const axiosBase = axios.create({
+    baseURL: "http://localhost:5000",
+});
 
-axios.defaults.baseURL = process.env.API_URL;
-
-axios.interceptors.request.use((config) => {
+axiosBase.interceptors.request.use((config) => {
     const token = store.commonStore.token;
     if (token) {
         config.headers!.Authorization = `Bearer ${token}`;
@@ -25,9 +22,20 @@ axios.interceptors.request.use((config) => {
     return config;
 });
 
-axios.interceptors.response.use(
+axiosBase.defaults.headers.post["Content-Type"] = "multipart/form-date";
+
+axiosBase.interceptors.response.use(
     async (response) => {
-        if (process.env.NODE_ENV === "development") await sleep(1000);
+        const pagination = response.headers["pagination"];
+
+        if (pagination) {
+            response.data = new PaginatedResult(
+                response.data,
+                JSON.parse(pagination)
+            );
+
+            return response as AxiosResponse<PaginatedResult<any>>;
+        }
 
         return response;
     },
@@ -46,7 +54,7 @@ axios.interceptors.response.use(
                     config.method === "get" &&
                     data.errors.hasOwnProperty("id")
                 ) {
-                    history.push("/not-found");
+                    history.push("/");
                 }
 
                 if (data.errors) {
@@ -75,12 +83,12 @@ axios.interceptors.response.use(
                 break;
 
             case 404:
-                history.push("/not-found");
+                history.push("/");
                 break;
 
             case 500:
                 store.commonStore.setServerError(data);
-                history.push("/server-error");
+                history.push("/");
                 break;
 
             default:
@@ -94,30 +102,33 @@ axios.interceptors.response.use(
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 const requests = {
-    get: <T>(url: string) => axios.get<T>(url).then(responseBody),
+    get: <T>(url: string) => axiosBase.get<T>(url).then(responseBody),
     post: <T>(url: string, body: {}) =>
-        axios.post<T>(url, body).then(responseBody),
+        axiosBase.post<T>(url, body).then(responseBody),
     put: <T>(url: string, body: {}) =>
-        axios.put<T>(url, body).then(responseBody),
-    del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
+        axiosBase.put<T>(url, body).then(responseBody),
+    del: <T>(url: string) => axiosBase.delete<T>(url).then(responseBody),
 };
 
 const CheckPayments = {
-    list: () => axios.get<CheckPayment[]>("/CheckPayments").then(responseBody),
+    list: (params: URLSearchParams) =>
+        axios
+            .get<PaginatedResult<CheckPayment[]>>("/payments", { params })
+            .then(responseBody),
+    details: (id: string) => requests.get<CheckPayment>(`/payments/${id}`),
     create: (checkPayment: CheckPaymentFormValues) =>
-        requests.post<void>("/CheckPayments", checkPayment),
+        requests.post<void>("/payments", checkPayment),
     update: (checkPayment: CheckPaymentFormValues) =>
-        requests.put<void>(`/CheckPayments/${checkPayment.id}`, checkPayment),
-    details: (id: string) => requests.get<CheckPayment>(`/CheckPayments/${id}`),
-    delete: (id: string) => requests.del<void>(`/CheckPayments/${id}`),
+        requests.put<void>(`/payments/${checkPayment.id}`, checkPayment),
+    delete: (id: string) => requests.del<void>(`/payments/${id}`),
 };
 
 const Account = {
     current: () => requests.get<User>("/account"),
     login: (user: UserFormValues) =>
-        requests.post<User>("/account/login", user),
+        requests.post<User>("/api/account/login", JSON.stringify(user)),
     register: (user: UserFormValues) =>
-        requests.post<User>("/account/register", user),
+        requests.post<User>("/api/account/register", user),
     refreshToken: () => requests.post<User>("/account/refreshToken", {}),
     verifyEmail: (token: string, email: string) =>
         requests.post<void>(

@@ -19,13 +19,13 @@ export default class UserStore {
     login = async (creds: UserFormValues) => {
         try {
             const user = await api.Account.login(creds);
-
             store.commonStore.setToken(user.token);
-            this.startRefreshTokenTimer(user);
 
+            this.startRefreshTokenTimer(user);
             runInAction(() => (this.user = user));
 
-            history.push("/activities");
+            history.push("/dashboard");
+            store.modalStore.closeModal();
         } catch (error) {
             throw error;
         }
@@ -42,9 +42,7 @@ export default class UserStore {
         try {
             const user = await api.Account.current();
             store.commonStore.setToken(user.token);
-
             runInAction(() => (this.user = user));
-
             this.startRefreshTokenTimer(user);
         } catch (error) {
             console.log(error);
@@ -56,6 +54,7 @@ export default class UserStore {
             await api.Account.register(creds);
 
             history.push(`/account/registerSuccess?email=${creds.email}`);
+            store.modalStore.closeModal();
         } catch (error) {
             throw error;
         }

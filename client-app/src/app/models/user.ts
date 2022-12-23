@@ -6,8 +6,10 @@ export interface User {
 }
 
 export interface UserFormValues {
+    username?: string;
+    firstName?: string;
+    lastName?: string;
     email: string;
     password: string;
-    firstName?: string;
-    username?: string;
+    rePassword?: string;
 }

@@ -266,9 +266,6 @@ namespace PayMe.Core.Migrations
                     b.Property<Guid>("CheckPaymentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsHost")
-                        .HasColumnType("bit");
-
                     b.HasKey("AppUserId", "CheckPaymentId");
 
                     b.HasIndex("CheckPaymentId");
@@ -293,7 +290,7 @@ namespace PayMe.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Date")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
@@ -310,6 +307,9 @@ namespace PayMe.Core.Migrations
 
                     b.Property<double>("Total")
                         .HasColumnType("float");
+
+                    b.Property<int>("ZipCode")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

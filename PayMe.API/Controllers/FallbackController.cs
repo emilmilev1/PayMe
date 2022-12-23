@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace PayMe.API.Controllers
 {
     [AllowAnonymous]
-    
     public class FallbackController : Controller
     {
         public IActionResult Index()

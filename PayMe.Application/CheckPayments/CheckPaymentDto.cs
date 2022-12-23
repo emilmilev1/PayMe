@@ -33,12 +33,15 @@ namespace PayMe.Application.CheckPayments
         [Required]
         [Display(Name = "Country Category")]
         public string Country { get; set; } = null!;
+        
+        [Required]
+        [Display(Name = "Zip Code")]
+        public int ZipCode { get; set; }
 
         [Required]
         [Range(0.00, 100000.00, ErrorMessage = "Total should be a positive number!")]
         public double Total { get; set; }
         
-        [JsonIgnore]
-        public string HostUsername { get; set; } = null!;
+        public ICollection<CheckAttendee> CheckAttendees { get; set; }
     }
 }

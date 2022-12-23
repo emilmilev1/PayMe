@@ -30,6 +30,18 @@ namespace PayMe.Core.DataSeed
                         LastName = "Bones",
                         Email = "bobby@test.com"
                     },
+                    new AppUser
+                    {
+                        FirstName = "Ivan",
+                        LastName = "Sprite",
+                        Email = "ivan@test.com"
+                    },
+                    new AppUser
+                    {
+                        FirstName = "Light",
+                        LastName = "Runner",
+                        Email = "light@test.com"
+                    }
                 };
 
                 foreach (var user in users)
@@ -48,6 +60,18 @@ namespace PayMe.Core.DataSeed
                         Address = "London, 123",
                         Country = "London",
                         Total = 1234.45,
+                        ZipCode = 2343,
+                        CheckAttendees = new List<CheckAttendee>
+                        {
+                            new CheckAttendee
+                            {
+                                AppUser = users[3]
+                            },
+                            new CheckAttendee
+                            {
+                                AppUser = users[4]
+                            },
+                        }
                     },
                     new CheckPayment                      
                     {                                     
@@ -55,9 +79,21 @@ namespace PayMe.Core.DataSeed
                         Title = "Payment 2",              
                         FirstName = "Peter1",              
                         LastName = "Petrov1",              
-                        Address = "London, 1234",          
-                        Country = "London",               
-                        Total = 34234.45,                  
+                        Address = "Essen, 1234",          
+                        Country = "Germany",               
+                        Total = 34234.45,   
+                        ZipCode = 2344,
+                        CheckAttendees = new List<CheckAttendee>
+                        {
+                            new CheckAttendee
+                            {
+                                AppUser = users[0]
+                            },
+                            new CheckAttendee
+                            {
+                                AppUser = users[1]
+                            },
+                        }
                     },
                     new CheckPayment                      
                     {                                     
@@ -65,9 +101,21 @@ namespace PayMe.Core.DataSeed
                         Title = "Payment 3",              
                         FirstName = "Peter2",             
                         LastName = "Petrov2",             
-                        Address = "London, 1234",         
-                        Country = "London",               
-                        Total = 3423443.45,                 
+                        Address = "USA, 1234",         
+                        Country = "USA",               
+                        Total = 3423443.45,
+                        ZipCode = 2324,
+                        CheckAttendees = new List<CheckAttendee>
+                        {
+                            new CheckAttendee
+                            {
+                                AppUser = users[1]
+                            },
+                            new CheckAttendee
+                            {
+                                AppUser = users[3]
+                            },
+                        }
                     },   
                     new CheckPayment                      
                     {                                     
@@ -77,7 +125,8 @@ namespace PayMe.Core.DataSeed
                         LastName = "Petrov3",             
                         Address = "London, 1234",         
                         Country = "London",               
-                        Total = 456456.45,                 
+                        Total = 456456.45,        
+                        ZipCode = 4078,
                     },   
                     new CheckPayment                      
                     {                                     
@@ -85,13 +134,14 @@ namespace PayMe.Core.DataSeed
                         Title = "Payment 5",              
                         FirstName = "Peter4",             
                         LastName = "Petrov4",             
-                        Address = "London, 123444",         
-                        Country = "London",               
-                        Total = 99994.45,                 
+                        Address = "Sofia, 123444",         
+                        Country = "Bulgaria",               
+                        Total = 99994.45, 
+                        ZipCode = 4543,
                     },    
                 };
 
-                await context.CheckPayments!.AddRangeAsync(checkPayments);
+                await context.CheckPayments.AddRangeAsync(checkPayments);
                 await context.SaveChangesAsync();
             }
         }

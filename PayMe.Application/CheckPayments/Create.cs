@@ -46,8 +46,7 @@ namespace PayMe.Application.CheckPayments
                 var attendee = new CheckAttendee
                 {
                     AppUser = user,
-                    CheckPayment = request.CheckPayment,
-                    IsHost = true
+                    CheckPayment = request.CheckPayment
                 };
 
                 request.CheckPayment.CheckAttendees.Add(attendee);
