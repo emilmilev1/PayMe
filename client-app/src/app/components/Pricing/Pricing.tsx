@@ -12,11 +12,8 @@ import Typography from "@mui/material/Typography";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import Container from "@mui/material/Container";
 import { tiers } from "./tiers";
-import { useTheme } from "@mui/material";
 
 function PricingContent() {
-    const theme = useTheme();
-
     return (
         <React.Fragment>
             <GlobalStyles

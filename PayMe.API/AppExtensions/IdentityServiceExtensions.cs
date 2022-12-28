@@ -6,7 +6,6 @@ using Microsoft.IdentityModel.Tokens;
 using PayMe.API.Services;
 using PayMe.Core;
 using PayMe.Domain;
-using PayMe.Infrastructure.HostRequirements;
 
 namespace PayMe.API.AppExtensions
 {
@@ -15,14 +14,14 @@ namespace PayMe.API.AppExtensions
         public static IServiceCollection AddIdentityServices(this IServiceCollection services,
             IConfiguration config)
         {
-            services.AddIdentityCore<AppUser>(opt =>
-            {
-                opt.Password.RequireNonAlphanumeric = false;
-                opt.SignIn.RequireConfirmedEmail = true;
-            })
-            .AddEntityFrameworkStores<DataContext>()
-            .AddSignInManager<SignInManager<AppUser>>()
-            .AddDefaultTokenProviders();
+            services.AddIdentityCore<AppUser>(opt => 
+                {
+                    opt.Password.RequireNonAlphanumeric = false;
+                    opt.SignIn.RequireConfirmedEmail = true;
+                })
+                .AddEntityFrameworkStores<DataContext>()
+                .AddSignInManager<SignInManager<AppUser>>()
+                .AddDefaultTokenProviders();
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
 
@@ -44,10 +43,8 @@ namespace PayMe.API.AppExtensions
                         OnMessageReceived = context =>
                         {
                             var accessToken = context.Request.Query["access_token"];
-                            var path = context.HttpContext.Request.Path;
 
-                            if (!string.IsNullOrEmpty(accessToken) &&
-                                path.StartsWithSegments("/chat"))
+                            if (!string.IsNullOrEmpty(accessToken))
                             {
                                 context.Token = accessToken;
                             }
@@ -57,15 +54,6 @@ namespace PayMe.API.AppExtensions
                     };
                 });
 
-            services.AddAuthorization(opt =>
-            {
-                opt.AddPolicy("IsPaymentCheckHost", policy =>
-                {
-                    policy.Requirements.Add(new IsHostRequirement());
-                });
-            });
-
-            services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
             services.AddScoped<Token>();
 
             return services;

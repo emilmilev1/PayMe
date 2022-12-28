@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CloudinaryDotNet;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using PayMe.Application.CheckPayments;
 using PayMe.Application.Core;
 using PayMe.Application.Interfaces;
 using PayMe.Core;
@@ -24,19 +26,20 @@ namespace PayMe.API.AppExtensions
                 options.UseSqlServer(config.GetConnectionString("DefaultConnection")!);
             });
 
-            services.AddCors(opt =>
+            services.AddCors(options =>
             {
-                opt.AddPolicy("CorsPolicy", policy =>
+                options.AddPolicy("CorsPolicy", policy =>
                 {
                     policy
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials()
-                        .WithExposedHeaders("WWW-Authenticate")
+                        .WithExposedHeaders("WWW-Authenticate", "Pagination")
                         .WithOrigins("http://localhost:3000");
                 });
             });
 
+            services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddAutoMapper(typeof(MappedProfiles).Assembly);
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();

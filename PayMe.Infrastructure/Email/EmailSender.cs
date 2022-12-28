@@ -20,7 +20,7 @@ namespace PayMe.Infrastructure.Email
 
             var message = new SendGridMessage
             {
-                From = new EmailAddress("emo.2012@abv.bg", _config["Sendgrid:User"]),
+                From = new EmailAddress(_config["Sendgrid:Email"], _config["Sendgrid:User"]),
                 Subject = emailSubject,
                 PlainTextContent = msg,
                 HtmlContent = msg

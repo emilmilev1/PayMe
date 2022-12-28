@@ -12,33 +12,36 @@ namespace PayMe.Application.CheckPayments
         public Guid Id { get; set; }
 
         [Required]
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
         
         [Required]
-        [MaxLength(30)]
+        [StringLength(30, MinimumLength = 5)]
         public string Title { get; set; } = null!;
 
         [Required]
-        [MaxLength(40)]
+        [StringLength(40, MinimumLength = 3)]
         public string FirstName { get; set; } = null!;
 
         [Required]
-        [MaxLength(40)]
+        [StringLength(40, MinimumLength = 3)]
         public string LastName { get; set; } = null!;
 
         [Required]
-        [MaxLength(100)]
+        [StringLength(100, MinimumLength = 5)]
         public string Address { get; set; } = null!;
 
         [Required]
-        [MaxLength(60)]
+        [Display(Name = "Country Category")]
         public string Country { get; set; } = null!;
+        
+        [Required]
+        [Display(Name = "Zip Code")]
+        public int ZipCode { get; set; }
 
         [Required]
-        [Range(0.00, 100000.00)]
+        [Range(0.00, 100000.00, ErrorMessage = "Total should be a positive number!")]
         public double Total { get; set; }
         
-        [JsonIgnore]
-        public string HostUsername { get; set; } = null!;
+        public ICollection<CheckAttendee> CheckAttendees { get; set; }
     }
 }

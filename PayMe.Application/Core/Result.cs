@@ -1,4 +1,6 @@
-﻿namespace PayMe.Application.Core
+﻿using MediatR;
+
+namespace PayMe.Application.Core
 {
     public class Result<T>
     {

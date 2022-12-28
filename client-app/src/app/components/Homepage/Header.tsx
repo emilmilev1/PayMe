@@ -1,8 +1,13 @@
 import { Typography, Stack, Link, Button } from "@mui/material";
 import { Container } from "semantic-ui-react";
 import Carousel from "./Carousel";
+import { useStore } from "../../stores/store";
+import SignInPage from "../../pages/SignIn/SignInPage";
+import { observer } from "mobx-react-lite";
 
 const Header = () => {
+    const { userStore } = useStore();
+
     return (
         <Container style={{ paddingBottom: "5rem" }}>
             <Typography
@@ -19,24 +24,26 @@ const Header = () => {
                 justifyContent="center"
                 sx={{ flexGrow: 1, pt: 5 }}
             >
-                <Button
-                    variant="contained"
-                    href="/create-payment"
-                    LinkComponent={Link}
-                    color="success"
-                    sx={{
-                        maxWidth: "100px",
-                        maxHeight: "50px",
-                        minWidth: "100px",
-                        minHeight: "40px",
-                    }}
-                >
-                    Create
-                </Button>
+                {userStore.isLoggedIn ? (
+                    <Button
+                        variant="contained"
+                        href="/dashboard"
+                        LinkComponent={Link}
+                        color="success"
+                        sx={{
+                            maxWidth: "100px",
+                            maxHeight: "50px",
+                            minWidth: "100px",
+                            minHeight: "40px",
+                        }}
+                    >
+                        Dashboard
+                    </Button>
+                ) : null}
             </Stack>
             <Carousel />
         </Container>
     );
 };
 
-export default Header;
+export default observer(Header);

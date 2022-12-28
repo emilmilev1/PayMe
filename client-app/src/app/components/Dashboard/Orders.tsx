@@ -1,26 +1,22 @@
 import * as React from "react";
 import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Title from "./Title";
 import { Button } from "@mui/material";
-
-/*interface ICreateData {
-    id: number;
-    date: Date;
-    firstName: string;
-    lastName: string;
-    address: string;
-    country: string;
-    total: number;
-    zipCode: number;
-}*/
+import { useStore } from "../../stores/store";
+import { observer } from "mobx-react-lite";
+import { Fragment } from "react";
+import Pagination from "./Pagination";
+import OrdersListItems from "./OrdersListItems";
 
 const Orders = () => {
+    const { checkPaymentStore } = useStore();
+    const { pagination } = checkPaymentStore;
+
     return (
-        <React.Fragment>
+        <Fragment>
             <Title>Recent Payments</Title>
             <TableCell align="right">
                 <Button>Sort by current month</Button>
@@ -40,26 +36,16 @@ const Orders = () => {
                         <TableCell align="right">Total</TableCell>
                     </TableRow>
                 </TableHead>
-                <TableBody>
-                    <TableRow key={1}>
-                        <TableCell>24.03.2001</TableCell>
-                        <TableCell>Gogo</TableCell>
-                        <TableCell>Gogev</TableCell>
-                        <TableCell>Sofia, 123</TableCell>
-                        <TableCell>Bulgaria</TableCell>
-                        <TableCell>4000</TableCell>
-                        <TableCell align="center">
-                            <Button>Edit</Button>
-                            <Button>Delete</Button>
-                            <Button>Details</Button>
-                        </TableCell>
-                        <TableCell align="right">{`$12334.00`}</TableCell>
-                    </TableRow>
-                </TableBody>
+                <OrdersListItems />
             </Table>
-            {/* Pagination */}
-        </React.Fragment>
+            <Pagination
+                currentPage={pagination!.currentPage}
+                itemsPerPage={pagination!.itemsPerPage}
+                totalItems={pagination!.totalItems}
+                totalPages={pagination!.totalPages}
+            />
+        </Fragment>
     );
 };
 
-export default Orders;
+export default observer(Orders);
