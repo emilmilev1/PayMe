@@ -60,7 +60,7 @@ function App() {
                                 path={"/(.+)"}
                                 render={() => (
                                     <Switch>
-                                        <GuardedRouteUser
+                                        <Route
                                             path="/dashboard"
                                             component={Dashboard}
                                         />

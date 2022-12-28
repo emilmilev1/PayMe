@@ -1,19 +1,19 @@
 import * as React from "react";
 import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Title from "./Title";
 import { Button } from "@mui/material";
 import { useStore } from "../../stores/store";
-import TableEachPayment from "./TableEachPayment";
 import { observer } from "mobx-react-lite";
 import { Fragment } from "react";
+import Pagination from "./Pagination";
+import OrdersListItems from "./OrdersListItems";
 
 const Orders = () => {
     const { checkPaymentStore } = useStore();
-    const { groupedPayments } = checkPaymentStore;
+    const { pagination } = checkPaymentStore;
 
     return (
         <Fragment>
@@ -36,19 +36,14 @@ const Orders = () => {
                         <TableCell align="right">Total</TableCell>
                     </TableRow>
                 </TableHead>
-                <TableBody>
-                    {groupedPayments.map(([group, payments]) => (
-                        <Fragment>
-                            {payments.map((payment) => (
-                                <TableEachPayment
-                                    key={payment.id}
-                                    payment={payment}
-                                />
-                            ))}
-                        </Fragment>
-                    ))}
-                </TableBody>
+                <OrdersListItems />
             </Table>
+            <Pagination
+                currentPage={pagination!.currentPage}
+                itemsPerPage={pagination!.itemsPerPage}
+                totalItems={pagination!.totalItems}
+                totalPages={pagination!.totalPages}
+            />
         </Fragment>
     );
 };

@@ -10,23 +10,22 @@ import { User, UserFormValues } from "../models/user";
 import { Photo, Profile } from "../models/profile";
 import { PaginatedResult } from "../models/pagination";
 
-const axiosBase = axios.create({
-    baseURL: "http://localhost:5000",
-});
+axios.defaults.baseURL = process.env.REACT_APP_API_URL; // "http://localhost:5000/api"
 
-axiosBase.interceptors.request.use((config) => {
+axios.interceptors.request.use((config) => {
     const token = store.commonStore.token;
+
     if (token) {
         config.headers!.Authorization = `Bearer ${token}`;
     }
+
     return config;
 });
 
-axiosBase.defaults.headers.post["Content-Type"] = "multipart/form-date";
-
-axiosBase.interceptors.response.use(
+axios.interceptors.response.use(
     async (response) => {
-        const pagination = response.headers["pagination"];
+        console.log("response => ", response);
+        const pagination = response.headers["Pagination"];
 
         if (pagination) {
             response.data = new PaginatedResult(
@@ -73,7 +72,7 @@ axiosBase.interceptors.response.use(
             case 401:
                 if (
                     status === 401 &&
-                    headers["www-authenticate"]?.startsWith(
+                    headers["WWW-Authenticate"]?.startsWith(
                         'Bearer error="invalid_token"'
                     )
                 ) {
@@ -102,12 +101,12 @@ axiosBase.interceptors.response.use(
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 const requests = {
-    get: <T>(url: string) => axiosBase.get<T>(url).then(responseBody),
+    get: <T>(url: string) => axios.get<T>(url).then(responseBody),
     post: <T>(url: string, body: {}) =>
-        axiosBase.post<T>(url, body).then(responseBody),
+        axios.post<T>(url, body).then(responseBody),
     put: <T>(url: string, body: {}) =>
-        axiosBase.put<T>(url, body).then(responseBody),
-    del: <T>(url: string) => axiosBase.delete<T>(url).then(responseBody),
+        axios.put<T>(url, body).then(responseBody),
+    del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 };
 
 const CheckPayments = {
@@ -126,9 +125,9 @@ const CheckPayments = {
 const Account = {
     current: () => requests.get<User>("/account"),
     login: (user: UserFormValues) =>
-        requests.post<User>("/api/account/login", JSON.stringify(user)),
+        requests.post<User>("/account/login", user),
     register: (user: UserFormValues) =>
-        requests.post<User>("/api/account/register", user),
+        requests.post<User>("/account/register", user),
     refreshToken: () => requests.post<User>("/account/refreshToken", {}),
     verifyEmail: (token: string, email: string) =>
         requests.post<void>(

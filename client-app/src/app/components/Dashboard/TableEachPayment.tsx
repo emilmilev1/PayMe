@@ -3,6 +3,7 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import { format } from "date-fns";
 import { Button } from "@mui/material";
+import { observer } from "mobx-react-lite";
 
 interface Props {
     payment: CheckPayment;
@@ -27,4 +28,4 @@ const TableEachPayment = ({ payment }: Props) => {
     );
 };
 
-export default TableEachPayment;
+export default observer(TableEachPayment);

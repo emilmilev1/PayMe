@@ -10,14 +10,15 @@ const SignIn = () => {
     return (
         <Formik
             initialValues={{ email: "", password: "", error: null }}
-            onSubmit={(values, { setErrors }) =>
+            onSubmit={(data, { setErrors }) =>
                 userStore
-                    .login(values)
+                    .login(data)
                     .catch((error) => setErrors({ error: error.response.data }))
             }
         >
             {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
                 <Form
+                    method="POST"
                     className="ui form error"
                     onSubmit={handleSubmit}
                     autoComplete="off"

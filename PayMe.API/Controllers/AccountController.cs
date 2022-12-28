@@ -54,7 +54,6 @@ namespace PayMe.API.Controllers
 
             // TODO - Only test mode
             if (user.UserName == "Emo") user.EmailConfirmed = true;
-            if (user.UserName == "Emo34") user.EmailConfirmed = true;
 
             if (!user.EmailConfirmed) return Unauthorized("Email not confirmed");
 

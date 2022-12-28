@@ -10,80 +10,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="862aaff2-1b08-4330-8334-effd41a5be6b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/PayMe.API/AppExtensions/HttpExtension.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PayMe.Application/CheckPayments/CheckPaymentParams.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PayMe.Application/CheckPayments/Details.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PayMe.Application/Core/PagedList.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PayMe.Application/Core/PagedParams.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221220220837_InitialCreateUpdated122400987.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221220220837_InitialCreateUpdated122400987.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221220221036_InitialCreateUpdated1224009878.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221220221036_InitialCreateUpdated1224009878.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221220222930_InitialCreateUpdated122400987348.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221220222930_InitialCreateUpdated122400987348.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221222124757_InitialUpdate.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221223010450_UpdateEntityCheckPayment.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221223010450_UpdateEntityCheckPayment.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221223011748_UpdateEntityCheckPaymentDto.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221223011748_UpdateEntityCheckPaymentDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/components/Confirm/ConfirmEmail.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/components/Confirm/RegisterSuccess.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/TableEachPayment.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/components/Forms/MyDateInput.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/components/Forms/MySelectInput.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/components/Forms/MyTextArea.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/components/Forms/MyTextInput.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/components/common/GuardedRouteUser.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/components/common/ValidationErrors.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/models/pagination.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/stores/modalStore.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/utils/hooks.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/public/cards.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/OrdersListItems.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Pagination.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Pagination.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PayMe/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PayMe/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PayMe.API/AppExtensions/ApplicationServiceExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/AppExtensions/ApplicationServiceExtension.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.API/AppExtensions/IdentityServiceExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/AppExtensions/IdentityServiceExtensions.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PayMe.API/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/Controllers/AccountController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.API/Controllers/BaseApiController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/Controllers/BaseApiController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.API/Controllers/CheckPaymentsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/Controllers/PaymentsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.API/Controllers/FallbackController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/Controllers/FallbackController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.API/Controllers/PaymentsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/Controllers/PaymentsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.API/PayMe.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/PayMe.API.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PayMe.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.API/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.Application/CheckPayments/CheckPaymentDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Application/CheckPayments/CheckPaymentDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.Application/CheckPayments/CheckPaymentValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Application/CheckPayments/CheckPaymentValidator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.Application/CheckPayments/Create.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Application/CheckPayments/Create.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.Application/CheckPayments/List.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Application/CheckPayments/List.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.Application/Core/MappedProfiles.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Application/Core/MappedProfiles.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.Application/Core/Result.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Application/Core/Result.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.Core/DataContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Core/DataContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.Core/DataSeed/Seed.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Core/DataSeed/Seed.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221216232858_InitialCreateUpdated11.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20221222124757_InitialUpdate.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221216232858_InitialCreateUpdated11.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/DataContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/DataContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.Domain/AppUser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Domain/AppUser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.Domain/CheckAttendee.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Domain/CheckAttendee.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.Domain/CheckPayment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Domain/CheckPayment.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.Domain/RefreshToken.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Domain/RefreshToken.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.Infrastructure/Email/EmailSender.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Infrastructure/Email/EmailSender.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.Infrastructure/HostRequirements/IsHostRequirement.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client-app/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client-app/src/app/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Dashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Deposits.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Deposits.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Orders.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Orders.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/ForgotPassword/ForgotPassword.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/ForgotPassword/ForgotPassword.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Homepage/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Homepage/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Homepage/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Homepage/Navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/TableEachPayment.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/TableEachPayment.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Login/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Login/Login.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Register/Register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Register/Register.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/common/GuardedRouteAuth.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/common/GuardedRouteAuth.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/models/checkPaymentStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/models/checkPaymentStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/models/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/models/user.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/pages/SignIn/SignInPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/pages/SignIn/SignInPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/pages/SignUp/SignUpPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/pages/SignUp/SignUpPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/models/pagination.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/models/pagination.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client-app/src/app/stores/checkPaymentStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/stores/checkPaymentStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/stores/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/stores/store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/stores/userStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/stores/userStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,6 +40,7 @@
     <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/DecompilerCache/ILViewer/50f693031e264d448ab2d03343baaa7cce00/a9/43151753/02000014pdb2High.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/DecompilerCache/ILViewer/50f693031e264d448ab2d03343baaa7cce00/e5/d0a37e2e/0200000Epdb5High.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/93bf8ca51564b3532dce6442f8ec6d3856e11622b484427b6e965ca60aba4b1/IdentityDbContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/ad044ca1d4b709617f929d85fd10684e616ce188e0a313fc44f2e51671aee/CorsMiddlewareExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/cb95b7b1e6d482339ecabb1a6fa3e9315d56544aab774a0cd184be219fdf9d0/HttpListenerRequest.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/d2b60674f3b5ef49d23f8128ac988fd6c59e49f0c19b383143182268f392/Queryable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/ffda4c1ea2fce545601358582584d891d6c9d65c364534c4ad32a9ebc23f1/IConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
@@ -254,7 +199,8 @@
       <workItem from="1671300777609" duration="20625000" />
       <workItem from="1671564421824" duration="22859000" />
       <workItem from="1671599706994" duration="5592000" />
-      <workItem from="1671666020245" duration="29625000" />
+      <workItem from="1671666020245" duration="30480000" />
+      <workItem from="1672097616403" duration="6067000" />
     </task>
     <servers />
   </component>

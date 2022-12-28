@@ -26,9 +26,9 @@ namespace PayMe.API.AppExtensions
                 options.UseSqlServer(config.GetConnectionString("DefaultConnection")!);
             });
 
-            services.AddCors(opt =>
+            services.AddCors(options =>
             {
-                opt.AddPolicy("CorsPolicy", policy =>
+                options.AddPolicy("CorsPolicy", policy =>
                 {
                     policy
                         .AllowAnyMethod()

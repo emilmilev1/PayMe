@@ -1,8 +1,8 @@
 export interface Pagination {
-    currentPage: number;
-    itemsPerPage: number;
-    totalItems: number;
-    totalPages: number;
+    currentPage: number | null;
+    itemsPerPage: number | null;
+    totalItems: number | null;
+    totalPages: number | null;
 }
 
 export class PaginatedResult<T> {

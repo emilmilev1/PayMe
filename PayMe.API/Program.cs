@@ -17,15 +17,10 @@ builder.Services.AddControllers(opt =>
 {
     var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
     opt.Filters.Add(new AuthorizeFilter(policy));
-})
-    .AddFluentValidation((config =>
-    {
-        config.RegisterValidatorsFromAssemblyContaining<Create>();
-    }));
+});
 
-
-//builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
-//builder.Services.AddValidatorsFromAssembly(typeof(Create).Assembly);
+builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+builder.Services.AddValidatorsFromAssembly(typeof(Create).Assembly);
 
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
@@ -66,7 +61,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-//app.MapFallbackToController("Index", "Fallback");
+app.MapFallbackToController("Index", "Fallback");
 
 using var scope = app.Services.CreateScope();
 

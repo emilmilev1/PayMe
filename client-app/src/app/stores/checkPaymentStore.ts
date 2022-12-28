@@ -26,6 +26,10 @@ export default class CheckPaymentStore {
         );
     }
 
+    setPagingParams = (pagingParams: PagingParams) => {
+        this.pagingParams = pagingParams;
+    };
+
     get axiosParams() {
         const params = new URLSearchParams();
 
