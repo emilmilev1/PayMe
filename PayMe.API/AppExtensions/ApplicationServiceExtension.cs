@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CloudinaryDotNet;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using PayMe.Application.CheckPayments;
 using PayMe.Application.Core;

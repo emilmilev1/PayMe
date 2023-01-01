@@ -10,13 +10,15 @@ import { User, UserFormValues } from "../models/user";
 import { Photo, Profile } from "../models/profile";
 import { PaginatedResult } from "../models/pagination";
 
-axios.defaults.baseURL = process.env.REACT_APP_API_URL; // "http://localhost:5000/api"
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+
+axios.defaults.headers.post["Content-Type"] = "application/json";
 
 axios.interceptors.request.use((config) => {
     const token = store.commonStore.token;
 
     if (token) {
-        config.headers!.Authorization = `Bearer ${token}`;
+        config.headers!["Authorization"] = `Bearer ${token}`;
     }
 
     return config;
