@@ -34,7 +34,7 @@ const SignInPage = () => {
                             <Avatar sx={{ mt: 8, bgcolor: "secondary.main" }}>
                                 <LockOutlinedIcon />
                             </Avatar>
-                            <Box component="form" noValidate sx={{ mt: 1 }}>
+                            <Box component="div" sx={{ mt: 1 }}>
                                 <SignIn />
                                 <Grid container>
                                     <Grid item xs>

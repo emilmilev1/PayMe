@@ -52,9 +52,6 @@ namespace PayMe.API.Controllers
 
             if (user == null) return Unauthorized("Invalid email");
 
-            // TODO - Only test mode
-            if (user.UserName == "Emo") user.EmailConfirmed = true;
-
             if (!user.EmailConfirmed) return Unauthorized("Email not confirmed");
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);

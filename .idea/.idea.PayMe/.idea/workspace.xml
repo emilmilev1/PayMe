@@ -10,24 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="862aaff2-1b08-4330-8334-effd41a5be6b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/client-app/public/cards.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/OrdersListItems.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Pagination.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Pagination.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PayMe/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PayMe/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PayMe.API/AppExtensions/ApplicationServiceExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/AppExtensions/ApplicationServiceExtension.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PayMe.API/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/Controllers/AccountController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.API/Controllers/PaymentsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/Controllers/PaymentsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PayMe.API/PayMe.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/PayMe.API.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PayMe.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client-app/src/app/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Deposits.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Deposits.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Orders.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Orders.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/TableEachPayment.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/TableEachPayment.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Homepage/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Homepage/Navbar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Login/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Login/Login.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/models/pagination.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/models/pagination.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/stores/checkPaymentStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/stores/checkPaymentStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/pages/SignIn/SignInPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/pages/SignIn/SignInPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/stores/userStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/stores/userStore.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,7 +191,7 @@
       <workItem from="1671564421824" duration="22859000" />
       <workItem from="1671599706994" duration="5592000" />
       <workItem from="1671666020245" duration="30480000" />
-      <workItem from="1672097616403" duration="6067000" />
+      <workItem from="1672097616403" duration="11364000" />
     </task>
     <servers />
   </component>
