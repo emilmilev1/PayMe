@@ -10,17 +10,23 @@ const SignIn = () => {
     return (
         <Formik
             initialValues={{ email: "", password: "", error: null }}
-            onSubmit={(data, { setErrors }) =>
-                userStore
+            onSubmit={async (data, { setErrors, setSubmitting }) => {
+                setSubmitting(true);
+                await userStore
                     .login(data)
-                    .catch((error) => setErrors({ error: error.response.data }))
-            }
+                    .catch((error) =>
+                        setErrors({ error: error.response.data })
+                    );
+                setSubmitting(false);
+            }}
         >
-            {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
+            {({ handleSubmit, isSubmitting, errors }) => (
                 <Form
-                    method="POST"
                     className="ui form error"
-                    onSubmit={handleSubmit}
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        handleSubmit();
+                    }}
                     autoComplete="off"
                 >
                     <Header
@@ -47,7 +53,6 @@ const SignIn = () => {
                         )}
                     />
                     <Button
-                        disabled={!isValid || !dirty || isSubmitting}
                         loading={isSubmitting}
                         positive
                         floated="right"

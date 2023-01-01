@@ -275,9 +275,7 @@ const Navbar = () => {
                                         display="flex"
                                         sx={{ color: "inherit" }}
                                     >
-                                        <Link to="/login">
-                                            Login
-                                        </Link>
+                                        <Link to="/login">Login</Link>
                                     </Typography>
                                 </MenuItem>
                             )}
