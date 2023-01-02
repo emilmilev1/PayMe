@@ -8,8 +8,6 @@ The project is going to be with a well structured architecture and a well-config
 
 # Technologies
 
-Soon!
-
-Updates
-
-10 Views and 5 Entities
+- ASP.NET Core Api
+- React
+- Typescript
