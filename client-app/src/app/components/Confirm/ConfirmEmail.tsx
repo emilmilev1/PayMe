@@ -5,6 +5,7 @@ import useQuery from "../../utils/hooks";
 import { useStore } from "../../stores/store";
 import api from "../../api/api";
 import SignInPage from "../../pages/SignIn/SignInPage";
+import Login from "../Login/Login";
 
 const ConfirmEmail = () => {
     const { modalStore } = useStore();
@@ -67,7 +68,7 @@ const ConfirmEmail = () => {
                         <p>Email has been verified - you can now login</p>
                         <Button
                             primary
-                            onClick={() => modalStore.openModal(<SignInPage />)}
+                            onClick={() => modalStore.openModal(<Login />)}
                             size="medium"
                             content="Login"
                         />

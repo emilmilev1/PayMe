@@ -8,7 +8,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Link } from "react-router-dom";
 
@@ -20,18 +19,22 @@ const SignInPage = () => {
             <Navbar />
             <Fragment>
                 <ThemeProvider theme={theme}>
-                    <Container component="main" maxWidth="xs">
+                    <Container
+                        component="main"
+                        maxWidth="xs"
+                        style={{ height: "100vh" }}
+                    >
                         <CssBaseline />
                         <Box
                             sx={{
-                                marginTop: 15,
-                                marginBottom: 15,
+                                marginTop: 10,
+                                marginBottom: 5,
                                 display: "flex",
                                 flexDirection: "column",
                                 alignItems: "center",
                             }}
                         >
-                            <Avatar sx={{ mt: 8, bgcolor: "secondary.main" }}>
+                            <Avatar sx={{ mt: 5, bgcolor: "secondary.main" }}>
                                 <LockOutlinedIcon />
                             </Avatar>
                             <Box component="div" sx={{ mt: 1 }}>

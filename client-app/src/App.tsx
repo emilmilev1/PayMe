@@ -10,7 +10,8 @@ import { ToastContainer } from "react-toastify";
 import { useStore } from "./app/stores/store";
 import RegisterSuccess from "./app/components/Confirm/RegisterSuccess";
 import ConfirmEmail from "./app/components/Confirm/ConfirmEmail";
-import GuardedRouteUser from "./app/components/common/GuardedRouteUser";
+import ModalContainer from "./app/components/ModalContainer/ModalContainer";
+//import GuardedRouteUser from "./app/components/common/GuardedRouteUser";
 
 const Homepage = lazy(() => import("./app/pages/Homepage/Homepage"));
 const Blog = lazy(() => import("./app/pages/Blog/Blog"));
@@ -30,6 +31,7 @@ export const ColorModeContext = React.createContext({
 
 function App() {
     const location = useLocation();
+    const { commonStore, userStore } = useStore();
     const [mode, setMode] = React.useState<PaletteMode>("light");
 
     const colorMode = React.useMemo(
@@ -43,6 +45,10 @@ function App() {
         []
     );
 
+    useEffect(() => {
+        userStore.getUser().finally(() => commonStore.setAppLoaded());
+    }, [userStore]);
+
     const theme = React.useMemo(
         () => createTheme(getDesignTokens(mode)),
         [mode]
@@ -52,6 +58,7 @@ function App() {
         <div className="app">
             <Fragment>
                 <ToastContainer position="bottom-right" hideProgressBar />
+                <ModalContainer />
                 <ColorModeContext.Provider value={colorMode}>
                     <ThemeProvider theme={theme}>
                         <Suspense fallback={<LoadingComponent />}>

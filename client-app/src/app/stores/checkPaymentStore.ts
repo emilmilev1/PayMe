@@ -6,7 +6,11 @@ import {
 } from "../models/checkPaymentStore";
 import api from "../api/api";
 import { store } from "./store";
-import { Pagination, PagingParams } from "../models/pagination";
+import {
+    PaginatedResult,
+    Pagination,
+    PagingParams,
+} from "../models/pagination";
 
 export default class CheckPaymentStore {
     checkPaymentRegistry = new Map<string, CheckPayment>();
@@ -14,15 +18,18 @@ export default class CheckPaymentStore {
     editMode = false;
     loading = false;
     loadingInitial = false;
-    pagingParams = new PagingParams();
     pagination: Pagination | null = null;
+    pagingParams = new PagingParams();
 
     constructor() {
         makeAutoObservable(this);
 
         reaction(
             () => (this.pagingParams = new PagingParams()),
-            () => (this.checkPaymentRegistry.clear(), this.loadCheckPayments())
+            () => {
+                this.checkPaymentRegistry.clear();
+                this.loadCheckPayments();
+            }
         );
     }
 
@@ -63,10 +70,10 @@ export default class CheckPaymentStore {
         this.loadingInitial = true;
 
         try {
-            const result = await api.CheckPayments.list(this.axiosParams);
+            const result: any = await api.CheckPayments.list(this.axiosParams);
 
-            result.data.forEach((x) => {
-                this.setCheckPayment(x);
+            result.data.forEach((value: CheckPayment) => {
+                this.setCheckPayment(value);
             });
 
             this.setPagination(result.pagination);
@@ -111,6 +118,7 @@ export default class CheckPaymentStore {
 
     private setCheckPayment = (checkPayment: CheckPayment) => {
         checkPayment.date = new Date(checkPayment.date!);
+
         this.checkPaymentRegistry.set(checkPayment.id, checkPayment);
     };
 

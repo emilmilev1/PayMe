@@ -26,7 +26,6 @@ axios.interceptors.request.use((config) => {
 
 axios.interceptors.response.use(
     async (response) => {
-        console.log("response => ", response);
         const pagination = response.headers["Pagination"];
 
         if (pagination) {

@@ -22,11 +22,8 @@ const SignIn = () => {
         >
             {({ handleSubmit, isSubmitting, errors }) => (
                 <Form
-                    className="ui form error"
-                    onSubmit={(e) => {
-                        e.preventDefault();
-                        handleSubmit();
-                    }}
+                    className="ui form"
+                    onSubmit={handleSubmit}
                     autoComplete="off"
                 >
                     <Header

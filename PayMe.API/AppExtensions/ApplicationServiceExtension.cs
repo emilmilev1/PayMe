@@ -29,7 +29,7 @@ namespace PayMe.API.AppExtensions
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials()
-                        .WithExposedHeaders("WWW-Authenticate", "Pagination")
+                        .WithExposedHeaders("www-authenticate", "pagination")
                         .WithOrigins("http://localhost:3000");
                 });
             });

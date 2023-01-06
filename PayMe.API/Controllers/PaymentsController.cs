@@ -17,7 +17,6 @@ namespace PayMe.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize]
         public async Task<IActionResult> GetCheckPayment(Guid id)
         {
             var result = await Mediator!.Send(new Details.Query { Id = id });
@@ -26,7 +25,6 @@ namespace PayMe.API.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> CreateCheckPayment(CheckPayment checkPayment)
         {
             return HandleResult(await Mediator!.Send(new Create.Command { CheckPayment = checkPayment }));
@@ -34,7 +32,6 @@ namespace PayMe.API.Controllers
 
         // [Authorize(Policy = "")]
         [HttpPut("{id}")]
-        [Authorize]
         public async Task<IActionResult> EditCheckPayment(Guid id, CheckPayment checkPayment)
         {
             checkPayment.Id = id;
@@ -44,7 +41,6 @@ namespace PayMe.API.Controllers
 
         // [Authorize(Policy = "")]
         [HttpDelete("{id}")]
-        [Authorize]
         public async Task<IActionResult> DeleteCheckPayment(Guid id)
         {
             return HandleResult(await Mediator!.Send(new Delete.Command { Id = id }));

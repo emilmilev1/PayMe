@@ -20,7 +20,6 @@ import { observer } from "mobx-react-lite";
 
 const Navbar = () => {
     const { userStore } = useStore();
-    const { user, logout, isLoggedIn } = userStore;
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
@@ -220,7 +219,7 @@ const Navbar = () => {
                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                             <Avatar
                                 alt="User"
-                                src={user?.image || "/user.png"}
+                                src={userStore.user?.image || "/user.png"}
                             />
                         </IconButton>
                         <Menu
@@ -247,12 +246,14 @@ const Navbar = () => {
                                     display="flex"
                                     sx={{ color: "inherit" }}
                                 >
-                                    <Link to={`/profiles/${user?.username}`}>
+                                    <Link
+                                        to={`/profiles/${userStore.user?.username}`}
+                                    >
                                         Profile
                                     </Link>
                                 </Typography>
                             </MenuItem>
-                            {isLoggedIn ? (
+                            {userStore.isLoggedIn ? (
                                 <MenuItem>
                                     <Typography
                                         margin="auto"
@@ -261,7 +262,7 @@ const Navbar = () => {
                                         display="flex"
                                         sx={{ color: "inherit" }}
                                     >
-                                        <Link to="/" onClick={logout}>
+                                        <Link to="/" onClick={userStore.logout}>
                                             Logout
                                         </Link>
                                     </Typography>
