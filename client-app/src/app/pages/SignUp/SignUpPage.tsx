@@ -36,7 +36,7 @@ const SignUpPage = () => {
                             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
                                 <LockOutlinedIcon />
                             </Avatar>
-                            <Box component="form" noValidate sx={{ mt: 3 }}>
+                            <Box component="div" sx={{ mt: 3 }}>
                                 <SignUp />
                                 <Grid container justifyContent="flex-end">
                                     <Grid item>

@@ -14,30 +14,35 @@ namespace PayMe.Core.DataSeed
                 {
                     new AppUser
                     {
+                        UserName = "Bob",
                         FirstName = "Bob",
                         LastName = "Brown",
                         Email = "bob@test.com"
                     },
                     new AppUser
                     {
+                        UserName = "Tom",
                         FirstName = "Tom",
                         LastName = "White",
                         Email = "tommy@test.com"
                     },
                     new AppUser
                     {
+                        UserName = "Bobby",
                         FirstName = "Bobby",
                         LastName = "Bones",
                         Email = "bobby@test.com"
                     },
                     new AppUser
                     {
+                        UserName = "Ivan",
                         FirstName = "Ivan",
                         LastName = "Sprite",
                         Email = "ivan@test.com"
                     },
                     new AppUser
                     {
+                        UserName = "Light",
                         FirstName = "Light",
                         LastName = "Runner",
                         Email = "light@test.com"

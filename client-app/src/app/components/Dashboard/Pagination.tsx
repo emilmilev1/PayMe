@@ -4,10 +4,10 @@ import { useStore } from "../../stores/store";
 import { PagingParams } from "../../models/pagination";
 
 interface PaginationData {
-    currentPage: number | null;
-    itemsPerPage: number | null;
-    totalItems: number | null;
-    totalPages: number | null;
+    currentPage: number;
+    itemsPerPage: number;
+    totalItems: number;
+    totalPages: number;
 }
 
 const Pagination = ({

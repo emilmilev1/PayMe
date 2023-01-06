@@ -81,14 +81,11 @@ const Dashboard = () => {
     };
 
     const { checkPaymentStore } = useStore();
-
-    const { loadCheckPayments, checkPaymentRegistry } = checkPaymentStore;
+    const { loadCheckPayments } = checkPaymentStore;
 
     useEffect(() => {
-        if (checkPaymentRegistry.size <= 1) {
-            loadCheckPayments();
-        }
-    }, [checkPaymentRegistry.size, loadCheckPayments]);
+        loadCheckPayments();
+    }, [loadCheckPayments]);
 
     return (
         <ThemeProvider theme={mdTheme}>

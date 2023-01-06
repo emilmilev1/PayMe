@@ -19,8 +19,8 @@ export default class UserStore {
     login = async (creds: UserFormValues) => {
         try {
             const user = await api.Account.login(creds);
-            store.commonStore.setToken(user.token);
 
+            store.commonStore.setToken(user.token);
             this.startRefreshTokenTimer(user);
             runInAction(() => (this.user = user));
 

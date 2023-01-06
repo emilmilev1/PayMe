@@ -2,14 +2,13 @@ import { Typography, Stack, Link, Button } from "@mui/material";
 import { Container } from "semantic-ui-react";
 import Carousel from "./Carousel";
 import { useStore } from "../../stores/store";
-import SignInPage from "../../pages/SignIn/SignInPage";
 import { observer } from "mobx-react-lite";
 
 const Header = () => {
     const { userStore } = useStore();
 
     return (
-        <Container style={{ paddingBottom: "5rem" }}>
+        <Container style={{ height: "100vh" }}>
             <Typography
                 component="h1"
                 variant="h4"
@@ -22,7 +21,7 @@ const Header = () => {
             <Stack
                 direction="row"
                 justifyContent="center"
-                sx={{ flexGrow: 1, pt: 5 }}
+                sx={{ flexGrow: 1, pt: 10 }}
             >
                 {userStore.isLoggedIn ? (
                     <Button

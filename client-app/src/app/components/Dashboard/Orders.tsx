@@ -38,12 +38,12 @@ const Orders = () => {
                 </TableHead>
                 <OrdersListItems />
             </Table>
-            <Pagination
+            {/* <Pagination
                 currentPage={pagination!.currentPage}
                 itemsPerPage={pagination!.itemsPerPage}
                 totalItems={pagination!.totalItems}
                 totalPages={pagination!.totalPages}
-            />
+            /> */}
         </Fragment>
     );
 };

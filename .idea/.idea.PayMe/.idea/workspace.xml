@@ -10,7 +10,58 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="862aaff2-1b08-4330-8334-effd41a5be6b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20230106121658_MigrationProblemSolved.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/components/ModalContainer/ModalContainer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PayMe/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PayMe/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.API/AppExtensions/ApplicationServiceExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/AppExtensions/ApplicationServiceExtension.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.API/Controllers/PaymentsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.API/Controllers/PaymentsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/DataSeed/Seed.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Core/DataSeed/Seed.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217001323_IdentityAdded.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217001323_IdentityAdded.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217121912_InitialCreateUpdated111.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217121912_InitialCreateUpdated111.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217131210_InitialCreateUpdated122.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217131210_InitialCreateUpdated122.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217132200_InitialCreateUpdated1224.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217132200_InitialCreateUpdated1224.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217134006_InitialCreateUpdated12248.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217134006_InitialCreateUpdated12248.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217141128_InitialCreateUpdated122408.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217141128_InitialCreateUpdated122408.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217141704_InitialCreateUpdated12240348.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217141704_InitialCreateUpdated12240348.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217145854_InitialCreateUpdated12240340098.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221217145854_InitialCreateUpdated12240340098.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221218020419_InitialCreateUpdated12240098.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221218020419_InitialCreateUpdated12240098.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221220220837_InitialCreateUpdated122400987.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221220220837_InitialCreateUpdated122400987.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221220221036_InitialCreateUpdated1224009878.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221220221036_InitialCreateUpdated1224009878.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221220222930_InitialCreateUpdated122400987348.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221220222930_InitialCreateUpdated122400987348.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221222124757_InitialUpdate.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221222124757_InitialUpdate.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221223010450_UpdateEntityCheckPayment.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Core/Migrations/20230106121658_MigrationProblemSolved.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221223010450_UpdateEntityCheckPayment.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221223011748_UpdateEntityCheckPaymentDto.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/Migrations/20221223011748_UpdateEntityCheckPaymentDto.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PayMe.Core/PayMe.Core.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PayMe.Core/PayMe.Core.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/api/api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Confirm/ConfirmEmail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Confirm/ConfirmEmail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Dashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Orders.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Orders.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Pagination.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Dashboard/Pagination.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Homepage/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Homepage/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Homepage/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Homepage/Navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Login/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Login/Login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/components/Register/Register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/components/Register/Register.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/models/pagination.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/models/pagination.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/pages/SignIn/SignInPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/pages/SignIn/SignInPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/pages/SignUp/SignUpPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/pages/SignUp/SignUpPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/stores/checkPaymentStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/stores/checkPaymentStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/stores/userStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/stores/userStore.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,6 +237,10 @@
       <workItem from="1672097616403" duration="11364000" />
       <workItem from="1672604655028" duration="480000" />
       <workItem from="1672605812187" duration="173000" />
+      <workItem from="1672830056459" duration="590000" />
+      <workItem from="1672866388320" duration="1343000" />
+      <workItem from="1672913109107" duration="634000" />
+      <workItem from="1672996724279" duration="7173000" />
     </task>
     <servers />
   </component>

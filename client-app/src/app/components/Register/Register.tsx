@@ -13,6 +13,7 @@ const SignUp = () => {
     return (
         <Formik
             initialValues={{
+                username: "",
                 firstName: "",
                 lastName: "",
                 email: "",
@@ -26,18 +27,16 @@ const SignUp = () => {
                     .catch((error) => setErrors({ error }))
             }
             validationSchema={Yup.object({
-                firstName: Yup.string().required(),
-                lastName: Yup.string().required(),
-                email: Yup.string().required().email(),
+                username: Yup.string().required("Username is required!"),
+                firstName: Yup.string().required("First name is required!"),
+                lastName: Yup.string().required("Last name is required!"),
+                email: Yup.string().required("Email is required!").email(),
                 password: Yup.string()
                     .required("Please enter your password.")
                     .min(8, "Your password is too short."),
                 rePassword: Yup.string()
-                    .required("Please retype your password.")
-                    .oneOf(
-                        [Yup.ref("password")],
-                        "Your passwords do not match."
-                    ),
+                    .required("Please confirm your password.")
+                    .oneOf([Yup.ref("password")], "Passwords do not match."),
             })}
         >
             {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
@@ -52,16 +51,35 @@ const SignUp = () => {
                         color="teal"
                         textAlign="center"
                     />
-                    <MyTextInput name="firstName" placeholder="First Name" />
-                    <MyTextInput name="lastName" placeholder="Last Name" />
-                    <MyTextInput name="email" placeholder="Email" />
                     <MyTextInput
+                        label="Username"
+                        name="username"
+                        placeholder="Username"
+                    />
+                    <MyTextInput
+                        label="First Name"
+                        name="firstName"
+                        placeholder="First Name"
+                    />
+                    <MyTextInput
+                        label="Last Name"
+                        name="lastName"
+                        placeholder="Last Name"
+                    />
+                    <MyTextInput
+                        label="Email"
+                        name="email"
+                        placeholder="Email"
+                    />
+                    <MyTextInput
+                        label="Password"
                         name="password"
                         placeholder="Password"
                         type="password"
                     />
                     <MyTextInput
-                        name="confirm-password"
+                        label="Confirm Password"
+                        name="rePassword"
                         placeholder="Confirm Password"
                         type="password"
                     />
@@ -72,7 +90,7 @@ const SignUp = () => {
                         )}
                     />
                     <Button
-                        disabled={isValid || !dirty || isSubmitting}
+                        disabled={!isValid || !dirty || isSubmitting}
                         loading={isSubmitting}
                         positive
                         content="Register"
