@@ -66,7 +66,7 @@ const Drawer = styled(MuiDrawer, {
             }),
             width: theme.spacing(7),
             [theme.breakpoints.up("sm")]: {
-                width: theme.spacing(9),
+                width: theme.spacing(5),
             },
         }),
     },
@@ -94,7 +94,7 @@ const Dashboard = () => {
                 <AppBar position="absolute" open={open}>
                     <Toolbar
                         sx={{
-                            pr: "24px", // keep right padding when drawer closed
+                            pr: "20px", // keep right padding when drawer closed
                         }}
                     >
                         <IconButton
@@ -103,7 +103,7 @@ const Dashboard = () => {
                             aria-label="open drawer"
                             onClick={toggleDrawer}
                             sx={{
-                                marginRight: "36px",
+                                marginRight: "30px",
                                 ...(open && { display: "none" }),
                             }}
                         >
@@ -114,7 +114,10 @@ const Dashboard = () => {
                             variant="h6"
                             color="inherit"
                             noWrap
-                            sx={{ flexGrow: 1 }}
+                            sx={{
+                                flexGrow: 1,
+                                fontSize: "1.2rem", // Adjust the font size as desired
+                            }}
                         >
                             Dashboard
                         </Typography>
@@ -171,7 +174,7 @@ const Dashboard = () => {
                             <Grid item xs={12}>
                                 <Paper
                                     sx={{
-                                        p: 2,
+                                        p: 10,
                                         display: "flex",
                                         flexDirection: "column",
                                     }}

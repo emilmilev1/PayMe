@@ -1,3 +1,5 @@
+import { CheckPaymentData } from "./checkPaymentStore";
+
 export interface Pagination {
     currentPage: number;
     itemsPerPage: number;
@@ -6,10 +8,10 @@ export interface Pagination {
 }
 
 export class PaginatedResult<T> {
-    data: T;
+    data: any;
     pagination: Pagination;
 
-    constructor(data: T, pagination: Pagination) {
+    constructor(data: any, pagination: Pagination) {
         this.data = data;
         this.pagination = pagination;
     }

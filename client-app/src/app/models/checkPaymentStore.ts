@@ -1,6 +1,6 @@
 import { Profile } from "./profile";
 
-export interface CheckPayment {
+export interface CheckPaymentData {
     id: string;
     date: Date;
     firstName: string;
@@ -14,7 +14,19 @@ export interface CheckPayment {
     checkAttendees: Profile[];
 }
 
-export class CheckPayment implements CheckPayment {
+export class CheckPayment {
+    id!: string;
+    date!: Date;
+    firstName!: string;
+    lastName!: string;
+    address!: string;
+    country!: string;
+    total!: number;
+    zipCode!: number;
+    isHost!: boolean;
+    hostUsername!: string;
+    checkAttendees!: Profile[];
+
     constructor(init?: CheckPaymentFormValues) {
         Object.assign(this, init);
     }
@@ -27,8 +39,8 @@ export class CheckPaymentFormValues {
     lastName: string = "";
     address: string = "";
     country: string = "";
-    total!: number;
     zipCode!: number;
+    total!: number;
 
     constructor(checkPayment?: CheckPaymentFormValues) {
         if (checkPayment) {

@@ -26,8 +26,8 @@ const Header = () => {
                 {userStore.isLoggedIn ? (
                     <Button
                         variant="contained"
-                        href="/dashboard"
                         LinkComponent={Link}
+                        href="/dashboard"
                         color="success"
                         sx={{
                             maxWidth: "100px",

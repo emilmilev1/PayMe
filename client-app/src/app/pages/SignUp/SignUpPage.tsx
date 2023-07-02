@@ -8,6 +8,7 @@ import {
     Container,
     CssBaseline,
     Grid,
+    PaletteMode,
     ThemeProvider,
     Typography,
     createTheme,

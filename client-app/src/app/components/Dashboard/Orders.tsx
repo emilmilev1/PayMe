@@ -7,26 +7,68 @@ import Title from "./Title";
 import { Button } from "@mui/material";
 import { useStore } from "../../stores/store";
 import { observer } from "mobx-react-lite";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import Pagination from "./Pagination";
 import OrdersListItems from "./OrdersListItems";
 
 const Orders = () => {
     const { checkPaymentStore } = useStore();
-    const { pagination } = checkPaymentStore;
+    const { loadCheckPayments, pagination, pagingParams, setPagingParams } =
+        checkPaymentStore;
+
+    useEffect(() => {
+        loadCheckPayments();
+    }, [loadCheckPayments]);
+
+    const handlePageChange = (page: number) => {
+        setPagingParams({
+            ...pagingParams,
+            pageNumber: page,
+        });
+    };
 
     return (
         <Fragment>
-            <Title>Recent Payments</Title>
-            <TableCell align="right">
-                <Button>Sort by current month</Button>
-                <Button>Sort by Highest</Button>
-                <Button>Sort by Lowest</Button>
-            </TableCell>
-            <Table size="small">
+            <Table>
                 <TableHead>
                     <TableRow>
+                        <TableCell align="center" colSpan={9}>
+                            <Title>Recent Payments</Title>
+                        </TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell align="right" colSpan={9}>
+                            <div>
+                                <Button
+                                    style={{ border: "none", outline: "none" }}
+                                    onClick={() =>
+                                        console.log("Sort by current month")
+                                    }
+                                >
+                                    Sort by current month
+                                </Button>
+                                <Button
+                                    style={{ border: "none", outline: "none" }}
+                                    onClick={() =>
+                                        console.log("Sort by Highest")
+                                    }
+                                >
+                                    Sort by Highest Total
+                                </Button>
+                                <Button
+                                    style={{ border: "none", outline: "none" }}
+                                    onClick={() =>
+                                        console.log("Sort by Lowest")
+                                    }
+                                >
+                                    Sort by Lowest Total
+                                </Button>
+                            </div>
+                        </TableCell>
+                    </TableRow>
+                    <TableRow>
                         <TableCell>Date</TableCell>
+                        <TableCell>Time</TableCell>
                         <TableCell>First Name</TableCell>
                         <TableCell>Last Name</TableCell>
                         <TableCell>Address</TableCell>
@@ -38,12 +80,12 @@ const Orders = () => {
                 </TableHead>
                 <OrdersListItems />
             </Table>
-            {/* <Pagination
-                currentPage={pagination!.currentPage}
-                itemsPerPage={pagination!.itemsPerPage}
-                totalItems={pagination!.totalItems}
-                totalPages={pagination!.totalPages}
-            /> */}
+            <Pagination
+                currentPage={pagingParams.pageNumber}
+                totalPages={pagination ? pagination.totalPages : 0}
+                totalItems={pagination ? pagination.totalItems : 0}
+                onPageChange={handlePageChange}
+            />
         </Fragment>
     );
 };

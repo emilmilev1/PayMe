@@ -1,7 +1,8 @@
-import { makeAutoObservable, reaction, runInAction } from "mobx";
+import { makeAutoObservable, reaction, runInAction, values } from "mobx";
 import { format } from "date-fns";
 import {
     CheckPayment,
+    CheckPaymentData,
     CheckPaymentFormValues,
 } from "../models/checkPaymentStore";
 import api from "../api/api";
@@ -13,8 +14,8 @@ import {
 } from "../models/pagination";
 
 export default class CheckPaymentStore {
-    checkPaymentRegistry = new Map<string, CheckPayment>();
-    selectedCheckPayment: CheckPayment | undefined = undefined;
+    checkPaymentRegistry = new Map<string, CheckPaymentData>();
+    selectedCheckPayment: CheckPaymentData | undefined = undefined;
     editMode = false;
     loading = false;
     loadingInitial = false;
@@ -25,7 +26,7 @@ export default class CheckPaymentStore {
         makeAutoObservable(this);
 
         reaction(
-            () => (this.pagingParams = new PagingParams()),
+            () => this.pagingParams.pageNumber,
             () => {
                 this.checkPaymentRegistry.clear();
                 this.loadCheckPayments();
@@ -62,7 +63,7 @@ export default class CheckPaymentStore {
                     : [payment];
 
                 return payments;
-            }, {} as { [key: string]: CheckPayment[] })
+            }, {} as { [key: string]: CheckPaymentData[] })
         );
     }
 
@@ -70,13 +71,25 @@ export default class CheckPaymentStore {
         this.loadingInitial = true;
 
         try {
-            const result: any = await api.CheckPayments.list(this.axiosParams);
+            this.checkPaymentRegistry.clear();
 
-            result.data.forEach((value: CheckPayment) => {
-                this.setCheckPayment(value);
-            });
+            const result: PaginatedResult<CheckPaymentData[]> =
+                await api.CheckPayments.list(this.axiosParams);
 
-            this.setPagination(result.pagination);
+            if (result.data) {
+                result.data.forEach((value: CheckPaymentData) => {
+                    this.setCheckPayment(value);
+                });
+            }
+
+            const pagination: Pagination = {
+                currentPage: result.pagination.currentPage,
+                itemsPerPage: result.pagination.itemsPerPage,
+                totalItems: result.pagination.totalItems,
+                totalPages: result.pagination.totalPages,
+            };
+
+            this.setPagination(pagination);
             this.setLoadingInitial(false);
         } catch (error) {
             console.log(error);
@@ -98,6 +111,8 @@ export default class CheckPaymentStore {
             this.loadingInitial = true;
 
             try {
+                this.selectedCheckPayment = undefined;
+
                 checkPayment = await api.CheckPayments.details(id);
 
                 this.setCheckPayment(checkPayment);
@@ -116,7 +131,7 @@ export default class CheckPaymentStore {
         }
     };
 
-    private setCheckPayment = (checkPayment: CheckPayment) => {
+    private setCheckPayment = (checkPayment: CheckPaymentData) => {
         checkPayment.date = new Date(checkPayment.date!);
 
         this.checkPaymentRegistry.set(checkPayment.id, checkPayment);
@@ -165,11 +180,11 @@ export default class CheckPaymentStore {
 
                     this.checkPaymentRegistry.set(
                         checkPayment.id,
-                        updatedCheckPayment as CheckPayment
+                        updatedCheckPayment as CheckPaymentData
                     );
 
                     this.selectedCheckPayment =
-                        updatedCheckPayment as CheckPayment;
+                        updatedCheckPayment as CheckPaymentData;
                 }
             });
         } catch (error) {

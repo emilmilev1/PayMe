@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Homepage/Navbar";
 import SignIn from "../../components/Login/Login";
-import { ThemeProvider, createTheme } from "@mui/material";
+import { PaletteMode, ThemeProvider, createTheme } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";

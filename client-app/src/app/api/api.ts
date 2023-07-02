@@ -2,6 +2,7 @@ import { toast } from "react-toastify";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import {
     CheckPayment,
+    CheckPaymentData,
     CheckPaymentFormValues,
 } from "../models/checkPaymentStore";
 import { history } from "../..";
@@ -26,7 +27,7 @@ axios.interceptors.request.use((config) => {
 
 axios.interceptors.response.use(
     async (response) => {
-        const pagination = response.headers["Pagination"];
+        const pagination = response.headers["pagination"];
 
         if (pagination) {
             response.data = new PaginatedResult(
@@ -113,9 +114,24 @@ const requests = {
 const CheckPayments = {
     list: (params: URLSearchParams) =>
         axios
-            .get<PaginatedResult<CheckPayment[]>>("/payments", { params })
-            .then(responseBody),
-    details: (id: string) => requests.get<CheckPayment>(`/payments/${id}`),
+            .get<PaginatedResult<CheckPaymentData[]>>("/payments", { params })
+            .then(
+                (
+                    response: AxiosResponse<PaginatedResult<CheckPaymentData[]>>
+                ) => {
+                    const paginationHeaders = response.headers["pagination"];
+                    const pagination = paginationHeaders
+                        ? JSON.parse(paginationHeaders)
+                        : null;
+
+                    const paginatedResult = new PaginatedResult<
+                        CheckPaymentData[]
+                    >(response.data.data, pagination);
+
+                    return paginatedResult;
+                }
+            ),
+    details: (id: string) => requests.get<CheckPaymentData>(`/payments/${id}`),
     create: (checkPayment: CheckPaymentFormValues) =>
         requests.post<void>("/payments", checkPayment),
     update: (checkPayment: CheckPaymentFormValues) =>

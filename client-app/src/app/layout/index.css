@@ -21,3 +21,11 @@ li {
     max-height: 100%;
     background-color: rgb(170, 210, 250);
 }
+
+button:focus {
+    border: none;
+}
+
+button {
+    border: none;
+}

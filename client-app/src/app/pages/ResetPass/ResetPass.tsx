@@ -1,3 +1,4 @@
+import { PaletteMode } from "@mui/material";
 import Footer from "../../components/Footer/Footer";
 import ForgotPassword from "../../components/ForgotPassword/ForgotPassword";
 import Navbar from "../../components/Homepage/Navbar";

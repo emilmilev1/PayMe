@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using PayMe.API.AppExtensions;
+using PayMe.API.LoggingConfig;
 using PayMe.API.Middleware;
 using PayMe.Application.CheckPayments;
 using PayMe.Core;
@@ -12,6 +13,8 @@ using PayMe.Core.DataSeed;
 using PayMe.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
+
+ConfigureLogging.ConfigureLoggingService(builder.Logging);
 
 builder.Services.AddControllers(opt =>
 {

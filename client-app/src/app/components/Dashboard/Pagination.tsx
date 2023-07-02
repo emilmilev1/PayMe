@@ -2,35 +2,37 @@ import { observer } from "mobx-react-lite";
 import styles from "./Pagination.module.css";
 import { useStore } from "../../stores/store";
 import { PagingParams } from "../../models/pagination";
+import "@fortawesome/fontawesome-free/css/all.css";
 
 interface PaginationData {
     currentPage: number;
-    itemsPerPage: number;
-    totalItems: number;
     totalPages: number;
+    totalItems: number;
+    onPageChange: (page: number) => void;
 }
 
 const Pagination = ({
     currentPage,
-    itemsPerPage,
-    totalItems,
     totalPages,
+    totalItems,
+    onPageChange,
 }: PaginationData) => {
-    console.log(currentPage, itemsPerPage, totalItems, totalPages);
-
     const { checkPaymentStore } = useStore();
-    const { setPagingParams, pagination } = checkPaymentStore;
+    const { setPagingParams } = checkPaymentStore;
 
-    setPagingParams(new PagingParams(currentPage! + 1));
+    const handlePageChange = (page: number) => {
+        setPagingParams(new PagingParams(page));
+        onPageChange(page);
+    };
 
     const getPages = () => {
-        let elements = [];
+        const elements = [];
 
-        for (let i = 1; i <= totalPages!; i++) {
+        for (let i = 1; i <= totalPages; i++) {
             elements.push(
                 <div
                     className={`${currentPage === i ? styles.active : ""}`}
-                    onClick={() => i}
+                    onClick={() => handlePageChange(i)}
                     key={i}
                 >
                     {i < 10 ? `${i}` : i}
@@ -47,10 +49,11 @@ const Pagination = ({
                 className={`${styles.paginationArrow} ${
                     currentPage === 1 ? styles.inactive : ""
                 }`}
-                onClick={() =>
-                    currentPage !== 1 &&
-                    setPagingParams(new PagingParams(currentPage! - 1))
-                }
+                onClick={() => {
+                    if (currentPage !== 1) {
+                        handlePageChange(currentPage - 1);
+                    }
+                }}
             >
                 <i className="fas fa-angle-left"></i>
             </div>
@@ -61,10 +64,11 @@ const Pagination = ({
                 className={`${styles.paginationArrow} ${
                     currentPage === totalPages ? styles.inactive : ""
                 }`}
-                onClick={() =>
-                    currentPage !== totalPages &&
-                    setPagingParams(new PagingParams(currentPage! + 1))
-                }
+                onClick={() => {
+                    if (currentPage !== totalPages) {
+                        handlePageChange(currentPage + 1);
+                    }
+                }}
             >
                 <i className="fas fa-angle-right"></i>
             </div>

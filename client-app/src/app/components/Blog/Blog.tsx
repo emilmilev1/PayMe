@@ -6,13 +6,18 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import FeaturedPost from "./FeaturedPost";
 import { Typography } from "@mui/material";
 
+const generatedFirstPicture = "https://picsum.photos/200/300";
+const generatedSecondPicture = "https://picsum.photos/200/300";
+const generatedThirdPicture = "https://picsum.photos/200/300";
+const generatedFourthPicture = "https://picsum.photos/200/300";
+
 const featuredPosts = [
     {
         title: "Featured post",
         date: "Sept 5",
         description:
             "This is a wider card with supporting text below as a natural lead-in to additional content.",
-        image: "https://source.unsplash.com/random",
+        image: generatedFirstPicture,
         imageLabel: "Image Text 1",
     },
     {
@@ -20,7 +25,7 @@ const featuredPosts = [
         date: "Nov 11",
         description:
             "This is a wider card with supporting text below as a natural lead-in to additional content.",
-        image: "https://source.unsplash.com/random",
+        image: generatedSecondPicture,
         imageLabel: "Image Text 2",
     },
     {
@@ -28,7 +33,7 @@ const featuredPosts = [
         date: "Nov 11",
         description:
             "This is a wider card with supporting text below as a natural lead-in to additional content.",
-        image: "https://source.unsplash.com/random",
+        image: generatedThirdPicture,
         imageLabel: "Image Text 3",
     },
     {
@@ -36,7 +41,7 @@ const featuredPosts = [
         date: "Nov 11",
         description:
             "This is a wider card with supporting text below as a natural lead-in to additional content.",
-        image: "https://source.unsplash.com/random",
+        image: generatedFourthPicture,
         imageLabel: "Image Text 4",
     },
 ];

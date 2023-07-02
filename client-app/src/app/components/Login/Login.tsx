@@ -3,6 +3,7 @@ import { observer } from "mobx-react-lite";
 import { Button, Header, Label } from "semantic-ui-react";
 import { useStore } from "../../stores/store";
 import MyTextInput from "../Forms/MyTextInput";
+import * as Yup from "yup";
 
 const SignIn = () => {
     const { userStore } = useStore();
@@ -19,10 +20,16 @@ const SignIn = () => {
                     );
                 setSubmitting(false);
             }}
+            validationSchema={Yup.object({
+                email: Yup.string().required("Email is required!").email(),
+                password: Yup.string()
+                    .required("Please enter your password.")
+                    .min(8, "Your password is too short."),
+            })}
         >
-            {({ handleSubmit, isSubmitting, errors }) => (
+            {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
                 <Form
-                    className="ui form"
+                    className="ui form error"
                     onSubmit={handleSubmit}
                     autoComplete="off"
                 >
@@ -50,6 +57,7 @@ const SignIn = () => {
                         )}
                     />
                     <Button
+                        disabled={!isValid || !dirty || isSubmitting}
                         loading={isSubmitting}
                         positive
                         floated="right"

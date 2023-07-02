@@ -13,10 +13,9 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import CountrySelect from "../CountrySelect/CountrySelect";
 import { CheckPaymentFormValues } from "../../models/checkPaymentStore";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useStore } from "../../stores/store";
 import { v4 as uuid } from "uuid";
-import { Formik, Form } from "formik";
 
 export default function CreateCheck() {
     const history = useHistory();

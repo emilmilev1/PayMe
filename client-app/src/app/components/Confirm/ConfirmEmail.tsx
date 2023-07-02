@@ -4,8 +4,7 @@ import { Button, Header, Icon, Segment } from "semantic-ui-react";
 import useQuery from "../../utils/hooks";
 import { useStore } from "../../stores/store";
 import api from "../../api/api";
-import SignInPage from "../../pages/SignIn/SignInPage";
-import Login from "../Login/Login";
+import Dashboard from "../Dashboard/Dashboard";
 
 const ConfirmEmail = () => {
     const { modalStore } = useStore();
@@ -49,9 +48,9 @@ const ConfirmEmail = () => {
             case Status.Failed:
                 return (
                     <div>
+                        <p color="red">Verification failed.</p>
                         <p>
-                            Verification failed. You can try resending the
-                            verify link to your email
+                            You can try resending the verify link to your email
                         </p>
                         <Button
                             primary
@@ -65,12 +64,14 @@ const ConfirmEmail = () => {
             case Status.Success:
                 return (
                     <div>
-                        <p>Email has been verified - you can now login</p>
+                        <p>Email has been verified</p>
+                        <p color="green">Successful Registration</p>
+                        <p>Go to dashboard</p>
                         <Button
                             primary
-                            onClick={() => modalStore.openModal(<Login />)}
+                            onClick={() => modalStore.openModal(<Dashboard />)}
                             size="medium"
-                            content="Login"
+                            content="Dashboard"
                         />
                     </div>
                 );

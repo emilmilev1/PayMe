@@ -11,15 +11,16 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { FormGroup } from "@mui/material";
+import { FormGroup, Link, PaletteMode } from "@mui/material";
 import MaterialUISwitch from "../../layout/SwitchDesign";
 import { ColorModeContext } from "../../../App";
-import { Link } from "react-router-dom";
 import { useStore } from "../../stores/store";
 import { observer } from "mobx-react-lite";
 
 const Navbar = () => {
     const { userStore } = useStore();
+
+    const [colorModeOn, setColorModeOn] = React.useState(false);
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
@@ -43,7 +44,16 @@ const Navbar = () => {
         setAnchorElUser(null);
     };
 
-    const colorMode = React.useContext(ColorModeContext);
+    // const toggleColorMode = () => {
+    //     setColorModeOn((prevMode: boolean) => !prevMode);
+    //     setMode((prevMode: string) =>
+    //         prevMode === "light" ? "dark" : "light"
+    //     );
+    // };
+
+    const toggleColorMode = () => {
+        "dark";
+    };
 
     return (
         <AppBar position="static">
@@ -113,7 +123,7 @@ const Navbar = () => {
                                     display="flex"
                                     sx={{ color: "inherit" }}
                                 >
-                                    <Link to="/dashboard">Dashboard</Link>
+                                    <Link href="/dashboard">Dashboard</Link>
                                 </Typography>
                             </MenuItem>
                             <MenuItem>
@@ -124,7 +134,7 @@ const Navbar = () => {
                                     display="flex"
                                     sx={{ color: "inherit" }}
                                 >
-                                    <Link to="/pricing">Pricing</Link>
+                                    <Link href="/pricing">Pricing</Link>
                                 </Typography>
                             </MenuItem>
                             <MenuItem>
@@ -135,7 +145,7 @@ const Navbar = () => {
                                     display="flex"
                                     sx={{ color: "inherit" }}
                                 >
-                                    <Link to="/blog">Blog</Link>
+                                    <Link href="/blog">Blog</Link>
                                 </Typography>
                             </MenuItem>
                             <MenuItem>
@@ -146,7 +156,7 @@ const Navbar = () => {
                                     display="flex"
                                     sx={{ color: "inherit" }}
                                 >
-                                    <Link to="/about-us">About Us</Link>
+                                    <Link href="/about-us">About Us</Link>
                                 </Typography>
                             </MenuItem>
                         </Menu>
@@ -207,11 +217,12 @@ const Navbar = () => {
                             About Us
                         </Button>
                     </Box>
-                    <Box>
+                    <Box sx={{ display: "flex" }}>
                         <FormGroup>
                             <MaterialUISwitch
                                 sx={{ m: 1 }}
-                                onClick={colorMode.toggleColorMode}
+                                checked={colorModeOn}
+                                onClick={toggleColorMode}
                             />
                         </FormGroup>
                     </Box>
@@ -247,7 +258,7 @@ const Navbar = () => {
                                     sx={{ color: "inherit" }}
                                 >
                                     <Link
-                                        to={`/profiles/${userStore.user?.username}`}
+                                        href={`/profiles/${userStore.user?.username}`}
                                     >
                                         Profile
                                     </Link>
@@ -262,7 +273,7 @@ const Navbar = () => {
                                         display="flex"
                                         sx={{ color: "inherit" }}
                                     >
-                                        <Link to="/" onClick={userStore.logout}>
+                                        <Link onClick={userStore.logout}>
                                             Logout
                                         </Link>
                                     </Typography>
@@ -276,7 +287,7 @@ const Navbar = () => {
                                         display="flex"
                                         sx={{ color: "inherit" }}
                                     >
-                                        <Link to="/login">Login</Link>
+                                        <Link href="/login">Login</Link>
                                     </Typography>
                                 </MenuItem>
                             )}

@@ -21,11 +21,15 @@ const SignUp = () => {
                 rePassword: "",
                 error: null,
             }}
-            onSubmit={(values, { setErrors }) =>
-                userStore
-                    .register(values)
-                    .catch((error) => setErrors({ error }))
-            }
+            onSubmit={async (data, { setErrors, setSubmitting }) => {
+                setSubmitting(true);
+                await userStore
+                    .register(data)
+                    .catch((error) =>
+                        setErrors({ error: error.response.data })
+                    );
+                setSubmitting(false);
+            }}
             validationSchema={Yup.object({
                 username: Yup.string().required("Username is required!"),
                 firstName: Yup.string().required("First name is required!"),
