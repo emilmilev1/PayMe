@@ -66,7 +66,7 @@ const Drawer = styled(MuiDrawer, {
             }),
             width: theme.spacing(7),
             [theme.breakpoints.up("sm")]: {
-                width: theme.spacing(5),
+                width: theme.spacing(7),
             },
         }),
     },

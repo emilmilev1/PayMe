@@ -13,25 +13,28 @@ export default class UserStore {
     }
 
     get isLoggedIn() {
-        return !!this.user;
+        return store.commonStore.token !== null;
     }
 
     login = async (creds: UserFormValues) => {
         try {
             const user = await api.Account.login(creds);
+            console.log(user);
 
             store.commonStore.setToken(user.token);
             this.startRefreshTokenTimer(user);
             runInAction(() => (this.user = user));
+            console.log("this user: " + this.user);
 
-            history.push("/dashboard");
             store.modalStore.closeModal();
+            history.push("/dashboard");
         } catch (error) {
             throw error;
         }
     };
 
     logout = () => {
+        store.modalStore.closeModal();
         store.commonStore.setToken(null);
         window.localStorage.removeItem("jwt");
         this.user = null;
@@ -45,7 +48,7 @@ export default class UserStore {
             runInAction(() => (this.user = user));
             this.startRefreshTokenTimer(user);
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
@@ -53,8 +56,8 @@ export default class UserStore {
         try {
             await api.Account.register(creds);
 
-            history.push(`/account/registerSuccess?email=${creds.email}`);
             store.modalStore.closeModal();
+            history.push(`/account/registerSuccess?email=${creds.email}`);
         } catch (error) {
             throw error;
         }
@@ -82,13 +85,18 @@ export default class UserStore {
     };
 
     private startRefreshTokenTimer(user: User) {
-        const jwtToken = JSON.parse(atob(user.token.split(".")[1]));
+        const jwtToken = JSON.parse(atob(user.token.split(".")[1])) as {
+            exp: number;
+        };
         const expires = new Date(jwtToken.exp * 1000);
         const timeout = expires.getTime() - Date.now() - 60 * 1000;
         this.refreshTokenTimeout = setTimeout(this.refreshToken, timeout);
     }
 
     private stopRefreshTokenTimer() {
-        clearTimeout(this.refreshTokenTimeout);
+        if (this.refreshTokenTimeout) {
+            clearTimeout(this.refreshTokenTimeout);
+            this.refreshTokenTimeout = null;
+        }
     }
 }

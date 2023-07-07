@@ -1,7 +1,6 @@
 import { toast } from "react-toastify";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import {
-    CheckPayment,
     CheckPaymentData,
     CheckPaymentFormValues,
 } from "../models/checkPaymentStore";

@@ -13,7 +13,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { FormGroup, Link, PaletteMode } from "@mui/material";
 import MaterialUISwitch from "../../layout/SwitchDesign";
-import { ColorModeContext } from "../../../App";
+import { ColorModeContext } from "../../../AppRouter";
 import { useStore } from "../../stores/store";
 import { observer } from "mobx-react-lite";
 
@@ -21,6 +21,7 @@ const Navbar = () => {
     const { userStore } = useStore();
 
     const [colorModeOn, setColorModeOn] = React.useState(false);
+    const [mode, setMode] = React.useState<PaletteMode>("light");
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
@@ -41,18 +42,16 @@ const Navbar = () => {
     };
 
     const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
+        if (!userStore.isLoggedIn) {
+            setAnchorElUser(null);
+        }
     };
 
-    // const toggleColorMode = () => {
-    //     setColorModeOn((prevMode: boolean) => !prevMode);
-    //     setMode((prevMode: string) =>
-    //         prevMode === "light" ? "dark" : "light"
-    //     );
-    // };
-
     const toggleColorMode = () => {
-        "dark";
+        setColorModeOn((prevMode: boolean) => !prevMode);
+        setMode((prevMode: string) =>
+            prevMode === "light" ? "dark" : "light"
+        );
     };
 
     return (
@@ -165,10 +164,10 @@ const Navbar = () => {
                         sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
                     />
                     <Typography
-                        variant="h5"
+                        variant="h6"
                         noWrap
                         component="a"
-                        href=""
+                        href="/"
                         sx={{
                             mr: 2,
                             display: { xs: "flex", md: "none" },
@@ -249,21 +248,23 @@ const Navbar = () => {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            <MenuItem>
-                                <Typography
-                                    margin="auto"
-                                    textAlign="center"
-                                    justifyContent="center"
-                                    display="flex"
-                                    sx={{ color: "inherit" }}
-                                >
-                                    <Link
-                                        href={`/profiles/${userStore.user?.username}`}
+                            {userStore.isLoggedIn ? (
+                                <MenuItem>
+                                    <Typography
+                                        margin="auto"
+                                        textAlign="center"
+                                        justifyContent="center"
+                                        display="flex"
+                                        sx={{ color: "inherit" }}
                                     >
-                                        Profile
-                                    </Link>
-                                </Typography>
-                            </MenuItem>
+                                        <Link
+                                            href={`/profiles/${userStore.user?.username}`}
+                                        >
+                                            Profile
+                                        </Link>
+                                    </Typography>
+                                </MenuItem>
+                            ) : null}
                             {userStore.isLoggedIn ? (
                                 <MenuItem>
                                     <Typography

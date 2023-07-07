@@ -13,25 +13,7 @@ interface Props extends RouteProps {
         | React.ComponentType<any>;
 }
 
-const GuardedRoutesAuthorization = ({
-    component: Component,
-    ...rest
-}: Props) => {
-    const {
-        userStore: { isLoggedIn },
-    } = useStore();
-
-    return (
-        <Route
-            {...rest}
-            render={(props) =>
-                isLoggedIn ? <Redirect to="/" /> : <Component {...props} />
-            }
-        />
-    );
-};
-
-const GuardedRoutesAuthUserOptions = ({
+export const GuardedRoutesAuthorization = ({
     component: Component,
     ...rest
 }: Props) => {
@@ -49,9 +31,20 @@ const GuardedRoutesAuthUserOptions = ({
     );
 };
 
-const guardRoutes = {
-    GuardedRoutesAuthorization,
-    GuardedRoutesAuthUserOptions,
-};
+export const GuardedRoutesAuthUserOptions = ({
+    component: Component,
+    ...rest
+}: Props) => {
+    const {
+        userStore: { isLoggedIn },
+    } = useStore();
 
-export default guardRoutes;
+    return (
+        <Route
+            {...rest}
+            render={(props) =>
+                isLoggedIn ? <Redirect to="/" /> : <Component {...props} />
+            }
+        />
+    );
+};

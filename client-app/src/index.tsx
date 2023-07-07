@@ -9,7 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./app/layout/index.css";
 import "react-bootstrap/dist/react-bootstrap.min";
 
-import App from "./App";
+import AppRouter from "./AppRouter";
 import ScrollToTop from "./app/layout/ScrollToTop";
 
 import { createBrowserHistory } from "history";
@@ -27,7 +27,7 @@ root.render(
         <Router history={history}>
             <CssBaseline />
             <ScrollToTop />
-            <App />
+            <AppRouter />
         </Router>
     </StoreContext.Provider>
 );

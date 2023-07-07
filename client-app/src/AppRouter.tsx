@@ -1,12 +1,11 @@
+import React, { Fragment, lazy, Suspense, useEffect } from "react";
 import {
     createTheme,
     PaletteMode,
     ThemeProvider,
     CssBaseline,
 } from "@mui/material";
-import React, { Fragment, lazy, Suspense, useEffect } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
-import guardRoutes from "./app/components/common/GuardRoutes";
 import NotFound from "./app/pages/NotFound/NotFound";
 import getDesignTokens from "./app/layout/customPalette";
 import LoadingComponent from "./app/components/Loading/Loading";
@@ -16,6 +15,10 @@ import { useStore } from "./app/stores/store";
 import RegisterSuccess from "./app/components/Confirm/RegisterSuccess";
 import ConfirmEmail from "./app/components/Confirm/ConfirmEmail";
 import ModalContainer from "./app/components/ModalContainer/ModalContainer";
+import {
+    GuardedRoutesAuthorization,
+    GuardedRoutesAuthUserOptions,
+} from "./app/components/common/GuardRoutes";
 
 const Homepage = lazy(() => import("./app/pages/Homepage/Homepage"));
 const Blog = lazy(() => import("./app/pages/Blog/Blog"));
@@ -33,12 +36,10 @@ export const ColorModeContext = React.createContext({
     toggleColorMode: () => {},
 });
 
-function App() {
+function AppRouter() {
     const location = useLocation();
     const { commonStore, userStore } = useStore();
     const [mode, setMode] = React.useState<PaletteMode>("light");
-    const { GuardedRoutesAuthUserOptions, GuardedRoutesAuthorization } =
-        guardRoutes;
 
     // persist the selected mode in the local storage
     const colorMode = React.useMemo(
@@ -53,8 +54,16 @@ function App() {
     );
 
     useEffect(() => {
-        userStore.getUser().finally(() => commonStore.setAppLoaded());
-    }, [userStore, commonStore]);
+        userStore.getUser();
+    }, [userStore]);
+
+    useEffect(() => {
+        commonStore.setAppLoaded();
+    }, [commonStore]);
+
+    useEffect(() => {
+        document.body.setAttribute("data-theme", mode);
+    }, [mode]);
 
     const savedMode = localStorage.getItem("colorMode");
     const initialMode = savedMode ? (savedMode as PaletteMode) : "light";
@@ -72,43 +81,46 @@ function App() {
                     <ThemeProvider theme={theme}>
                         <CssBaseline />
                         <Suspense fallback={<LoadingComponent />}>
-                            <Route exact path="/" component={Homepage} />
                             <Route
-                                path={"/(.+)"}
                                 render={() => (
                                     <Switch>
+                                        <Route
+                                            exact
+                                            path="/"
+                                            component={Homepage}
+                                        />
                                         <Route path="/blog" component={Blog} />
                                         <Route
                                             path="/pricing"
                                             component={Pricing}
                                         />
-                                        //GuardedRoutesAuthUserOptions
-                                        <Route
-                                            exact
+                                        <GuardedRoutesAuthorization
                                             path="/dashboard"
                                             component={Dashboard}
                                         />
-                                        <GuardedRoutesAuthUserOptions
+                                        <GuardedRoutesAuthorization
                                             path="/profile"
                                             component={Profile}
                                         />
-                                        <GuardedRoutesAuthUserOptions
+                                        <GuardedRoutesAuthorization
                                             key={location.key}
                                             path={"/create-payment"}
                                             component={CreateCheckPage}
                                         />
-                                        <GuardedRoutesAuthorization
+
+                                        <GuardedRoutesAuthUserOptions
                                             path="/login"
                                             component={SignIn}
                                         />
-                                        <GuardedRoutesAuthorization
+                                        <GuardedRoutesAuthUserOptions
                                             path="/register"
                                             component={SignUp}
                                         />
-                                        <GuardedRoutesAuthorization
+                                        <GuardedRoutesAuthUserOptions
                                             path="/reset-password"
                                             component={ForgotPassword}
                                         />
+
                                         <Route
                                             path="/account/registerSuccess"
                                             component={RegisterSuccess}
@@ -129,4 +141,4 @@ function App() {
     );
 }
 
-export default observer(App);
+export default observer(AppRouter);
