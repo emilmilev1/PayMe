@@ -8,8 +8,8 @@ import { Button } from "@mui/material";
 import { useStore } from "../../stores/store";
 import { observer } from "mobx-react-lite";
 import { Fragment, useEffect } from "react";
-import Pagination from "./Pagination";
 import OrdersListItems from "./OrdersListItems";
+import Pagination from "./Pagination/Pagination";
 
 const Orders = () => {
     const { checkPaymentStore } = useStore();

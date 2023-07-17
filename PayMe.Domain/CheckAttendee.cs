@@ -9,10 +9,10 @@ namespace PayMe.Domain
     {
         public Guid CheckPaymentId { get; set; }
 
-        public string AppUserId { get; set; }
+        public string? AppUserId { get; set; }
 
-        public AppUser AppUser { get; set; }
+        public AppUser? AppUser { get; set; }
 
-        public CheckPayment CheckPayment { get; set; }
+        public CheckPayment? CheckPayment { get; set; }
     }
 }

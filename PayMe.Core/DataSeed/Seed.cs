@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using PayMe.Domain;
 
 namespace PayMe.Core.DataSeed
@@ -70,7 +69,7 @@ namespace PayMe.Core.DataSeed
                         {
                             new CheckAttendee
                             {
-                                AppUser = users[3]
+                                AppUser = users[3],
                             },
                             new CheckAttendee
                             {

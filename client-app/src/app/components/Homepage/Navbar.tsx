@@ -42,9 +42,7 @@ const Navbar = () => {
     };
 
     const handleCloseUserMenu = () => {
-        if (!userStore.isLoggedIn) {
-            setAnchorElUser(null);
-        }
+        setAnchorElUser(null);
     };
 
     const toggleColorMode = () => {
@@ -52,6 +50,11 @@ const Navbar = () => {
         setMode((prevMode: string) =>
             prevMode === "light" ? "dark" : "light"
         );
+    };
+
+    const handleExitClick = () => {
+        userStore.logout();
+        handleCloseUserMenu();
     };
 
     return (
@@ -184,7 +187,11 @@ const Navbar = () => {
                     <Box
                         sx={{
                             flexGrow: 1,
-                            display: { xs: "none", md: "flex" },
+                            display: {
+                                xs: "none",
+                                md: "flex",
+                            },
+                            justifyContent: "center",
                         }}
                     >
                         <Button
@@ -248,49 +255,67 @@ const Navbar = () => {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {userStore.isLoggedIn ? (
-                                <MenuItem>
-                                    <Typography
-                                        margin="auto"
-                                        textAlign="center"
-                                        justifyContent="center"
-                                        display="flex"
-                                        sx={{ color: "inherit" }}
-                                    >
-                                        <Link
-                                            href={`/profiles/${userStore.user?.username}`}
+                            {!userStore.isLoggedIn && (
+                                <Button href="/login">Login</Button>
+                            )}
+                            {userStore.isLoggedIn && (
+                                <React.Fragment>
+                                    <MenuItem>
+                                        <Typography
+                                            margin="auto"
+                                            textAlign="center"
+                                            justifyContent="center"
+                                            display="flex"
+                                            sx={{ color: "inherit" }}
                                         >
-                                            Profile
-                                        </Link>
-                                    </Typography>
-                                </MenuItem>
-                            ) : null}
-                            {userStore.isLoggedIn ? (
-                                <MenuItem>
-                                    <Typography
-                                        margin="auto"
-                                        textAlign="center"
-                                        justifyContent="center"
-                                        display="flex"
-                                        sx={{ color: "inherit" }}
-                                    >
-                                        <Link onClick={userStore.logout}>
-                                            Logout
-                                        </Link>
-                                    </Typography>
-                                </MenuItem>
-                            ) : (
-                                <MenuItem>
-                                    <Typography
-                                        margin="auto"
-                                        textAlign="center"
-                                        justifyContent="center"
-                                        display="flex"
-                                        sx={{ color: "inherit" }}
-                                    >
-                                        <Link href="/login">Login</Link>
-                                    </Typography>
-                                </MenuItem>
+                                            <Link
+                                                href={`/profiles/${userStore.user?.username}`}
+                                            >
+                                                Profile
+                                            </Link>
+                                        </Typography>
+                                    </MenuItem>
+                                    <MenuItem>
+                                        <Typography
+                                            margin="auto"
+                                            textAlign="center"
+                                            justifyContent="center"
+                                            display="flex"
+                                            sx={{ color: "inherit" }}
+                                        >
+                                            <Link href="/">
+                                                My Transactions
+                                            </Link>
+                                        </Typography>
+                                    </MenuItem>
+                                    <MenuItem>
+                                        <Typography
+                                            margin="auto"
+                                            textAlign="center"
+                                            justifyContent="center"
+                                            display="flex"
+                                            sx={{ color: "inherit" }}
+                                        >
+                                            <Link href="/">Recycle Bin</Link>
+                                        </Typography>
+                                    </MenuItem>
+                                    <MenuItem>
+                                        <Typography
+                                            margin="auto"
+                                            textAlign="center"
+                                            justifyContent="center"
+                                            display="flex"
+                                            sx={{
+                                                color: "black",
+                                                fontWeight: 600,
+                                            }}
+                                        >
+                                            <Button onClick={handleExitClick}>
+                                                Exit
+                                            </Button>
+                                        </Typography>
+                                    </MenuItem>
+                                </React.Fragment>
                             )}
                         </Menu>
                     </Box>

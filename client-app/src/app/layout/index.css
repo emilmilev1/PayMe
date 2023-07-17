@@ -16,9 +16,10 @@ li {
 }
 
 .app {
+    align-items: center;
+    max-width: 100%;
     margin: 0;
     padding: 0;
-    max-height: 100%;
     background-color: rgb(170, 210, 250);
 }
 

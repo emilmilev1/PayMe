@@ -1,12 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
-using System.Text.Json.Serialization;
 using PayMe.Domain;
 
 namespace PayMe.Application.CheckPayments
 {
     public class CheckPaymentDto
     {
+        public CheckPaymentDto(ICollection<CheckAttendee> checkAttendees)
+        {
+            CheckAttendees = checkAttendees;
+        }
+
         [Key]
         [Required]
         public Guid Id { get; set; }

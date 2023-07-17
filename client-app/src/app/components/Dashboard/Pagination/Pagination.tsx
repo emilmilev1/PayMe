@@ -1,8 +1,8 @@
 import { observer } from "mobx-react-lite";
 import styles from "./Pagination.module.css";
-import { useStore } from "../../stores/store";
-import { PagingParams } from "../../models/pagination";
 import "@fortawesome/fontawesome-free/css/all.css";
+import { useStore } from "../../../stores/store";
+import { PagingParams } from "../../../models/pagination";
 
 interface PaginationData {
     currentPage: number;

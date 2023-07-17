@@ -165,11 +165,33 @@ export default class CheckPaymentStore {
         }
     };
 
+    updateEditedPayment = (editedPayment: CheckPaymentFormValues) => {
+        if (editedPayment.id) {
+            const updatedPayment: CheckPaymentData = {
+                id: editedPayment.id,
+                date: editedPayment.date!,
+                title: editedPayment.title,
+                firstName: editedPayment.firstName,
+                lastName: editedPayment.lastName,
+                address: editedPayment.address,
+                country: editedPayment.country,
+                zipCode: editedPayment.zipCode,
+                total: editedPayment.total,
+                isHost: editedPayment.isHost!,
+                hostUsername: editedPayment.hostUsername,
+                checkAttendees: editedPayment.checkAttendees,
+            };
+
+            this.checkPaymentRegistry.set(editedPayment.id, updatedPayment);
+        }
+    };
+
     updateCheckPayment = async (checkPayment: CheckPaymentFormValues) => {
         this.loading = true;
 
         try {
             await api.CheckPayments.update(checkPayment);
+            this.updateEditedPayment(checkPayment);
 
             runInAction(() => {
                 if (checkPayment.id) {
