@@ -11,50 +11,33 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { FormGroup, Link, PaletteMode } from "@mui/material";
-import MaterialUISwitch from "../../layout/SwitchDesign";
-import { ColorModeContext } from "../../../AppRouter";
+import { Link } from "@mui/material";
 import { useStore } from "../../stores/store";
 import { observer } from "mobx-react-lite";
+import { useHistory } from "react-router-dom";
 
 const Navbar = () => {
     const { userStore } = useStore();
-
-    const [colorModeOn, setColorModeOn] = React.useState(false);
-    const [mode, setMode] = React.useState<PaletteMode>("light");
+    const history = useHistory();
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-        null
-    );
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
         null
     );
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElUser(event.currentTarget);
-    };
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
 
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
-
-    const toggleColorMode = () => {
-        setColorModeOn((prevMode: boolean) => !prevMode);
-        setMode((prevMode: string) =>
-            prevMode === "light" ? "dark" : "light"
-        );
-    };
-
-    const handleExitClick = () => {
-        userStore.logout();
-        handleCloseUserMenu();
+    const handleProfileClick = () => {
+        if (userStore.isLoggedIn) {
+            history.push(`/profiles/${userStore.user?.username}`);
+        } else {
+            history.push("/login");
+        }
     };
 
     return (
@@ -117,50 +100,58 @@ const Navbar = () => {
                                 display: { xs: "block", md: "none" },
                             }}
                         >
-                            <MenuItem>
-                                <Typography
-                                    margin="auto"
-                                    textAlign="center"
-                                    justifyContent="center"
-                                    display="flex"
-                                    sx={{ color: "inherit" }}
-                                >
-                                    <Link href="/dashboard">Dashboard</Link>
-                                </Typography>
-                            </MenuItem>
-                            <MenuItem>
-                                <Typography
-                                    margin="auto"
-                                    textAlign="center"
-                                    justifyContent="center"
-                                    display="flex"
-                                    sx={{ color: "inherit" }}
-                                >
-                                    <Link href="/pricing">Pricing</Link>
-                                </Typography>
-                            </MenuItem>
-                            <MenuItem>
-                                <Typography
-                                    margin="auto"
-                                    textAlign="center"
-                                    justifyContent="center"
-                                    display="flex"
-                                    sx={{ color: "inherit" }}
-                                >
-                                    <Link href="/blog">Blog</Link>
-                                </Typography>
-                            </MenuItem>
-                            <MenuItem>
-                                <Typography
-                                    margin="auto"
-                                    textAlign="center"
-                                    justifyContent="center"
-                                    display="flex"
-                                    sx={{ color: "inherit" }}
-                                >
-                                    <Link href="/about-us">About Us</Link>
-                                </Typography>
-                            </MenuItem>
+                            {[
+                                <React.Fragment>
+                                    <MenuItem key="dashboard">
+                                        <Typography
+                                            margin="auto"
+                                            textAlign="center"
+                                            justifyContent="center"
+                                            display="flex"
+                                            sx={{ color: "inherit" }}
+                                        >
+                                            <Link href="/dashboard">
+                                                Dashboard
+                                            </Link>
+                                        </Typography>
+                                    </MenuItem>
+                                    <MenuItem key="pricing">
+                                        <Typography
+                                            margin="auto"
+                                            textAlign="center"
+                                            justifyContent="center"
+                                            display="flex"
+                                            sx={{ color: "inherit" }}
+                                        >
+                                            <Link href="/pricing">Pricing</Link>
+                                        </Typography>
+                                    </MenuItem>
+                                    <MenuItem key="blog">
+                                        <Typography
+                                            margin="auto"
+                                            textAlign="center"
+                                            justifyContent="center"
+                                            display="flex"
+                                            sx={{ color: "inherit" }}
+                                        >
+                                            <Link href="/blog">Blog</Link>
+                                        </Typography>
+                                    </MenuItem>
+                                    <MenuItem key="about">
+                                        <Typography
+                                            margin="auto"
+                                            textAlign="center"
+                                            justifyContent="center"
+                                            display="flex"
+                                            sx={{ color: "inherit" }}
+                                        >
+                                            <Link href="/about-us">
+                                                About Us
+                                            </Link>
+                                        </Typography>
+                                    </MenuItem>
+                                </React.Fragment>,
+                            ]}
                         </Menu>
                     </Box>
                     <AdbIcon
@@ -223,101 +214,14 @@ const Navbar = () => {
                             About Us
                         </Button>
                     </Box>
-                    <Box sx={{ display: "flex" }}>
-                        <FormGroup>
-                            <MaterialUISwitch
-                                sx={{ m: 1 }}
-                                checked={colorModeOn}
-                                onClick={toggleColorMode}
-                            />
-                        </FormGroup>
-                    </Box>
+
                     <Box sx={{ flexGrow: 0 }}>
-                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                        <IconButton onClick={handleProfileClick} sx={{ p: 0 }}>
                             <Avatar
                                 alt="User"
                                 src={userStore.user?.image || "/user.png"}
                             />
                         </IconButton>
-                        <Menu
-                            sx={{ mt: "45px" }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {!userStore.isLoggedIn && (
-                                <Button href="/login">Login</Button>
-                            )}
-                            {userStore.isLoggedIn && (
-                                <React.Fragment>
-                                    <MenuItem>
-                                        <Typography
-                                            margin="auto"
-                                            textAlign="center"
-                                            justifyContent="center"
-                                            display="flex"
-                                            sx={{ color: "inherit" }}
-                                        >
-                                            <Link
-                                                href={`/profiles/${userStore.user?.username}`}
-                                            >
-                                                Profile
-                                            </Link>
-                                        </Typography>
-                                    </MenuItem>
-                                    <MenuItem>
-                                        <Typography
-                                            margin="auto"
-                                            textAlign="center"
-                                            justifyContent="center"
-                                            display="flex"
-                                            sx={{ color: "inherit" }}
-                                        >
-                                            <Link href="/">
-                                                My Transactions
-                                            </Link>
-                                        </Typography>
-                                    </MenuItem>
-                                    <MenuItem>
-                                        <Typography
-                                            margin="auto"
-                                            textAlign="center"
-                                            justifyContent="center"
-                                            display="flex"
-                                            sx={{ color: "inherit" }}
-                                        >
-                                            <Link href="/">Recycle Bin</Link>
-                                        </Typography>
-                                    </MenuItem>
-                                    <MenuItem>
-                                        <Typography
-                                            margin="auto"
-                                            textAlign="center"
-                                            justifyContent="center"
-                                            display="flex"
-                                            sx={{
-                                                color: "black",
-                                                fontWeight: 600,
-                                            }}
-                                        >
-                                            <Button onClick={handleExitClick}>
-                                                Exit
-                                            </Button>
-                                        </Typography>
-                                    </MenuItem>
-                                </React.Fragment>
-                            )}
-                        </Menu>
                     </Box>
                 </Toolbar>
             </Container>

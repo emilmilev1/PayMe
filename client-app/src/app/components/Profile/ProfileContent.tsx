@@ -15,7 +15,7 @@ export const ProfileContent = () => {
     return (
         <Tab
             menu={{ fluid: true, vertical: true }}
-            menuPosition="right"
+            menuPosition="left"
             panes={panes}
         />
     );

@@ -39,19 +39,6 @@ export const ColorModeContext = React.createContext({
 function AppRouter() {
     const location = useLocation();
     const { commonStore, userStore } = useStore();
-    const [mode, setMode] = React.useState<PaletteMode>("light");
-
-    // persist the selected mode in the local storage
-    const colorMode = React.useMemo(
-        () => ({
-            toggleColorMode: () => {
-                const updatedMode = mode === "light" ? "dark" : "light";
-                localStorage.setItem("colorMode", updatedMode);
-                setMode(updatedMode);
-            },
-        }),
-        [mode]
-    );
 
     useEffect(() => {
         userStore.getUser();
@@ -61,81 +48,62 @@ function AppRouter() {
         commonStore.setAppLoaded();
     }, [commonStore]);
 
-    useEffect(() => {
-        document.body.setAttribute("data-theme", mode);
-    }, [mode]);
-
-    const savedMode = localStorage.getItem("colorMode");
-    const initialMode = savedMode ? (savedMode as PaletteMode) : "light";
-    const theme = React.useMemo(
-        () => createTheme(getDesignTokens(initialMode)),
-        [initialMode]
-    );
-
     return (
         <div className="app">
             <Fragment>
                 <ToastContainer position="bottom-right" hideProgressBar />
                 <ModalContainer />
-                <ColorModeContext.Provider value={colorMode}>
-                    <ThemeProvider theme={theme}>
-                        <CssBaseline />
-                        <Suspense fallback={<LoadingComponent />}>
-                            <Route
-                                render={() => (
-                                    <Switch>
-                                        <Route
-                                            exact
-                                            path="/"
-                                            component={Homepage}
-                                        />
-                                        <Route path="/blog" component={Blog} />
-                                        <Route
-                                            path="/pricing"
-                                            component={Pricing}
-                                        />
-                                        <GuardedRoutesAuthorization
-                                            path="/dashboard"
-                                            component={Dashboard}
-                                        />
-                                        <GuardedRoutesAuthorization
-                                            path="/profile"
-                                            component={Profile}
-                                        />
-                                        <GuardedRoutesAuthorization
-                                            key={location.key}
-                                            path={"/create-payment"}
-                                            component={CreateCheckPage}
-                                        />
+                <CssBaseline />
+                <Suspense fallback={<LoadingComponent />}>
+                    <Route
+                        render={() => (
+                            <Switch>
+                                <Route exact path="/" component={Homepage} />
+                                <Route path="/blog" component={Blog} />
+                                <Route path="/pricing" component={Pricing} />
+                                <GuardedRoutesAuthorization
+                                    path="/dashboard"
+                                    component={Dashboard}
+                                />
+                                <GuardedRoutesAuthorization
+                                    path="/profile"
+                                    component={Profile}
+                                />
+                                <GuardedRoutesAuthorization
+                                    key={location.key}
+                                    path={"/create-payment"}
+                                    component={CreateCheckPage}
+                                />
+                                <GuardedRoutesAuthorization
+                                    path="/profiles/:username"
+                                    component={Profile}
+                                />
+                                <GuardedRoutesAuthUserOptions
+                                    path="/login"
+                                    component={SignIn}
+                                />
+                                <GuardedRoutesAuthUserOptions
+                                    path="/register"
+                                    component={SignUp}
+                                />
+                                <GuardedRoutesAuthUserOptions
+                                    path="/reset-password"
+                                    component={ForgotPassword}
+                                />
 
-                                        <GuardedRoutesAuthUserOptions
-                                            path="/login"
-                                            component={SignIn}
-                                        />
-                                        <GuardedRoutesAuthUserOptions
-                                            path="/register"
-                                            component={SignUp}
-                                        />
-                                        <GuardedRoutesAuthUserOptions
-                                            path="/reset-password"
-                                            component={ForgotPassword}
-                                        />
-
-                                        <Route
-                                            path="/account/registerSuccess"
-                                            component={RegisterSuccess}
-                                        />
-                                        <Route
-                                            path="/account/verifyEmail"
-                                            component={ConfirmEmail}
-                                        />
-                                        <Route path="*" component={NotFound} />
-                                    </Switch>
-                                )}
-                            />
-                        </Suspense>
-                    </ThemeProvider>
-                </ColorModeContext.Provider>
+                                <Route
+                                    path="/account/registerSuccess"
+                                    component={RegisterSuccess}
+                                />
+                                <Route
+                                    path="/account/verifyEmail"
+                                    component={ConfirmEmail}
+                                />
+                                <Route path="*" component={NotFound} />
+                            </Switch>
+                        )}
+                    />
+                </Suspense>
             </Fragment>
         </div>
     );
