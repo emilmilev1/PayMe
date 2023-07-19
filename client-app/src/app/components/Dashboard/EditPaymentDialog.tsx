@@ -56,7 +56,7 @@ const EditPaymentDialog: React.FC<EditPaymentDialogProps> = ({
 
     const handleSaveChanges = async () => {
         try {
-            const currentTime = format(new Date(), "HH:mm");
+            const currentTime = new Date();
             const currentDate = new Date();
 
             setEditedPayment((prevPayment: CheckPaymentFormValues) => ({
@@ -67,8 +67,6 @@ const EditPaymentDialog: React.FC<EditPaymentDialogProps> = ({
 
             await checkPaymentStore.updateCheckPayment(editedPayment);
             checkPaymentStore.updateEditedPayment(editedPayment);
-
-            console.log("Edited Payment:", editedPayment);
 
             toast.success("Payment edited successfully");
             onClose();

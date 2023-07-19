@@ -44,9 +44,10 @@ export default function CreateCheck() {
 
     useEffect(() => {
         if (id) {
-            loadCheckPayment(id).then((checkPayment) =>
-                setCheckPayment(new CheckPaymentFormValues(checkPayment))
-            );
+            loadCheckPayment(id).then((checkPayment) => {
+                setCheckPayment(new CheckPaymentFormValues(checkPayment));
+                setSelectedCountry(checkPayment!.country);
+            });
         }
     }, [id, loadCheckPayment]);
 
@@ -64,22 +65,24 @@ export default function CreateCheck() {
 
         if (isFormValid) {
             if (!checkPayment.id) {
-                const currentTime = new Date();
-
                 const newCheckPayment = {
                     ...checkPayment,
                     id: uuid(),
                     country: selectedCountry,
-                    date: currentTime,
+                    date: new Date(),
                 };
 
-                createCheckPayment(newCheckPayment).then(() =>
-                    history.push(`/dashboard`)
-                );
+                createCheckPayment(newCheckPayment).then(() => {
+                    toast.success("Payment created successfully!");
+                    history.push(`/dashboard`);
+                });
             } else {
-                updateCheckPayment(checkPayment).then(() =>
-                    history.push(`/CheckPayments/${checkPayment.id}`)
-                );
+                console.log(checkPayment);
+
+                updateCheckPayment(checkPayment).then(() => {
+                    toast.success("Payment updated successfully!");
+                    history.push(`/dashboard`);
+                });
             }
         } else {
             toast.error("Please fill in all required fields.");
@@ -233,7 +236,7 @@ export default function CreateCheck() {
                                             onChange={(e) =>
                                                 setCheckPayment({
                                                     ...checkPayment,
-                                                    total: parseInt(
+                                                    total: parseFloat(
                                                         e.target.value
                                                     ),
                                                 })
