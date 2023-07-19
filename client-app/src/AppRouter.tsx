@@ -1,13 +1,7 @@
 import React, { Fragment, lazy, Suspense, useEffect } from "react";
-import {
-    createTheme,
-    PaletteMode,
-    ThemeProvider,
-    CssBaseline,
-} from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import { Route, Switch, useLocation } from "react-router-dom";
 import NotFound from "./app/pages/NotFound/NotFound";
-import getDesignTokens from "./app/layout/customPalette";
 import LoadingComponent from "./app/components/Loading/Loading";
 import { observer } from "mobx-react-lite";
 import { ToastContainer } from "react-toastify";
@@ -19,6 +13,7 @@ import {
     GuardedRoutesAuthorization,
     GuardedRoutesAuthUserOptions,
 } from "./app/components/common/GuardRoutes";
+import ScrollToTopButton from "./app/layout/ScrollToTopButton";
 
 const Homepage = lazy(() => import("./app/pages/Homepage/Homepage"));
 const Blog = lazy(() => import("./app/pages/Blog/Blog"));
@@ -54,6 +49,7 @@ function AppRouter() {
                 <ToastContainer position="bottom-right" hideProgressBar />
                 <ModalContainer />
                 <CssBaseline />
+                <ScrollToTopButton />
                 <Suspense fallback={<LoadingComponent />}>
                     <Route
                         render={() => (
