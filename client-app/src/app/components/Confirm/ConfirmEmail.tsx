@@ -45,7 +45,7 @@ const ConfirmEmail = () => {
         api.Account.resendEmailConfirm(email)
             .then(() => {
                 toast.success(
-                    "Verification email resent - please check your email"
+                    "Verification email resent - please check your email!"
                 );
             })
             .catch((error) => console.log(error));
