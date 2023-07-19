@@ -17,7 +17,6 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { mainListItems } from "./ListItems";
 import Deposits from "./Deposits";
 import Orders from "./Orders";
-import Footer from "../Footer/Footer";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores/store";
 import { useEffect } from "react";
@@ -94,7 +93,7 @@ const Dashboard = () => {
                 <AppBar position="absolute" open={open}>
                     <Toolbar
                         sx={{
-                            pr: "20px", // keep right padding when drawer closed
+                            pr: "20px",
                         }}
                     >
                         <IconButton
@@ -116,7 +115,7 @@ const Dashboard = () => {
                             noWrap
                             sx={{
                                 flexGrow: 1,
-                                fontSize: "1.2rem", // Adjust the font size as desired
+                                fontSize: "1.2rem",
                             }}
                         >
                             Dashboard
@@ -183,7 +182,6 @@ const Dashboard = () => {
                                 </Paper>
                             </Grid>
                         </Grid>
-                        <Footer />
                     </Container>
                 </Box>
             </Box>

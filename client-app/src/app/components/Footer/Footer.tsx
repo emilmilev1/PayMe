@@ -79,7 +79,7 @@ const Footer: React.FC = () => {
                         />
                         <Button
                             variant="contained"
-                            color="secondary" // Use a more prominent color
+                            color="secondary"
                             className="shadow-none position-absolute top-0 end-0 mt-1 me-2"
                         >
                             <i className="fa fa-paper-plane fs-4"></i>

@@ -68,7 +68,8 @@ const EditPaymentDialog: React.FC<EditPaymentDialogProps> = ({
             await checkPaymentStore.updateCheckPayment(editedPayment);
             checkPaymentStore.updateEditedPayment(editedPayment);
 
-            //console.log("Edited Payment:", editedPayment);
+            console.log("Edited Payment:", editedPayment);
+
             toast.success("Payment edited successfully");
             onClose();
         } catch (error) {
