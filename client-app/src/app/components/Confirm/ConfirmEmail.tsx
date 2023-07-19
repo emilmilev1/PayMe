@@ -4,7 +4,6 @@ import { Button, Header, Icon, Segment } from "semantic-ui-react";
 import useQuery from "../../utils/hooks";
 import { useStore } from "../../stores/store";
 import api from "../../api/api";
-import Dashboard from "../Dashboard/Dashboard";
 import { useHistory } from "react-router";
 
 const ConfirmEmail = () => {
