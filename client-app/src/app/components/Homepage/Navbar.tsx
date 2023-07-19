@@ -9,9 +9,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { Link } from "@mui/material";
 import { useStore } from "../../stores/store";
 import { observer } from "mobx-react-lite";
 import { useHistory } from "react-router-dom";
@@ -19,18 +17,6 @@ import { useHistory } from "react-router-dom";
 const Navbar = () => {
     const { userStore } = useStore();
     const history = useHistory();
-
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-        null
-    );
-
-    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElNav(event.currentTarget);
-    };
-
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
 
     const handleProfileClick = () => {
         if (userStore.isLoggedIn) {
@@ -44,132 +30,21 @@ const Navbar = () => {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon
-                        sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-                    />
                     <Typography
-                        variant="h6"
+                        variant="h5"
                         noWrap
                         component="a"
                         href="/"
+                        color="white"
                         sx={{
                             mr: 2,
                             display: { xs: "none", md: "flex" },
                             fontFamily: "monospace",
-                            fontWeight: 700,
+                            fontWeight: "bold",
                             letterSpacing: ".3rem",
-                            color: "inherit",
-                            textDecoration: "none",
-                        }}
-                    >
-                        PayMe
-                    </Typography>
-
-                    <Box
-                        sx={{
-                            flexGrow: 1,
-                            display: { xs: "flex", md: "none" },
-                        }}
-                    >
-                        <IconButton
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleOpenNavMenu}
-                            color="inherit"
-                        >
-                            <MenuIcon />
-                        </IconButton>
-
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorElNav}
-                            anchorOrigin={{
-                                vertical: "bottom",
-                                horizontal: "left",
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: "top",
-                                horizontal: "left",
-                            }}
-                            open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
-                            sx={{
-                                display: { xs: "block", md: "none" },
-                            }}
-                        >
-                            {[
-                                <React.Fragment>
-                                    <MenuItem key="dashboard">
-                                        <Typography
-                                            margin="auto"
-                                            textAlign="center"
-                                            justifyContent="center"
-                                            display="flex"
-                                            sx={{ color: "inherit" }}
-                                        >
-                                            <Link href="/dashboard">
-                                                Dashboard
-                                            </Link>
-                                        </Typography>
-                                    </MenuItem>
-                                    <MenuItem key="pricing">
-                                        <Typography
-                                            margin="auto"
-                                            textAlign="center"
-                                            justifyContent="center"
-                                            display="flex"
-                                            sx={{ color: "inherit" }}
-                                        >
-                                            <Link href="/pricing">Pricing</Link>
-                                        </Typography>
-                                    </MenuItem>
-                                    <MenuItem key="blog">
-                                        <Typography
-                                            margin="auto"
-                                            textAlign="center"
-                                            justifyContent="center"
-                                            display="flex"
-                                            sx={{ color: "inherit" }}
-                                        >
-                                            <Link href="/blog">Blog</Link>
-                                        </Typography>
-                                    </MenuItem>
-                                    <MenuItem key="about">
-                                        <Typography
-                                            margin="auto"
-                                            textAlign="center"
-                                            justifyContent="center"
-                                            display="flex"
-                                            sx={{ color: "inherit" }}
-                                        >
-                                            <Link href="/about-us">
-                                                About Us
-                                            </Link>
-                                        </Typography>
-                                    </MenuItem>
-                                </React.Fragment>,
-                            ]}
-                        </Menu>
-                    </Box>
-                    <AdbIcon
-                        sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-                    />
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        href="/"
-                        sx={{
-                            mr: 2,
-                            display: { xs: "flex", md: "none" },
-                            flexGrow: 1,
-                            fontFamily: "monospace",
-                            fontWeight: 700,
-                            letterSpacing: ".3rem",
-                            color: "inherit",
+                            "&:hover": {
+                                color: "lawngreen",
+                            },
                             textDecoration: "none",
                         }}
                     >
@@ -186,29 +61,57 @@ const Navbar = () => {
                         }}
                     >
                         <Button
-                            onClick={handleCloseNavMenu}
-                            sx={{ my: 2, color: "white", display: "block" }}
+                            sx={{
+                                m: 2,
+                                color: "white",
+                                display: "block",
+                                "&:hover": {
+                                    color: "white",
+                                    backgroundColor: "rgba(255, 255, 255, 0.2)",
+                                },
+                            }}
                             href="/dashboard"
                         >
                             Dashboard
                         </Button>
                         <Button
-                            onClick={handleCloseNavMenu}
-                            sx={{ my: 2, color: "white", display: "block" }}
+                            sx={{
+                                m: 2,
+                                color: "white",
+                                display: "block",
+                                "&:hover": {
+                                    color: "white",
+                                    backgroundColor: "rgba(255, 255, 255, 0.2)",
+                                },
+                            }}
                             href="/pricing"
                         >
                             Pricing
                         </Button>
                         <Button
-                            onClick={handleCloseNavMenu}
-                            sx={{ my: 2, color: "white", display: "block" }}
+                            sx={{
+                                m: 2,
+                                color: "white",
+                                display: "block",
+                                "&:hover": {
+                                    color: "white",
+                                    backgroundColor: "rgba(255, 255, 255, 0.2)",
+                                },
+                            }}
                             href="/blog"
                         >
                             Blog
                         </Button>
                         <Button
-                            onClick={handleCloseNavMenu}
-                            sx={{ my: 2, color: "white", display: "block" }}
+                            sx={{
+                                m: 2,
+                                color: "white",
+                                display: "block",
+                                "&:hover": {
+                                    color: "white",
+                                    backgroundColor: "rgba(255, 255, 255, 0.2)",
+                                },
+                            }}
                             href="/about-us"
                         >
                             About Us
