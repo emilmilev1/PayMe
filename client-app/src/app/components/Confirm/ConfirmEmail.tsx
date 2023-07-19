@@ -5,43 +5,20 @@ import useQuery from "../../utils/hooks";
 import { useStore } from "../../stores/store";
 import api from "../../api/api";
 import Dashboard from "../Dashboard/Dashboard";
-import { CircularProgress } from "@mui/material";
-import { useHistory } from "react-router";
 
 const ConfirmEmail = () => {
-    const { userStore } = useStore();
-    const history = useHistory();
+    const { modalStore } = useStore();
 
     const email = useQuery().get("email") as string;
     const token = useQuery().get("token") as string;
-
-    console.log(userStore.user?.token);
 
     const Status = {
         Verifying: "Verifying",
         Failed: "Failed",
         Success: "Success",
-        Waiting: "Waiting",
     };
 
-    const [status, setStatus] = useState(Status.Waiting);
-    const [verificationResult, setVerificationResult] = useState(false);
-    const [verificationAttempted, setVerificationAttempted] = useState(false);
-
-    useEffect(() => {
-        if (!verificationAttempted && status === Status.Waiting) {
-            setVerificationAttempted(true);
-            api.Account.verifyEmail(token, email)
-                .then(() => {
-                    setVerificationResult(true);
-                    setStatus(Status.Success);
-                })
-                .catch(() => {
-                    setVerificationResult(false);
-                    setStatus(Status.Failed);
-                });
-        }
-    }, [status, token, email, verificationAttempted]);
+    const [status, setStatus] = useState(Status.Verifying);
 
     function handleConfirmEmailResend() {
         api.Account.resendEmailConfirm(email)
@@ -53,49 +30,61 @@ const ConfirmEmail = () => {
             .catch((error) => console.log(error));
     }
 
-    const handleManualLogin = () => {
-        history.push("/login");
-    };
+    useEffect(() => {
+        api.Account.verifyEmail(token, email)
+            .then(() => {
+                setStatus(Status.Success);
+            })
+            .catch(() => {
+                setStatus(Status.Failed);
+            });
+    }, [Status.Failed, Status.Success, token, email]);
+
+    function getBody() {
+        switch (status) {
+            case Status.Verifying:
+                return <p>Verifying...</p>;
+
+            case Status.Failed:
+                return (
+                    <div>
+                        <p color="red">Verification failed.</p>
+                        <p>
+                            You can try resending the verify link to your email
+                        </p>
+                        <Button
+                            primary
+                            onClick={handleConfirmEmailResend}
+                            size="big"
+                            content="Resend email"
+                        />
+                    </div>
+                );
+
+            case Status.Success:
+                return (
+                    <div>
+                        <p>Email has been verified</p>
+                        <p color="green">Successful Registration</p>
+                        <p>Go to dashboard</p>
+                        <Button
+                            primary
+                            onClick={() => modalStore.openModal(<Dashboard />)}
+                            size="medium"
+                            content="Dashboard"
+                        />
+                    </div>
+                );
+        }
+    }
 
     return (
         <Segment placeholder textAlign="center">
-            <Segment.Inline>
-                {verificationResult ? (
-                    <div>
-                        <Header icon color="green">
-                            <Icon name="check" />
-                            Successfully registered and verified!
-                        </Header>
-                        <Button
-                            primary
-                            onClick={handleManualLogin}
-                            content="Go to Login"
-                            size="huge"
-                        />
-                    </div>
-                ) : (
-                    <div>
-                        {status === Status.Verifying && <p>Verifying...</p>}
-                        {status === Status.Failed && (
-                            <div>
-                                <p color="red">Verification failed.</p>
-                                <p>
-                                    Please check your email (including junk
-                                    email) for the verification email
-                                </p>
-                                {userStore.user?.token == null ? (
-                                    <Button
-                                        primary
-                                        onClick={handleConfirmEmailResend}
-                                        size="big"
-                                        content="Resend email"
-                                    />
-                                ) : null}
-                            </div>
-                        )}
-                    </div>
-                )}
-            </Segment.Inline>
+            <Header icon>
+                <Icon name="envelope" />
+                Email verification
+            </Header>
+            <Segment.Inline>{getBody()}</Segment.Inline>
         </Segment>
     );
 };
