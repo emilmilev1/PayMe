@@ -19,16 +19,16 @@ export default class UserStore {
     login = async (creds: UserFormValues) => {
         try {
             const user = await api.Account.login(creds);
-            console.log(user);
 
             store.commonStore.setToken(user.token);
             this.startRefreshTokenTimer(user);
+
             runInAction(() => (this.user = user));
-            console.log("this user: " + this.user);
 
             store.modalStore.closeModal();
             history.push("/dashboard");
         } catch (error) {
+            console.error("Login failed:", error);
             throw error;
         }
     };
@@ -37,7 +37,9 @@ export default class UserStore {
         store.modalStore.closeModal();
         store.commonStore.setToken(null);
         window.localStorage.removeItem("jwt");
-        this.user = null;
+        runInAction(() => {
+            this.user = null;
+        });
         history.push("/");
     };
 

@@ -32,10 +32,6 @@ const CreateCheckPage = lazy(
     () => import("./app/pages/CreateCheck/CreateCheck")
 );
 
-export const ColorModeContext = React.createContext({
-    toggleColorMode: () => {},
-});
-
 function AppRouter() {
     const location = useLocation();
     const { commonStore, userStore } = useStore();
@@ -93,11 +89,11 @@ function AppRouter() {
 
                                 <Route
                                     path="/account/registerSuccess"
-                                    component={RegisterSuccess}
+                                    render={() => <RegisterSuccess />}
                                 />
                                 <Route
                                     path="/account/verifyEmail"
-                                    component={ConfirmEmail}
+                                    render={() => <ConfirmEmail />}
                                 />
                                 <Route path="*" component={NotFound} />
                             </Switch>
