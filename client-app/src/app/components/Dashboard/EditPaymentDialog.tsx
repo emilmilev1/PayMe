@@ -6,33 +6,23 @@ import {
     DialogActions,
     Button,
     TextField,
+    unstable_useId,
 } from "@mui/material";
 import { toast } from "react-toastify";
 import { observer } from "mobx-react-lite";
 import CheckPaymentStore from "../../stores/checkPaymentStore";
 import { Profile } from "../../models/profile";
 import { format } from "date-fns";
-import { CheckPaymentFormValues } from "../../models/checkPaymentStore";
-
-interface PaymentDataEdit {
-    id: string;
-    date: Date;
-    title: string;
-    firstName: string;
-    lastName: string;
-    address: string;
-    country: string;
-    zipCode: number;
-    total: number;
-    isHost: boolean;
-    hostUsername: string;
-    checkAttendees: Profile[];
-}
+import {
+    CheckPaymentData,
+    CheckPaymentFormValues,
+} from "../../models/checkPaymentStore";
+import { useHistory } from "react-router";
 
 interface EditPaymentDialogProps {
     open: boolean;
     onClose: () => void;
-    payment: PaymentDataEdit;
+    payment: CheckPaymentData;
     checkPaymentStore: CheckPaymentStore;
 }
 
@@ -44,7 +34,9 @@ const EditPaymentDialog: React.FC<EditPaymentDialogProps> = ({
 }) => {
     const [editedPayment, setEditedPayment] = useState<CheckPaymentFormValues>({
         ...payment,
+        date: payment.date ? new Date(payment.date) : new Date(),
     });
+    const history = useHistory();
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -56,22 +48,20 @@ const EditPaymentDialog: React.FC<EditPaymentDialogProps> = ({
 
     const handleSaveChanges = async () => {
         try {
-            const currentTime = new Date();
-            const currentDate = new Date();
-
             setEditedPayment((prevPayment: CheckPaymentFormValues) => ({
                 ...prevPayment,
-                date: currentDate,
-                time: currentTime,
+                date: new Date(),
             }));
 
             await checkPaymentStore.updateCheckPayment(editedPayment);
             checkPaymentStore.updateEditedPayment(editedPayment);
 
             toast.success("Payment edited successfully");
+            history.push(`/dashboard`);
             onClose();
         } catch (error) {
             toast.error("Failed to edit payment");
+            history.push(`/dashboard`);
             console.log(error);
         }
     };
@@ -80,6 +70,14 @@ const EditPaymentDialog: React.FC<EditPaymentDialogProps> = ({
         <Dialog open={open} onClose={onClose}>
             <DialogTitle>Edit Payment</DialogTitle>
             <DialogContent>
+                <TextField
+                    label="Title"
+                    name="title"
+                    value={editedPayment.title}
+                    onChange={handleInputChange}
+                    fullWidth
+                    margin="normal"
+                />
                 <TextField
                     label="First Name"
                     name="firstName"

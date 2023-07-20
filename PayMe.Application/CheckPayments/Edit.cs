@@ -38,7 +38,7 @@ namespace PayMe.Application.CheckPayments
             {
                 var checkPayment = await _context.CheckPayments.FindAsync(request.CheckPayment.Id);
 
-                if (checkPayment == null) return null;
+                if (checkPayment == null) return Result<Unit>.Failure("Check payment not found!");;
 
                 _mapper.Map(request.CheckPayment, checkPayment);
 

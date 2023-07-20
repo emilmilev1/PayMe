@@ -19,8 +19,6 @@ export default class UserStore {
     login = async (creds: UserFormValues) => {
         try {
             const user = await api.Account.login(creds);
-            console.log(user);
-
             store.commonStore.setToken(user.token);
             this.startRefreshTokenTimer(user);
             runInAction(() => (this.user = user));
@@ -45,6 +43,7 @@ export default class UserStore {
         try {
             const user = await api.Account.current();
             store.commonStore.setToken(user.token);
+            this.user = user;
             runInAction(() => (this.user = user));
             this.startRefreshTokenTimer(user);
         } catch (error) {

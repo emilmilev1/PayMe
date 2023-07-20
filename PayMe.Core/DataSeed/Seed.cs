@@ -65,84 +65,56 @@ namespace PayMe.Core.DataSeed
                         Country = "London",
                         Total = 1234.45,
                         ZipCode = 2343,
-                        CheckAttendees = new List<CheckAttendee>
-                        {
-                            new CheckAttendee
-                            {
-                                AppUser = users[3],
-                            },
-                            new CheckAttendee
-                            {
-                                AppUser = users[4]
-                            },
-                        }
+                        CheckAttendees = new List<CheckAttendee> { }
                     },
-                    new CheckPayment                      
-                    {                                     
-                        Date = DateTime.Now.AddMonths(-4),
-                        Title = "Payment 2",              
-                        FirstName = "Peter1",              
-                        LastName = "Petrov1",              
-                        Address = "Essen, 1234",          
-                        Country = "Germany",               
-                        Total = 34234.45,   
+                    new CheckPayment
+                    {
+                        Date = DateTime.Now.AddMonths(-3),
+                        Title = "Payment 2",
+                        FirstName = "Peter1",
+                        LastName = "Petrov1",
+                        Address = "Essen, 1234",
+                        Country = "Germany",
+                        Total = 34234.45,
                         ZipCode = 2344,
-                        CheckAttendees = new List<CheckAttendee>
-                        {
-                            new CheckAttendee
-                            {
-                                AppUser = users[0]
-                            },
-                            new CheckAttendee
-                            {
-                                AppUser = users[1]
-                            },
-                        }
+                        CheckAttendees = new List<CheckAttendee> { }
                     },
-                    new CheckPayment                      
-                    {                                     
+                    new CheckPayment
+                    {
                         Date = DateTime.Now.AddMonths(-5),
-                        Title = "Payment 3",              
-                        FirstName = "Peter2",             
-                        LastName = "Petrov2",             
-                        Address = "USA, 1234",         
-                        Country = "USA",               
+                        Title = "Payment 3",
+                        FirstName = "Peter2",
+                        LastName = "Petrov2",
+                        Address = "USA, 1234",
+                        Country = "USA",
                         Total = 3423443.45,
                         ZipCode = 2324,
-                        CheckAttendees = new List<CheckAttendee>
-                        {
-                            new CheckAttendee
-                            {
-                                AppUser = users[1]
-                            },
-                            new CheckAttendee
-                            {
-                                AppUser = users[3]
-                            },
-                        }
-                    },   
-                    new CheckPayment                      
-                    {                                     
+                        CheckAttendees = new List<CheckAttendee> { }
+                    },
+                    new CheckPayment
+                    {
                         Date = DateTime.Now.AddMonths(-4),
-                        Title = "Payment 4",              
-                        FirstName = "Peter3",             
-                        LastName = "Petrov3",             
-                        Address = "London, 1234",         
-                        Country = "London",               
-                        Total = 456456.45,        
+                        Title = "Payment 4",
+                        FirstName = "Peter3",
+                        LastName = "Petrov3",
+                        Address = "London, 1234",
+                        Country = "London",
+                        Total = 456456.45,
                         ZipCode = 4078,
-                    },   
-                    new CheckPayment                      
-                    {                                     
-                        Date = DateTime.Now.AddMonths(-4),
-                        Title = "Payment 5",              
-                        FirstName = "Peter4",             
-                        LastName = "Petrov4",             
-                        Address = "Sofia, 123444",         
-                        Country = "Bulgaria",               
-                        Total = 99994.45, 
+                        CheckAttendees = new List<CheckAttendee> { }
+                    },
+                    new CheckPayment
+                    {
+                        Date = DateTime.Now.AddMonths(-7),
+                        Title = "Payment 5",
+                        FirstName = "Peter4",
+                        LastName = "Petrov4",
+                        Address = "Sofia, 123444",
+                        Country = "Bulgaria",
+                        Total = 99994.45,
                         ZipCode = 4543,
-                    },    
+                        CheckAttendees = new List<CheckAttendee> { }
+                    },
                 };
 
                 await context.CheckPayments.AddRangeAsync(checkPayments);

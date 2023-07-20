@@ -14,7 +14,7 @@ using PayMe.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
-ConfigureLogging.ConfigureLoggingService(builder.Logging);
+//ConfigureLogging.ConfigureLoggingService(builder.Logging);
 
 builder.Services.AddControllers(opt =>
 {
