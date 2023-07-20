@@ -22,8 +22,6 @@ export default class UserStore {
             store.commonStore.setToken(user.token);
             this.startRefreshTokenTimer(user);
             runInAction(() => (this.user = user));
-            console.log("this user: " + this.user);
-
             store.modalStore.closeModal();
             history.push("/dashboard");
         } catch (error) {
@@ -43,11 +41,10 @@ export default class UserStore {
         try {
             const user = await api.Account.current();
             store.commonStore.setToken(user.token);
-            this.user = user;
             runInAction(() => (this.user = user));
             this.startRefreshTokenTimer(user);
-        } catch (error) {
-            console.error(error);
+        } catch (error: any) {
+            console.info(error.message);
         }
     };
 

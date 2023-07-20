@@ -58,7 +58,10 @@ namespace PayMe.API.Controllers
 
             if (result.Succeeded)
             {
-                await SetRefreshToken(user);
+                if (user != null)
+                {
+                    await SetRefreshToken(user);
+                }
                 return CreateUserObject(user);
             }
 

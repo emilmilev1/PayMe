@@ -14,6 +14,7 @@ import { useStore } from "../../stores/store";
 import { v4 as uuid } from "uuid";
 import { Button } from "semantic-ui-react";
 import { toast } from "react-toastify";
+import { format, zonedTimeToUtc } from "date-fns-tz";
 
 export default function CreateCheck() {
     const history = useHistory();
@@ -33,7 +34,7 @@ export default function CreateCheck() {
             total: 0,
             country: "",
             zipCode: 0,
-            date: null,
+            date: new Date(),
             isHost: undefined,
             hostUsername: "",
             checkAttendees: [],
@@ -64,12 +65,15 @@ export default function CreateCheck() {
             checkPayment.date !== null;
 
         if (isFormValid) {
+            const currentTimeInTimeZone = zonedTimeToUtc(new Date(), "EEST");
+
             if (!checkPayment.id) {
                 const newCheckPayment = {
                     ...checkPayment,
                     id: uuid(),
                     country: selectedCountry,
                     date: new Date(),
+                    time: currentTimeInTimeZone,
                 };
 
                 createCheckPayment(newCheckPayment).then(() => {
@@ -77,8 +81,6 @@ export default function CreateCheck() {
                     history.push(`/dashboard`);
                 });
             } else {
-                console.log(checkPayment);
-
                 updateCheckPayment(checkPayment).then(() => {
                     toast.success("Payment updated successfully!");
                     history.push(`/dashboard`);
@@ -207,6 +209,7 @@ export default function CreateCheck() {
                                 <Grid container spacing={5}>
                                     <Grid item xs={12} sm={6}>
                                         <DatePicker
+                                            disabled
                                             label="Date Payment"
                                             value={checkPayment.date}
                                             onChange={(newValue) =>
@@ -256,7 +259,7 @@ export default function CreateCheck() {
                                             onChange={(e) =>
                                                 setCheckPayment({
                                                     ...checkPayment,
-                                                    zipCode: parseInt(
+                                                    zipCode: parseFloat(
                                                         e.target.value
                                                     ),
                                                 })

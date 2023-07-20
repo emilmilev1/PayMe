@@ -18,6 +18,7 @@ import {
     CheckPaymentFormValues,
 } from "../../models/checkPaymentStore";
 import { useHistory } from "react-router";
+import { zonedTimeToUtc } from "date-fns-tz";
 
 interface EditPaymentDialogProps {
     open: boolean;
@@ -48,8 +49,11 @@ const EditPaymentDialog: React.FC<EditPaymentDialogProps> = ({
 
     const handleSaveChanges = async () => {
         try {
+            const currentTimeInTimeZone = zonedTimeToUtc(new Date(), "EEST");
+
             setEditedPayment((prevPayment: CheckPaymentFormValues) => ({
                 ...prevPayment,
+                time: currentTimeInTimeZone,
                 date: new Date(),
             }));
 

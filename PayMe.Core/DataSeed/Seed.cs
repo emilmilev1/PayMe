@@ -52,12 +52,17 @@ namespace PayMe.Core.DataSeed
                 {
                     await userManager.CreateAsync(user, "QWErty123!");
                 }
+                
+                foreach (var user in users)
+                {
+                    user.EmailConfirmed = true;
+                }
 
                 var checkPayments = new List<CheckPayment>
                 {
                     new CheckPayment
                     {
-                        Date = DateTime.Now.AddMonths(-2),
+                        Date = DateTime.Now.AddMonths(-2).AddDays(-6).AddHours(-7),
                         Title = "Payment 1",
                         FirstName = "Peter",
                         LastName = "Petrov",
@@ -69,7 +74,7 @@ namespace PayMe.Core.DataSeed
                     },
                     new CheckPayment
                     {
-                        Date = DateTime.Now.AddMonths(-3),
+                        Date = DateTime.Now.AddMonths(-3).AddDays(-5).AddHours(-6),
                         Title = "Payment 2",
                         FirstName = "Peter1",
                         LastName = "Petrov1",
@@ -81,7 +86,7 @@ namespace PayMe.Core.DataSeed
                     },
                     new CheckPayment
                     {
-                        Date = DateTime.Now.AddMonths(-5),
+                        Date = DateTime.Now.AddMonths(-5).AddDays(-8).AddHours(-2),
                         Title = "Payment 3",
                         FirstName = "Peter2",
                         LastName = "Petrov2",
@@ -93,7 +98,7 @@ namespace PayMe.Core.DataSeed
                     },
                     new CheckPayment
                     {
-                        Date = DateTime.Now.AddMonths(-4),
+                        Date = DateTime.Now.AddMonths(-4).AddDays(-2).AddHours(-1),
                         Title = "Payment 4",
                         FirstName = "Peter3",
                         LastName = "Petrov3",
@@ -105,7 +110,7 @@ namespace PayMe.Core.DataSeed
                     },
                     new CheckPayment
                     {
-                        Date = DateTime.Now.AddMonths(-7),
+                        Date = DateTime.Now.AddMonths(-7).AddDays(-9).AddHours(-9),
                         Title = "Payment 5",
                         FirstName = "Peter4",
                         LastName = "Petrov4",

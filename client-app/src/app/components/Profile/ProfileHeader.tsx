@@ -38,7 +38,12 @@ export const ProfileHeader = () => {
                                 src={"/PayMe.png"}
                             />
                             <Item.Content verticalAlign="middle">
-                                <Header as="h1" content={"Pesho"} />
+                                <Header
+                                    as="h1"
+                                    content={
+                                        userStore.user?.username || "Pesho"
+                                    }
+                                />
                             </Item.Content>
                         </Item>
                     </Item.Group>
