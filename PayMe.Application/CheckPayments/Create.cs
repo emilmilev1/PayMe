@@ -48,6 +48,8 @@ namespace PayMe.Application.CheckPayments
                     AppUser = user,
                     CheckPayment = request.CheckPayment
                 };
+                
+                request.CheckPayment.Date = DateTime.Now;
 
                 request.CheckPayment.CheckAttendees.Add(attendee);
 

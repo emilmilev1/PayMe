@@ -36,9 +36,14 @@ namespace PayMe.Application.CheckPayments
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
+                if (request.CheckPayment.Id == Guid.Empty)
+                    return Result<Unit>.Failure("Invalid Check payment ID!");
+                
                 var checkPayment = await _context.CheckPayments.FindAsync(request.CheckPayment.Id);
 
-                if (checkPayment == null) return Result<Unit>.Failure("Check payment not found!");;
+                if (checkPayment == null) return Result<Unit>.Failure("Check payment not found!");
+                
+                request.CheckPayment.Date = DateTime.Now;
 
                 _mapper.Map(request.CheckPayment, checkPayment);
 

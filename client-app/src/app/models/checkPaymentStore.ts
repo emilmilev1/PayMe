@@ -10,9 +10,6 @@ export interface CheckPaymentData {
     country: string;
     total: number;
     zipCode: number;
-    isHost: boolean;
-    hostUsername: string;
-    checkAttendees: Profile[];
 }
 
 export class CheckPayment {
@@ -44,9 +41,6 @@ export class CheckPaymentFormValues {
     country: string = "";
     zipCode!: number;
     total!: number;
-    isHost: boolean | undefined = undefined;
-    hostUsername: string = "";
-    checkAttendees!: Profile[];
 
     constructor(checkPayment?: CheckPaymentFormValues) {
         if (checkPayment) {
@@ -59,9 +53,6 @@ export class CheckPaymentFormValues {
             this.country = checkPayment.country;
             this.zipCode = checkPayment.zipCode;
             this.total = checkPayment.total;
-            this.isHost = checkPayment.isHost;
-            this.hostUsername = checkPayment.hostUsername;
-            this.checkAttendees = checkPayment.checkAttendees;
         }
     }
 }

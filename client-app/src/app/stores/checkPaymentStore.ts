@@ -177,9 +177,6 @@ export default class CheckPaymentStore {
                 country: editedPayment.country,
                 zipCode: editedPayment.zipCode,
                 total: editedPayment.total,
-                isHost: editedPayment.isHost!,
-                hostUsername: editedPayment.hostUsername,
-                checkAttendees: editedPayment.checkAttendees,
             };
 
             this.checkPaymentRegistry.set(editedPayment.id, updatedPayment);
@@ -191,7 +188,6 @@ export default class CheckPaymentStore {
 
         try {
             await api.CheckPayments.update(checkPayment);
-            this.updateEditedPayment(checkPayment);
 
             runInAction(() => {
                 if (checkPayment.id) {
@@ -209,6 +205,8 @@ export default class CheckPaymentStore {
                         updatedCheckPayment as CheckPaymentData;
                 }
             });
+
+            this.updateEditedPayment(checkPayment);
         } catch (error) {
             console.log(error);
         }

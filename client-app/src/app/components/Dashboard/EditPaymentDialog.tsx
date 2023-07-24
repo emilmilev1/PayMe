@@ -6,19 +6,16 @@ import {
     DialogActions,
     Button,
     TextField,
-    unstable_useId,
 } from "@mui/material";
 import { toast } from "react-toastify";
 import { observer } from "mobx-react-lite";
 import CheckPaymentStore from "../../stores/checkPaymentStore";
-import { Profile } from "../../models/profile";
-import { format } from "date-fns";
 import {
     CheckPaymentData,
     CheckPaymentFormValues,
 } from "../../models/checkPaymentStore";
 import { useHistory } from "react-router";
-import { zonedTimeToUtc } from "date-fns-tz";
+import { useStore } from "../../stores/store";
 
 interface EditPaymentDialogProps {
     open: boolean;
@@ -35,9 +32,9 @@ const EditPaymentDialog: React.FC<EditPaymentDialogProps> = ({
 }) => {
     const [editedPayment, setEditedPayment] = useState<CheckPaymentFormValues>({
         ...payment,
-        date: payment.date ? new Date(payment.date) : new Date(),
     });
     const history = useHistory();
+    const { userStore } = useStore();
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -49,22 +46,21 @@ const EditPaymentDialog: React.FC<EditPaymentDialogProps> = ({
 
     const handleSaveChanges = async () => {
         try {
-            const currentTimeInTimeZone = zonedTimeToUtc(new Date(), "EEST");
-
             setEditedPayment((prevPayment: CheckPaymentFormValues) => ({
                 ...prevPayment,
-                time: currentTimeInTimeZone,
-                date: new Date(),
             }));
 
-            await checkPaymentStore.updateCheckPayment(editedPayment);
+            const result = await checkPaymentStore.updateCheckPayment(
+                editedPayment
+            );
+
             checkPaymentStore.updateEditedPayment(editedPayment);
 
-            toast.success("Payment edited successfully");
+            toast.success("Payment updated successfully");
             history.push(`/dashboard`);
             onClose();
         } catch (error) {
-            toast.error("Failed to edit payment");
+            toast.error("Failed to update payment");
             history.push(`/dashboard`);
             console.log(error);
         }

@@ -7,6 +7,7 @@ import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import EditPaymentDialog from "./EditPaymentDialog";
 import CheckPaymentStore from "../../stores/checkPaymentStore";
+import { utcToZonedTime } from "date-fns-tz";
 
 interface Props {
     payment: CheckPaymentData;
@@ -24,10 +25,22 @@ const TableEachPayment = ({ payment, checkPaymentStore }: Props) => {
         setEditDialogOpen(false);
     };
 
+    const dateEET = format(
+        utcToZonedTime(payment.date, "Europe/Sofia"),
+        "dd MMM yyyy"
+    );
+    const timeEET = format(
+        utcToZonedTime(payment.date, "Europe/Sofia"),
+        "h:mm aa"
+    );
+
+    const totalAmount =
+        typeof payment.total === "number" ? payment.total.toFixed(2) : "N/A";
+
     return (
         <TableRow key={payment.id}>
-            <TableCell>{format(payment.date, "dd MMM yyyy")}</TableCell>
-            <TableCell>{format(payment.date, "h:mm aa")}</TableCell>
+            <TableCell>{dateEET}</TableCell>
+            <TableCell>{timeEET}</TableCell>
             <TableCell>{payment.firstName}</TableCell>
             <TableCell>{payment.lastName}</TableCell>
             <TableCell>{payment.address}</TableCell>
@@ -53,7 +66,7 @@ const TableEachPayment = ({ payment, checkPaymentStore }: Props) => {
                     Delete
                 </Button>
             </TableCell>
-            <TableCell align="right">{payment.total.toFixed(2)}</TableCell>
+            <TableCell align="right">{totalAmount}</TableCell>
             {editDialogOpen && (
                 <EditPaymentDialog
                     open={editDialogOpen}

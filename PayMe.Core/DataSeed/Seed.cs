@@ -70,7 +70,7 @@ namespace PayMe.Core.DataSeed
                         Country = "London",
                         Total = 1234.45,
                         ZipCode = 2343,
-                        CheckAttendees = new List<CheckAttendee> { }
+                        CheckAttendees = new List<CheckAttendee> { },
                     },
                     new CheckPayment
                     {

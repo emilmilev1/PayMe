@@ -20,8 +20,7 @@ export default function CreateCheck() {
     const history = useHistory();
     const { checkPaymentStore } = useStore();
 
-    const { createCheckPayment, updateCheckPayment, loadCheckPayment } =
-        checkPaymentStore;
+    const { createCheckPayment, loadCheckPayment } = checkPaymentStore;
     const { id } = useParams<{ id: string }>();
 
     const [checkPayment, setCheckPayment] = useState<CheckPaymentFormValues>(
@@ -65,27 +64,22 @@ export default function CreateCheck() {
             checkPayment.date !== null;
 
         if (isFormValid) {
-            const currentTimeInTimeZone = zonedTimeToUtc(new Date(), "EEST");
+            const currentTimeInTimeZone = zonedTimeToUtc(
+                new Date(),
+                "Europe/Sofia"
+            );
 
-            if (!checkPayment.id) {
-                const newCheckPayment = {
-                    ...checkPayment,
-                    id: uuid(),
-                    country: selectedCountry,
-                    date: new Date(),
-                    time: currentTimeInTimeZone,
-                };
+            const newCheckPayment = {
+                ...checkPayment,
+                id: uuid(),
+                country: selectedCountry,
+                date: currentTimeInTimeZone,
+            };
 
-                createCheckPayment(newCheckPayment).then(() => {
-                    toast.success("Payment created successfully!");
-                    history.push(`/dashboard`);
-                });
-            } else {
-                updateCheckPayment(checkPayment).then(() => {
-                    toast.success("Payment updated successfully!");
-                    history.push(`/dashboard`);
-                });
-            }
+            createCheckPayment(newCheckPayment).then(() => {
+                toast.success("Payment created successfully!");
+                history.push(`/dashboard`);
+            });
         } else {
             toast.error("Please fill in all required fields.");
         }
@@ -215,7 +209,10 @@ export default function CreateCheck() {
                                             onChange={(newValue) =>
                                                 setCheckPayment({
                                                     ...checkPayment,
-                                                    date: newValue,
+                                                    date:
+                                                        newValue instanceof Date
+                                                            ? newValue
+                                                            : null,
                                                 })
                                             }
                                             renderInput={(params) => (
@@ -235,13 +232,20 @@ export default function CreateCheck() {
                                             label="Total"
                                             fullWidth
                                             variant="standard"
-                                            value={checkPayment.total}
+                                            value={
+                                                checkPayment.total === 0
+                                                    ? ""
+                                                    : checkPayment.total
+                                            }
                                             onChange={(e) =>
                                                 setCheckPayment({
                                                     ...checkPayment,
-                                                    total: parseFloat(
-                                                        e.target.value
-                                                    ),
+                                                    total:
+                                                        e.target.value === ""
+                                                            ? 0
+                                                            : parseFloat(
+                                                                  e.target.value
+                                                              ),
                                                 })
                                             }
                                         />
@@ -251,17 +255,25 @@ export default function CreateCheck() {
                                             required
                                             id="zip"
                                             name="zip"
+                                            type="number"
                                             label="Zip / Postal code"
                                             fullWidth
                                             autoComplete="shipping postal-code"
                                             variant="standard"
-                                            value={checkPayment.zipCode}
+                                            value={
+                                                checkPayment.zipCode === 0
+                                                    ? ""
+                                                    : checkPayment.zipCode
+                                            }
                                             onChange={(e) =>
                                                 setCheckPayment({
                                                     ...checkPayment,
-                                                    zipCode: parseFloat(
-                                                        e.target.value
-                                                    ),
+                                                    zipCode:
+                                                        e.target.value === ""
+                                                            ? 0
+                                                            : parseInt(
+                                                                  e.target.value
+                                                              ),
                                                 })
                                             }
                                         />

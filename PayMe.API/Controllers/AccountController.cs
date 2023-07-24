@@ -228,6 +228,11 @@ namespace PayMe.API.Controllers
         private async Task SetRefreshToken(AppUser user)
         {
             var refreshToken = _tokenService.GenerateRefreshToken();
+            
+            if (user.RefreshTokens == null)
+            {
+                user.RefreshTokens = new List<RefreshToken>();
+            }
 
             user.RefreshTokens.Add(refreshToken);
 
