@@ -12,9 +12,9 @@ namespace PayMe.Core
 
         public DbSet<CheckPayment> CheckPayments { get; set; }
 
-        public DbSet<CheckAttendee> CheckAttendees { get; set; }
+        public DbSet<CheckAttendee> CheckPaymentsUsers { get; set; }
 
-        public DbSet<Photo> Photos { get; set; } = null!;
+        public DbSet<Photo> Photos { get; set; }
 
         public DbSet<AdminComment> AdminComments { get; set; }
 
@@ -27,12 +27,12 @@ namespace PayMe.Core
 
             builder.Entity<CheckAttendee>()
                 .HasOne(x => x.AppUser)
-                .WithMany(b => b.CheckAttendees)
+                .WithMany(b => b.CheckPaymentsUsers)
                 .HasForeignKey(c => c.AppUserId);
-
+            
             builder.Entity<CheckAttendee>()
                 .HasOne(a => a.CheckPayment)
-                .WithMany(b => b.CheckAttendees)
+                .WithMany(b => b.CheckPaymentsUsers)
                 .HasForeignKey(c => c.CheckPaymentId);
 
             builder.Entity<AdminComment>()

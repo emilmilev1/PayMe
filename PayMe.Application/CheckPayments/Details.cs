@@ -34,6 +34,11 @@ namespace PayMe.Application.CheckPayments
                     .ProjectTo<CheckPaymentDto>(_mapper.ConfigurationProvider)
                     .FirstOrDefaultAsync(x => x.Id == request.Id);
 
+                if (payment == null)
+                {
+                    return Result<CheckPaymentDto>.Failure("CheckPayment not found");
+                }
+                
                 return Result<CheckPaymentDto>.Success(payment);
             }
         }

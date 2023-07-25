@@ -1,4 +1,4 @@
-import React, { Fragment, lazy, Suspense, useEffect } from "react";
+import React, { Fragment, lazy, Suspense, useEffect, useState } from "react";
 import { CssBaseline } from "@mui/material";
 import { Route, Switch, useLocation } from "react-router-dom";
 import NotFound from "./app/pages/NotFound/NotFound";
@@ -36,8 +36,10 @@ function AppRouter() {
     const { commonStore, userStore } = useStore();
 
     useEffect(() => {
-        userStore.getUser();
-    }, [userStore]);
+        if (commonStore.appLoaded) {
+            userStore.getUser();
+        }
+    }, [userStore, commonStore]);
 
     useEffect(() => {
         commonStore.setAppLoaded();

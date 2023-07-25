@@ -52,7 +52,7 @@ namespace PayMe.Core.DataSeed
                 {
                     await userManager.CreateAsync(user, "QWErty123!");
                 }
-                
+
                 foreach (var user in users)
                 {
                     user.EmailConfirmed = true;
@@ -70,7 +70,13 @@ namespace PayMe.Core.DataSeed
                         Country = "London",
                         Total = 1234.45,
                         ZipCode = 2343,
-                        CheckAttendees = new List<CheckAttendee> { },
+                        CheckPaymentsUsers = new List<CheckAttendee>
+                        {
+                            new CheckAttendee
+                            {
+                                AppUser = users[0],
+                            }
+                        },
                     },
                     new CheckPayment
                     {
@@ -82,7 +88,13 @@ namespace PayMe.Core.DataSeed
                         Country = "Germany",
                         Total = 34234.45,
                         ZipCode = 2344,
-                        CheckAttendees = new List<CheckAttendee> { }
+                        CheckPaymentsUsers = new List<CheckAttendee>
+                        {
+                            new CheckAttendee
+                            {
+                                AppUser = users[1],
+                            }
+                        }
                     },
                     new CheckPayment
                     {
@@ -94,7 +106,13 @@ namespace PayMe.Core.DataSeed
                         Country = "USA",
                         Total = 3423443.45,
                         ZipCode = 2324,
-                        CheckAttendees = new List<CheckAttendee> { }
+                        CheckPaymentsUsers = new List<CheckAttendee>
+                        {
+                            new CheckAttendee
+                            {
+                                AppUser = users[2],
+                            }
+                        }
                     },
                     new CheckPayment
                     {
@@ -106,7 +124,13 @@ namespace PayMe.Core.DataSeed
                         Country = "London",
                         Total = 456456.45,
                         ZipCode = 4078,
-                        CheckAttendees = new List<CheckAttendee> { }
+                        CheckPaymentsUsers = new List<CheckAttendee>
+                        {
+                            new CheckAttendee
+                            {
+                                AppUser = users[3],
+                            }
+                        }
                     },
                     new CheckPayment
                     {
@@ -118,7 +142,13 @@ namespace PayMe.Core.DataSeed
                         Country = "Bulgaria",
                         Total = 99994.45,
                         ZipCode = 4543,
-                        CheckAttendees = new List<CheckAttendee> { }
+                        CheckPaymentsUsers = new List<CheckAttendee>
+                        {
+                            new CheckAttendee
+                            {
+                                AppUser = users[4],
+                            }
+                        }
                     },
                 };
 

@@ -34,7 +34,6 @@ namespace PayMe.Application.CheckPayments
                 CancellationToken cancellationToken)
             {
                 var query = _context.CheckPayments
-                    //.Where(d => d.Date >= request.Params.StartDate)
                     .OrderBy(d => d.Date)
                     .ProjectTo<CheckPaymentDto>(_mapper.ConfigurationProvider)
                     .AsQueryable();

@@ -5,11 +5,6 @@ namespace PayMe.Application.CheckPayments
 {
     public class CheckPaymentDto
     {
-        public CheckPaymentDto(ICollection<CheckAttendee> checkAttendees)
-        {
-            CheckAttendees = checkAttendees;
-        }
-
         [Key]
         [Required]
         public Guid Id { get; set; }

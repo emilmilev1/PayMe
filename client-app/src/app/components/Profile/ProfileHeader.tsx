@@ -41,7 +41,8 @@ export const ProfileHeader = () => {
                                 <Header
                                     as="h1"
                                     content={
-                                        userStore.user?.username || "Pesho"
+                                        userStore.user?.username ||
+                                        "Missing username"
                                     }
                                 />
                             </Item.Content>

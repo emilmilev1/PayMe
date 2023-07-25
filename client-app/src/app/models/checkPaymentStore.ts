@@ -10,6 +10,7 @@ export interface CheckPaymentData {
     country: string;
     total: number;
     zipCode: number;
+    checkAttendees: Profile[];
 }
 
 export class CheckPayment {
@@ -41,6 +42,7 @@ export class CheckPaymentFormValues {
     country: string = "";
     zipCode!: number;
     total!: number;
+    checkAttendees: Profile[] = [];
 
     constructor(checkPayment?: CheckPaymentFormValues) {
         if (checkPayment) {

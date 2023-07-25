@@ -15,10 +15,9 @@ namespace PayMe.Domain
         
         public ICollection<Photo> Photos { get; set; } = new List<Photo>();
 
-        public ICollection<CheckAttendee>? CheckAttendees { get; set; } = new List<CheckAttendee>();
+        public ICollection<CheckAttendee> CheckPaymentsUsers { get; set; } = new List<CheckAttendee>();
 
-        
-        public ICollection<CheckPayment>? CheckPayments { get; set; } = new List<CheckPayment>();
+        public ICollection<CheckPayment> CheckPayments { get; set; } = new List<CheckPayment>();
 
         public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
     }

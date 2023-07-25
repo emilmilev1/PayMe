@@ -26,16 +26,17 @@ const TableEachPayment = ({ payment, checkPaymentStore }: Props) => {
     };
 
     const dateEET = format(
-        utcToZonedTime(payment.date, "Europe/Sofia"),
+        utcToZonedTime(new Date(), "Europe/Sofia"),
         "dd MMM yyyy"
     );
     const timeEET = format(
-        utcToZonedTime(payment.date, "Europe/Sofia"),
+        utcToZonedTime(new Date(), "Europe/Sofia"),
         "h:mm aa"
     );
+    console.log(dateEET + " " + timeEET);
 
     const totalAmount =
-        typeof payment.total === "number" ? payment.total.toFixed(2) : "N/A";
+        typeof payment.total === "number" ? payment.total.toFixed(2) : 0;
 
     return (
         <TableRow key={payment.id}>
@@ -66,7 +67,7 @@ const TableEachPayment = ({ payment, checkPaymentStore }: Props) => {
                     Delete
                 </Button>
             </TableCell>
-            <TableCell align="right">{totalAmount}</TableCell>
+            <TableCell align="right">${totalAmount}</TableCell>
             {editDialogOpen && (
                 <EditPaymentDialog
                     open={editDialogOpen}

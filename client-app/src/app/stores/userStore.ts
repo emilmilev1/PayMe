@@ -23,6 +23,7 @@ export default class UserStore {
             this.startRefreshTokenTimer(user);
             runInAction(() => (this.user = user));
             store.modalStore.closeModal();
+            store.commonStore.setAppLoaded();
             history.push("/dashboard");
         } catch (error) {
             throw error;
@@ -43,8 +44,8 @@ export default class UserStore {
             store.commonStore.setToken(user.token);
             runInAction(() => (this.user = user));
             this.startRefreshTokenTimer(user);
-        } catch (error: any) {
-            console.info(error.message);
+        } catch (error) {
+            console.error(error);
         }
     };
 
@@ -60,11 +61,15 @@ export default class UserStore {
     };
 
     setImage = (image: string) => {
-        if (this.user) this.user.image = image;
+        if (this.user) {
+            this.user.image = image;
+        }
     };
 
     setDisplayName = (name: string) => {
-        if (this.user) this.user.firstName = name;
+        if (this.user) {
+            this.user.firstName = name;
+        }
     };
 
     refreshToken = async () => {

@@ -48,16 +48,19 @@ namespace PayMe.Application.CheckPayments
                     AppUser = user,
                     CheckPayment = request.CheckPayment
                 };
-                
+
                 request.CheckPayment.Date = DateTime.Now;
 
-                request.CheckPayment.CheckAttendees.Add(attendee);
+                request.CheckPayment.CheckPaymentsUsers.Add(attendee);
 
                 _context.CheckPayments.Add(request.CheckPayment);
 
                 var result = await _context.SaveChangesAsync(cancellationToken) > 0;
 
-                if (!result) return Result<Unit>.Failure("Failed to create a check payment!");
+                if (!result)
+                {
+                    return Result<Unit>.Failure("Failed to create a check payment!");
+                }
 
                 return Result<Unit>.Success(Unit.Value);
             }

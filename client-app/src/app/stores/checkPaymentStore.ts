@@ -12,6 +12,7 @@ import {
     Pagination,
     PagingParams,
 } from "../models/pagination";
+import { Profile } from "../models/profile";
 
 export default class CheckPaymentStore {
     checkPaymentRegistry = new Map<string, CheckPaymentData>();
@@ -147,6 +148,7 @@ export default class CheckPaymentStore {
 
     createCheckPayment = async (checkPayment: CheckPaymentFormValues) => {
         const user = store.userStore.user;
+        const payment = new Profile(user!);
 
         try {
             await api.CheckPayments.create(checkPayment);
@@ -154,7 +156,7 @@ export default class CheckPaymentStore {
             const newCheckPayment = new CheckPayment(checkPayment);
 
             newCheckPayment.hostUsername = user!.username;
-
+            newCheckPayment.checkAttendees = [payment];
             this.setCheckPayment(newCheckPayment);
 
             runInAction(() => {
@@ -177,6 +179,7 @@ export default class CheckPaymentStore {
                 country: editedPayment.country,
                 zipCode: editedPayment.zipCode,
                 total: editedPayment.total,
+                checkAttendees: editedPayment.checkAttendees,
             };
 
             this.checkPaymentRegistry.set(editedPayment.id, updatedPayment);
@@ -209,6 +212,10 @@ export default class CheckPaymentStore {
             this.updateEditedPayment(checkPayment);
         } catch (error) {
             console.log(error);
+        } finally {
+            runInAction(() => {
+                this.loading = false;
+            });
         }
     };
 

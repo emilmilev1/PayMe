@@ -61,6 +61,7 @@ export default function CreateCheck() {
             checkPayment.address &&
             checkPayment.total >= 0 &&
             checkPayment.zipCode >= 0 &&
+            selectedCountry !== "" &&
             checkPayment.date !== null;
 
         if (isFormValid) {
@@ -190,6 +191,7 @@ export default function CreateCheck() {
                                             setSelectedCountry={
                                                 setSelectedCountry
                                             }
+                                            selectedCountry={selectedCountry}
                                         />
                                     </Grid>
                                 </Grid>
@@ -301,6 +303,7 @@ export default function CreateCheck() {
                                                 checkPayment.address &&
                                                 checkPayment.total > 0 &&
                                                 checkPayment.zipCode > 0 &&
+                                                selectedCountry !== "" &&
                                                 checkPayment.date !== null
                                             )
                                         }
