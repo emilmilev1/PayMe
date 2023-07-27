@@ -6,6 +6,8 @@ import ValidationErrors from "../common/ValidationErrors";
 import { Button, Header } from "semantic-ui-react";
 import * as Yup from "yup";
 import MyTextInput from "../Forms/MyTextInput";
+import { Avatar } from "@mui/material";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 const SignUp = () => {
     const { userStore } = useStore();
@@ -49,6 +51,9 @@ const SignUp = () => {
                     onSubmit={handleSubmit}
                     autoComplete="off"
                 >
+                    <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                        <LockOutlinedIcon />
+                    </Avatar>
                     <Header
                         as="h2"
                         content="Sign up to Pay Me"

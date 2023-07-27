@@ -10,18 +10,38 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
+import { useStore } from "../../stores/store";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const theme = createTheme();
 
-export default function ForgotPassword() {
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get("email"),
-            password: data.get("password"),
-        });
-    };
+interface FormValues {
+    email: string;
+    error: string | null;
+}
+
+const ForgotPassword = () => {
+    const { userStore } = useStore();
+
+    const formik = useFormik<FormValues>({
+        initialValues: { email: "", error: null },
+        onSubmit: async (data, { setErrors, setSubmitting }) => {
+            setSubmitting(true);
+            try {
+                await userStore.doesEmailExist(data.email);
+                await userStore.changePassword(data.email);
+            } catch (error) {
+                setErrors({
+                    error: "Incorrect email or password!",
+                });
+            }
+            setSubmitting(false);
+        },
+        validationSchema: Yup.object({
+            email: Yup.string().required("Email is required!").email(),
+        }),
+    });
 
     return (
         <ThemeProvider theme={theme}>
@@ -35,32 +55,46 @@ export default function ForgotPassword() {
                         alignItems: "center",
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                    <Avatar sx={{ m: 5, bgcolor: "secondary.main" }}>
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         Reset Password
                     </Typography>
-                    <Box
-                        component="form"
-                        onSubmit={handleSubmit}
-                        noValidate
-                        sx={{ mt: 1 }}
-                    >
+                    <form onSubmit={formik.handleSubmit} noValidate>
                         <TextField
+                            fullWidth
+                            id="reset-email"
                             margin="normal"
                             required
-                            fullWidth
-                            id="email"
                             label="Email Address"
                             name="email"
                             autoComplete="email"
-                            autoFocus
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={
+                                formik.touched.email &&
+                                Boolean(formik.errors.email)
+                            }
+                            helperText={
+                                formik.touched.email && formik.errors.email
+                            }
+                            sx={{
+                                background: "white",
+                                borderRadius: "5px",
+                                mt: 2,
+                            }}
                         />
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
+                            disabled={
+                                !formik.isValid ||
+                                !formik.dirty ||
+                                formik.isSubmitting
+                            }
                             sx={{ mt: 3, mb: 2 }}
                         >
                             Send email
@@ -70,9 +104,11 @@ export default function ForgotPassword() {
                                 <Link to="/login">Sign in?</Link>
                             </Grid>
                         </Grid>
-                    </Box>
+                    </form>
                 </Box>
             </Container>
         </ThemeProvider>
     );
-}
+};
+
+export default ForgotPassword;

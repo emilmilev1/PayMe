@@ -62,6 +62,7 @@ namespace PayMe.API.Controllers
                 {
                     await SetRefreshToken(user);
                 }
+
                 return CreateUserObject(user);
             }
 
@@ -82,7 +83,7 @@ namespace PayMe.API.Controllers
                 ModelState.AddModelError("email", "Email taken!");
                 return ValidationProblem();
             }
-            
+
             if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
             {
                 ModelState.AddModelError("username", "Username taken!");
@@ -115,6 +116,20 @@ namespace PayMe.API.Controllers
             return Ok("Registration success - please verify email");
         }
 
+        [AllowAnonymous]
+        [HttpGet("doesEmailExist")]
+        public async Task<IActionResult> CheckEmailExists(string email)
+        {
+            var userEmail = await _userManager.FindByEmailAsync(email);
+            
+            if (userEmail != null)
+            {
+                return Ok(new { doesEmailExist = true });
+            }
+
+            return Ok(new { doesEmailExist = false });
+        }
+
         /// <summary>
         /// Verification of the email used to register
         /// </summary>
@@ -137,7 +152,7 @@ namespace PayMe.API.Controllers
 
             return Ok("Email confirmed - you can now login");
         }
-        
+
         /// <summary>
         /// Resend the verification of the email used to register again
         /// </summary>
@@ -156,7 +171,8 @@ namespace PayMe.API.Controllers
             token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
             var verifyUrl = $"{origin}/account/verifyEmail?token={token}&email={user.Email}";
-            var message = $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify email</a></p>";
+            var message =
+                $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify email</a></p>";
 
             await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
 
@@ -175,7 +191,7 @@ namespace PayMe.API.Controllers
                 .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
 
             await SetRefreshToken(user!);
-            
+
             return CreateUserObject(user!);
         }
 
@@ -228,7 +244,7 @@ namespace PayMe.API.Controllers
         private async Task SetRefreshToken(AppUser user)
         {
             var refreshToken = _tokenService.GenerateRefreshToken();
-            
+
             if (user.RefreshTokens == null)
             {
                 user.RefreshTokens = new List<RefreshToken>();

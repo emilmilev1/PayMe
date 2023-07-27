@@ -27,28 +27,14 @@ const SignInPage = () => {
                         <CssBaseline />
                         <Box
                             sx={{
-                                marginTop: 10,
-                                marginBottom: 5,
                                 display: "flex",
-                                flexDirection: "column",
                                 alignItems: "center",
+                                flexDirection: "column",
+                                height: "100vh",
                             }}
                         >
-                            <Avatar sx={{ mt: 5, bgcolor: "secondary.main" }}>
-                                <LockOutlinedIcon />
-                            </Avatar>
                             <Box component="div" sx={{ mt: 1 }}>
                                 <SignIn />
-                                <Grid container>
-                                    <Grid item xs>
-                                        <Link to="/reset-password">
-                                            Forgot password?
-                                        </Link>
-                                    </Grid>
-                                    <Grid item>
-                                        <Link to="/register">{"Sign Up"}</Link>
-                                    </Grid>
-                                </Grid>
                             </Box>
                         </Box>
                     </Container>

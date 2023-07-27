@@ -4,9 +4,14 @@ import { User, UserFormValues } from "../models/user";
 import { store } from "./store";
 import api from "../api/api";
 
+interface DoesEmailExistResponse {
+    doesEmailExist: boolean;
+}
+
 export default class UserStore {
     user: User | null = null;
     refreshTokenTimeout: any;
+    doesUserEmailExist: boolean = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -52,12 +57,33 @@ export default class UserStore {
     register = async (creds: UserFormValues) => {
         try {
             await api.Account.register(creds);
-
             store.modalStore.closeModal();
             history.push(`/account/registerSuccess?email=${creds.email}`);
         } catch (error) {
             throw error;
         }
+    };
+
+    doesEmailExist = async (email: string) => {
+        try {
+            const responseData = await api.Account.doesEmailExist(email);
+
+            const doesEmailResponse = responseData as DoesEmailExistResponse;
+
+            const doesEmailExistResult = doesEmailResponse.doesEmailExist;
+
+            runInAction(() => {
+                this.doesUserEmailExist = doesEmailExistResult;
+            });
+
+            history.push(`/account/resetPassword?email=${email}`);
+        } catch (error) {
+            console.error("Error checking email existence:", error);
+        }
+    };
+
+    changePassword = async (email: String) => {
+        console.log("Change Password: " + email);
     };
 
     setImage = (image: string) => {
