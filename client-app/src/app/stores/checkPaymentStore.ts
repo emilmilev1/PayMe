@@ -171,7 +171,7 @@ export default class CheckPaymentStore {
         if (editedPayment.id) {
             const updatedPayment: CheckPaymentData = {
                 id: editedPayment.id,
-                date: editedPayment.date!,
+                date: editedPayment.date || new Date(),
                 title: editedPayment.title,
                 firstName: editedPayment.firstName,
                 lastName: editedPayment.lastName,

@@ -70,7 +70,7 @@ const EditPaymentDialog: React.FC<EditPaymentDialogProps> = ({
             };
 
             await checkPaymentStore.updateCheckPayment(updatedCurrentPayment);
-            checkPaymentStore.updateEditedPayment(editedPayment);
+            checkPaymentStore.updateEditedPayment(updatedCurrentPayment);
 
             toast.success("Payment updated successfully");
             history.push(`/dashboard`);

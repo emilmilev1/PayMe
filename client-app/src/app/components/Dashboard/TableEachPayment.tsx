@@ -25,15 +25,9 @@ const TableEachPayment = ({ payment, checkPaymentStore }: Props) => {
         setEditDialogOpen(false);
     };
 
-    const dateEET = format(
-        utcToZonedTime(new Date(), "Europe/Sofia"),
-        "dd MMM yyyy"
-    );
-    const timeEET = format(
-        utcToZonedTime(new Date(), "Europe/Sofia"),
-        "h:mm aa"
-    );
-    console.log(dateEET + " " + timeEET);
+    const paymentDateInBulgaria = utcToZonedTime(payment.date, "Europe/Sofia");
+    const dateEET = format(paymentDateInBulgaria, "dd MMM yyyy");
+    const timeEET = format(paymentDateInBulgaria, "h:mm aa");
 
     const totalAmount =
         typeof payment.total === "number" ? payment.total.toFixed(2) : 0;

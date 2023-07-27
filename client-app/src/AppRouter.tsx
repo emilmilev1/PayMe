@@ -36,10 +36,8 @@ function AppRouter() {
     const { commonStore, userStore } = useStore();
 
     useEffect(() => {
-        if (commonStore.appLoaded) {
-            userStore.getUser();
-        }
-    }, [userStore, commonStore]);
+        userStore.getUser();
+    }, []);
 
     useEffect(() => {
         commonStore.setAppLoaded();
