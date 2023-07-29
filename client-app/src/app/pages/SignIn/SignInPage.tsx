@@ -2,14 +2,10 @@ import { Fragment } from "react";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Homepage/Navbar";
 import SignIn from "../../components/Login/Login";
-import { PaletteMode, ThemeProvider, createTheme } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
+import { ThemeProvider, createTheme } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Container from "@mui/material/Container";
-import { Link } from "react-router-dom";
 
 const theme = createTheme();
 

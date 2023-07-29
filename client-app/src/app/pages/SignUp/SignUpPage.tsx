@@ -3,18 +3,12 @@ import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Homepage/Navbar";
 import SignUp from "../../components/Register/Register";
 import {
-    Avatar,
     Box,
     Container,
     CssBaseline,
-    Grid,
-    PaletteMode,
     ThemeProvider,
-    Typography,
     createTheme,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { Link } from "react-router-dom";
 
 const theme = createTheme();
 
@@ -24,23 +18,22 @@ const SignUpPage = () => {
             <Navbar />
             <Fragment>
                 <ThemeProvider theme={theme}>
-                    <Container component="main" maxWidth="xs">
+                    <Container
+                        component="main"
+                        maxWidth="xs"
+                        style={{ height: "100vh" }}
+                    >
                         <CssBaseline />
                         <Box
                             sx={{
-                                marginTop: 8,
                                 display: "flex",
-                                flexDirection: "column",
                                 alignItems: "center",
+                                flexDirection: "column",
+                                height: "100vh",
                             }}
                         >
                             <Box component="div" sx={{ mt: 3 }}>
                                 <SignUp />
-                                <Grid container justifyContent="flex-end">
-                                    <Grid item>
-                                        <Link to="/login">Sign in?</Link>
-                                    </Grid>
-                                </Grid>
                             </Box>
                         </Box>
                     </Container>
