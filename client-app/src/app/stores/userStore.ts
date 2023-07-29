@@ -21,10 +21,10 @@ export default class UserStore {
         return store.commonStore.token !== null;
     }
 
-    login = async (creds: UserFormValues) => {
+    login = async (creds: UserFormValues, rememberMe: boolean) => {
         try {
             const user = await api.Account.login(creds);
-            store.commonStore.setToken(user.token);
+            store.commonStore.setToken(user.token, rememberMe);
             this.startRefreshTokenTimer(user);
             runInAction(() => (this.user = user));
             store.modalStore.closeModal();
@@ -37,8 +37,11 @@ export default class UserStore {
 
     logout = () => {
         store.modalStore.closeModal();
-        store.commonStore.setToken(null);
+        store.commonStore.setToken(null, false);
+        window.sessionStorage.removeItem("jwt");
         window.localStorage.removeItem("jwt");
+        window.localStorage.removeItem("rememberMe");
+        runInAction(() => (this.user = null));
         this.user = null;
         history.push("/");
     };
@@ -46,7 +49,10 @@ export default class UserStore {
     getUser = async () => {
         try {
             const user = await api.Account.current();
-            store.commonStore.setToken(user.token);
+            store.commonStore.setToken(
+                user.token,
+                store.commonStore.userRemembered
+            );
             runInAction(() => (this.user = user));
             this.startRefreshTokenTimer(user);
         } catch (error) {
@@ -104,7 +110,10 @@ export default class UserStore {
         try {
             const user = await api.Account.refreshToken();
             runInAction(() => (this.user = user));
-            store.commonStore.setToken(user.token);
+            store.commonStore.setToken(
+                user.token,
+                store.commonStore.userRemembered
+            );
             this.startRefreshTokenTimer(user);
         } catch (error) {
             console.log(error);

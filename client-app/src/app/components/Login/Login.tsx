@@ -1,4 +1,4 @@
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores/store";
 import * as Yup from "yup";
@@ -29,10 +29,11 @@ interface FormValues {
 }
 
 const SignIn = () => {
-    const { userStore } = useStore();
+    const { userStore, commonStore } = useStore();
 
     const [showPassword, setShowPassword] = useState(false);
     const [loginError, setLoginError] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false);
 
     const formik = useFormik<FormValues>({
         initialValues: { email: "", password: "", error: null },
@@ -40,7 +41,7 @@ const SignIn = () => {
             setSubmitting(true);
             try {
                 setLoginError(false);
-                await userStore.login(data);
+                await userStore.login(data, rememberMe);
             } catch (error) {
                 setLoginError(true);
                 setErrors({
@@ -62,6 +63,11 @@ const SignIn = () => {
 
     const handleShowPassword = () => {
         setShowPassword((prevShowPassword) => !prevShowPassword);
+    };
+
+    const handleRememberMe = () => {
+        setRememberMe((prevRememberMe) => !prevRememberMe);
+        commonStore.setUserRemembered(!rememberMe);
     };
 
     return (
@@ -157,7 +163,14 @@ const SignIn = () => {
                         }}
                     />
                     <FormControlLabel
-                        control={<Checkbox value="remember" color="success" />}
+                        control={
+                            <Checkbox
+                                value="remember"
+                                color="success"
+                                checked={rememberMe}
+                                onChange={handleRememberMe}
+                            />
+                        }
                         label="Remember me"
                         sx={{ pt: 2 }}
                     />
@@ -166,7 +179,7 @@ const SignIn = () => {
                         fullWidth
                         color="success"
                         variant="contained"
-                        sx={{ mt: 1, mb: 2 }}
+                        sx={{ mt: 3, mb: 3 }}
                         disabled={
                             !formik.isValid ||
                             !formik.dirty ||
