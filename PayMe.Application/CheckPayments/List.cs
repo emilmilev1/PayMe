@@ -34,6 +34,8 @@ namespace PayMe.Application.CheckPayments
                 CancellationToken cancellationToken)
             {
                 var query = _context.CheckPayments
+                    .Where(chP => chP.CheckPaymentsUsers.Any(
+                        cpu => cpu.AppUserId == _userAccessor.GetUserId()))
                     .OrderBy(d => d.Date)
                     .ProjectTo<CheckPaymentDto>(_mapper.ConfigurationProvider)
                     .AsQueryable();
