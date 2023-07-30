@@ -13,35 +13,62 @@ import { Link } from "react-router-dom";
 import { useStore } from "../../stores/store";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useState } from "react";
+import { Alert, IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const theme = createTheme();
 
 interface FormValues {
     email: string;
+    password: string;
+    rePassword: string;
     error: string | null;
 }
 
 const ForgotPassword = () => {
     const { userStore } = useStore();
 
+    const [showPassword, setShowPassword] = useState(false);
+    const [signUpError, setSignUpError] = useState(false);
+
     const formik = useFormik<FormValues>({
-        initialValues: { email: "", error: null },
+        initialValues: { email: "", password: "", rePassword: "", error: null },
         onSubmit: async (data, { setErrors, setSubmitting }) => {
             setSubmitting(true);
             try {
+                setSignUpError(false);
                 await userStore.doesEmailExist(data.email);
-                await userStore.changePassword(data.email);
-            } catch (error) {
+                if (userStore.doesUserEmailExist) {
+                    await userStore.changePassword(data.email, data.password);
+                } else {
+                    console.log("Email does not exist");
+                }
+            } catch (error: any) {
+                setSignUpError(true);
                 setErrors({
-                    error: "Incorrect email or password!",
+                    error: "Password change failed. Please try again.",
                 });
+                setTimeout(() => {
+                    setSignUpError(false);
+                }, 3500);
             }
             setSubmitting(false);
         },
         validationSchema: Yup.object({
             email: Yup.string().required("Email is required!").email(),
+            password: Yup.string()
+                .required("Please enter your new password.")
+                .min(8, "Your new password is too short."),
+            rePassword: Yup.string()
+                .required("Please confirm your new password.")
+                .oneOf([Yup.ref("password")], "New passwords do not match."),
         }),
     });
+
+    const handleShowPassword = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
+    };
 
     return (
         <ThemeProvider theme={theme}>
@@ -62,6 +89,11 @@ const ForgotPassword = () => {
                         Reset Password
                     </Typography>
                     <form onSubmit={formik.handleSubmit} noValidate>
+                        {signUpError && (
+                            <Alert severity="error" sx={{ mt: 2 }}>
+                                {formik.errors.error}
+                            </Alert>
+                        )}
                         <TextField
                             fullWidth
                             id="reset-email"
@@ -79,6 +111,83 @@ const ForgotPassword = () => {
                             }
                             helperText={
                                 formik.touched.email && formik.errors.email
+                            }
+                            sx={{
+                                background: "white",
+                                borderRadius: "5px",
+                                mt: 2,
+                            }}
+                        />
+                        <TextField
+                            fullWidth
+                            id="newPassword"
+                            name="password"
+                            label="Password"
+                            type={showPassword ? "text" : "password"}
+                            autoComplete="newPassword"
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={
+                                formik.touched.password &&
+                                Boolean(formik.errors.password)
+                            }
+                            helperText={
+                                formik.touched.password &&
+                                formik.errors.password
+                            }
+                            sx={{
+                                background: "white",
+                                borderRadius: "5px",
+                                mt: 2,
+                            }}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            edge="end"
+                                            onClick={handleShowPassword}
+                                            size="small"
+                                            sx={{
+                                                "&:hover": {
+                                                    backgroundColor:
+                                                        "transparent",
+                                                },
+                                                "&:focus": {
+                                                    outline: "none",
+                                                },
+                                                "&:active": {
+                                                    outline: "none",
+                                                },
+                                            }}
+                                        >
+                                            {showPassword ? (
+                                                <VisibilityOff />
+                                            ) : (
+                                                <Visibility />
+                                            )}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <TextField
+                            fullWidth
+                            id="rePassword"
+                            name="rePassword"
+                            label="Confirm Password"
+                            type="password"
+                            autoComplete="rePassword"
+                            value={formik.values.rePassword}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={
+                                formik.touched.rePassword &&
+                                Boolean(formik.errors.rePassword)
+                            }
+                            helperText={
+                                formik.touched.rePassword &&
+                                formik.errors.rePassword
                             }
                             sx={{
                                 background: "white",

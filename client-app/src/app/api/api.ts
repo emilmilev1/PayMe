@@ -146,8 +146,8 @@ const Account = {
         requests.post<User>("/account/register", user),
     doesEmailExist: (email: string) =>
         requests.get(`/account/doesEmailExist?email=${email}`),
-    resetPassword: (user: UserFormValues) =>
-        requests.post<User>("/account/resetPassword", user),
+    resetPassword: (email: string, password: string) =>
+        requests.put<void>("/account/resetPassword", { email, password }),
     refreshToken: () => requests.post<User>("/account/refreshToken", {}),
     verifyEmail: (token: string, email: string) =>
         requests.post<void>(

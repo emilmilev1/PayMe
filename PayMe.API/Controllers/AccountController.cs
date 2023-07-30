@@ -121,13 +121,43 @@ namespace PayMe.API.Controllers
         public async Task<IActionResult> CheckEmailExists(string email)
         {
             var userEmail = await _userManager.FindByEmailAsync(email);
-            
+
             if (userEmail != null)
             {
                 return Ok(new { doesEmailExist = true });
             }
 
             return Ok(new { doesEmailExist = false });
+        }
+
+        /// <summary>
+        /// Reset a password.
+        /// </summary>
+        /// <param name="email">The user's email address.</param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpPut("resetPassword")]
+        public async Task<ActionResult<ResetPasswordUserDto>> ResetPassword(ResetPasswordUserDto resetPasswordUserDto)
+        {
+            var user = await _userManager.Users.SingleOrDefaultAsync(x => x.Email == resetPasswordUserDto.Email);
+            if (user == null)
+            {
+                return NotFound("User not found!");
+            }
+            
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+            
+            var decodedTokenBytes = WebEncoders.Base64UrlDecode(token);
+            var decodedToken = Encoding.UTF8.GetString(decodedTokenBytes);
+
+            var result = await _userManager.ResetPasswordAsync(user, decodedToken, resetPasswordUserDto.Password);
+            if (!result.Succeeded)
+            {
+                return BadRequest("Password reset failed");
+            }
+
+            return Ok("Password reset successfully!");
         }
 
         /// <summary>

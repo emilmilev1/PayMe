@@ -3,6 +3,7 @@ import { history } from "../..";
 import { User, UserFormValues } from "../models/user";
 import { store } from "./store";
 import api from "../api/api";
+import { toast } from "react-toastify";
 
 interface DoesEmailExistResponse {
     doesEmailExist: boolean;
@@ -73,23 +74,25 @@ export default class UserStore {
     doesEmailExist = async (email: string) => {
         try {
             const responseData = await api.Account.doesEmailExist(email);
-
             const doesEmailResponse = responseData as DoesEmailExistResponse;
-
             const doesEmailExistResult = doesEmailResponse.doesEmailExist;
-
             runInAction(() => {
                 this.doesUserEmailExist = doesEmailExistResult;
             });
-
-            history.push(`/account/resetPassword?email=${email}`);
         } catch (error) {
             console.error("Error checking email existence:", error);
         }
     };
 
-    changePassword = async (email: String) => {
-        console.log("Change Password: " + email);
+    changePassword = async (email: string, password: string) => {
+        try {
+            await api.Account.resetPassword(email, password);
+            toast.success("Password changed successfully!");
+            history.push("/login");
+        } catch (error) {
+            console.error("Error changing password:", error);
+            toast.error("Password change failed. Please try again.");
+        }
     };
 
     setImage = (image: string) => {
