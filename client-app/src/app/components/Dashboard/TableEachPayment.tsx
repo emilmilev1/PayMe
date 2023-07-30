@@ -2,7 +2,14 @@ import { CheckPaymentData } from "../../models/checkPaymentStore";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import { format } from "date-fns";
-import { Button } from "@mui/material";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+} from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import EditPaymentDialog from "./EditPaymentDialog";
@@ -16,6 +23,7 @@ interface Props {
 
 const TableEachPayment = ({ payment, checkPaymentStore }: Props) => {
     const [editDialogOpen, setEditDialogOpen] = useState(false);
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
     const handleOpenEditDialog = () => {
         setEditDialogOpen(true);
@@ -23,6 +31,19 @@ const TableEachPayment = ({ payment, checkPaymentStore }: Props) => {
 
     const handleCloseEditDialog = () => {
         setEditDialogOpen(false);
+    };
+
+    const handleOpenDeleteDialog = () => {
+        setDeleteDialogOpen(true);
+    };
+
+    const handleCloseDeleteDialog = () => {
+        setDeleteDialogOpen(false);
+    };
+
+    const handleDelete = () => {
+        checkPaymentStore.deleteCheckPayment(payment.id);
+        handleCloseDeleteDialog();
     };
 
     const paymentDateInBulgaria = utcToZonedTime(payment.date, "Europe/Sofia");
@@ -56,7 +77,7 @@ const TableEachPayment = ({ payment, checkPaymentStore }: Props) => {
                 </Button>
                 <Button
                     style={{ border: "none", outline: "none", color: "red" }}
-                    onClick={() => console.log("Delete")}
+                    onClick={handleOpenDeleteDialog}
                 >
                     Delete
                 </Button>
@@ -70,6 +91,22 @@ const TableEachPayment = ({ payment, checkPaymentStore }: Props) => {
                     checkPaymentStore={checkPaymentStore}
                 />
             )}
+            <Dialog open={deleteDialogOpen} onClose={handleCloseDeleteDialog}>
+                <DialogTitle>Confirm Delete</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Are you sure you want to delete this payment?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDeleteDialog} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleDelete} color="error">
+                        Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </TableRow>
     );
 };

@@ -186,6 +186,11 @@ export default class CheckPaymentStore {
         }
     };
 
+    private updateCheckPaymentDetails = (checkPayment: CheckPaymentData) => {
+        checkPayment.date = new Date(checkPayment.date!);
+        this.checkPaymentRegistry.set(checkPayment.id, checkPayment);
+    };
+
     updateCheckPayment = async (checkPayment: CheckPaymentFormValues) => {
         this.loading = true;
 
@@ -199,8 +204,7 @@ export default class CheckPaymentStore {
                         ...checkPayment,
                     };
 
-                    this.checkPaymentRegistry.set(
-                        checkPayment.id,
+                    this.updateCheckPaymentDetails(
                         updatedCheckPayment as CheckPaymentData
                     );
 
@@ -226,8 +230,15 @@ export default class CheckPaymentStore {
             await api.CheckPayments.delete(id);
 
             runInAction(() => {
+                const currentPage = this.pagination?.currentPage || 1;
+
                 this.checkPaymentRegistry.delete(id);
                 this.loading = false;
+
+                if (this.checkPaymentsByDate.length === 0 && currentPage > 1) {
+                    this.pagingParams.pageNumber--;
+                    this.loadCheckPayments();
+                }
             });
         } catch (error) {
             console.log(error);
