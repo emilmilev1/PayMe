@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using PayMe.Domain;
+using PayMe.Domain.Entities;
 
 namespace PayMe.API.Services
 {

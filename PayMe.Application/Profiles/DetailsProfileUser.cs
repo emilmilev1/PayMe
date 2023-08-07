@@ -12,11 +12,11 @@ namespace PayMe.Application.Profiles
     /// Service which shows Profile user data
     /// Anything that doesn't update the database is going to be a Query
     /// </summary>
-    public class DetailsProfileUser
+    public abstract class DetailsProfileUser
     {
         public class Query : IRequest<Result<Profile>>
         {
-            public string Username { get; set; }
+            public string Username { get; set; } = null!;
         }
 
         public class Handler : IRequestHandler<Query, Result<Profile>>
@@ -39,7 +39,10 @@ namespace PayMe.Application.Profiles
                         new { currentUsername = _userAccessor.GetUsername() })
                     .SingleOrDefaultAsync(x => x.Username == request.Username, cancellationToken: cancellationToken);
 
-                if (user == null) return null;
+                if (user == null)
+                {
+                    return null!;
+                }
 
                 return Result<Profile>.Success(user);
             }

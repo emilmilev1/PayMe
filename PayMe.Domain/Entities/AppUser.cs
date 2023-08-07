@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
-namespace PayMe.Domain
+namespace PayMe.Domain.Entities
 {
     /// <summary>
     /// Entity AppUser

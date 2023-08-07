@@ -3,12 +3,14 @@ import styles from "./Pagination.module.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import { useStore } from "../../../stores/store";
 import { PagingParams } from "../../../models/pagination";
+import { useEffect } from "react";
 
 interface PaginationData {
     currentPage: number;
     totalPages: number;
     totalItems: number;
     onPageChange: (page: number) => void;
+    itemsPerPage: number;
 }
 
 const Pagination = ({
@@ -16,6 +18,7 @@ const Pagination = ({
     totalPages,
     totalItems,
     onPageChange,
+    itemsPerPage,
 }: PaginationData) => {
     const { checkPaymentStore } = useStore();
     const { setPagingParams } = checkPaymentStore;
@@ -42,6 +45,17 @@ const Pagination = ({
 
         return elements;
     };
+
+    useEffect(() => {
+        if (currentPage > totalPages) {
+            onPageChange(totalPages);
+        }
+    }, [totalPages, currentPage, onPageChange]);
+
+    if (totalItems === 0) {
+        currentPage = 1;
+        totalPages = 1;
+    }
 
     return (
         <div className={styles.pagination}>

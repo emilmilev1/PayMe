@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using PayMe.Domain;
+using PayMe.Domain.Entities;
 
 namespace PayMe.Core
 {
@@ -10,18 +10,18 @@ namespace PayMe.Core
         {
         }
 
-        public DbSet<CheckPayment> CheckPayments { get; set; }
+        public DbSet<CheckPayment> CheckPayments { get; set; } = null!;
 
-        public DbSet<CheckAttendee> CheckPaymentsUsers { get; set; }
+        public DbSet<CheckAttendee> CheckPaymentsUsers { get; set; } = null!;
 
-        public DbSet<Photo> Photos { get; set; }
+        public DbSet<Photo> Photos { get; set; } = null!;
 
-        public DbSet<AdminComment> AdminComments { get; set; }
+        public DbSet<AdminComment> AdminComments { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
+            
             builder.Entity<CheckAttendee>(x =>
                 x.HasKey(a => new { a.AppUserId, a.CheckPaymentId }));
 

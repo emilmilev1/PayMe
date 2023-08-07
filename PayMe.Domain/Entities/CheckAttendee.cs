@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PayMe.Domain
+namespace PayMe.Domain.Entities
 {
     /// <summary>
     /// Entity CheckAttendee
@@ -11,7 +11,7 @@ namespace PayMe.Domain
 
         public string AppUserId { get; set; }
 
-        public AppUser AppUser { get; set; }
+        public AppUser? AppUser { get; set; }
 
         public CheckPayment CheckPayment { get; set; }
     }

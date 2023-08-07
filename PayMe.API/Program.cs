@@ -8,9 +8,11 @@ using PayMe.API.AppExtensions;
 using PayMe.API.LoggingConfig;
 using PayMe.API.Middleware;
 using PayMe.Application.CheckPayments;
+using PayMe.Application.Services;
 using PayMe.Core;
 using PayMe.Core.DataSeed;
 using PayMe.Domain;
+using PayMe.Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 

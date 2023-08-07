@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using PayMe.Domain;
+using PayMe.Domain.Entities;
 
 namespace PayMe.Application.CheckPayments
 {
@@ -40,6 +41,6 @@ namespace PayMe.Application.CheckPayments
         [Range(0.00, 100000.00, ErrorMessage = "Total should be a positive number!")]
         public double Total { get; set; }
         
-        public ICollection<CheckAttendee> CheckAttendees { get; set; }
+        public ICollection<CheckAttendee> CheckAttendees { get; set; } = new List<CheckAttendee>();
     }
 }

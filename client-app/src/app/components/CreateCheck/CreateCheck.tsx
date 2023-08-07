@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import { Box, Container, Paper } from "@mui/material";
+import { Box, Button, CircularProgress, Container, Paper } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -12,7 +12,6 @@ import { CheckPaymentFormValues } from "../../models/checkPaymentStore";
 import { useHistory, useParams } from "react-router-dom";
 import { useStore } from "../../stores/store";
 import { v4 as uuid } from "uuid";
-import { Button } from "semantic-ui-react";
 import { toast } from "react-toastify";
 import { format, zonedTimeToUtc } from "date-fns-tz";
 
@@ -51,36 +50,39 @@ export default function CreateCheck() {
         }
     }, [id, loadCheckPayment]);
 
-    const handleSubmit = (event: React.FormEvent) => {
+    const isFormValid =
+        checkPayment.firstName &&
+        checkPayment.lastName &&
+        checkPayment.title &&
+        checkPayment.address &&
+        checkPayment.total >= 0 &&
+        checkPayment.zipCode >= 0 &&
+        selectedCountry !== "" &&
+        checkPayment.date !== null;
+
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        const isFormValid =
-            checkPayment.firstName &&
-            checkPayment.lastName &&
-            checkPayment.title &&
-            checkPayment.address &&
-            checkPayment.total >= 0 &&
-            checkPayment.zipCode >= 0 &&
-            selectedCountry !== "" &&
-            checkPayment.date !== null;
-
         if (isFormValid) {
-            const currentTimeInTimeZone = zonedTimeToUtc(
-                new Date(),
-                "Europe/Sofia"
-            );
+            try {
+                const currentTimeInTimeZone = zonedTimeToUtc(
+                    new Date(),
+                    "Europe/Sofia"
+                );
 
-            const newCheckPayment = {
-                ...checkPayment,
-                id: uuid(),
-                country: selectedCountry,
-                date: currentTimeInTimeZone,
-            };
+                const newCheckPayment = {
+                    ...checkPayment,
+                    id: uuid(),
+                    country: selectedCountry,
+                    date: currentTimeInTimeZone,
+                };
 
-            createCheckPayment(newCheckPayment).then(() => {
+                await createCheckPayment(newCheckPayment);
                 toast.success("Payment created successfully!");
                 history.push(`/dashboard`);
-            });
+            } catch (error) {
+                toast.error("Error occurred while creating payment.");
+            }
         } else {
             toast.error("Please fill in all required fields.");
         }
@@ -116,13 +118,13 @@ export default function CreateCheck() {
                                 <Grid container spacing={3}>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
+                                            fullWidth
                                             required
                                             id="firstNameSender"
                                             name="firstNameSender"
                                             label="First name"
-                                            fullWidth
-                                            autoComplete="given-name"
-                                            variant="standard"
+                                            autoComplete="firstNameSender"
+                                            variant="filled"
                                             value={checkPayment.firstName}
                                             onChange={(e) =>
                                                 setCheckPayment({
@@ -134,13 +136,13 @@ export default function CreateCheck() {
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
+                                            fullWidth
                                             required
                                             id="lastNameSender"
                                             name="lastNameSender"
                                             label="Last name"
-                                            fullWidth
-                                            autoComplete="family-name"
-                                            variant="standard"
+                                            autoComplete="lastNameSender"
+                                            variant="filled"
                                             value={checkPayment.lastName}
                                             onChange={(e) =>
                                                 setCheckPayment({
@@ -152,13 +154,13 @@ export default function CreateCheck() {
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
+                                            fullWidth
                                             required
                                             id="title"
                                             name="title"
                                             label="Title"
-                                            fullWidth
-                                            autoComplete="given-name"
-                                            variant="standard"
+                                            autoComplete="title"
+                                            variant="filled"
                                             value={checkPayment.title}
                                             onChange={(e) =>
                                                 setCheckPayment({
@@ -170,13 +172,13 @@ export default function CreateCheck() {
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
+                                            fullWidth
                                             required
                                             id="address2"
                                             name="address2"
                                             label="Address line"
-                                            fullWidth
-                                            autoComplete="shipping address-line2"
-                                            variant="standard"
+                                            autoComplete="address2"
+                                            variant="filled"
                                             value={checkPayment.address}
                                             onChange={(e) =>
                                                 setCheckPayment({
@@ -227,13 +229,13 @@ export default function CreateCheck() {
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
+                                            fullWidth
                                             required
-                                            id="state"
+                                            id="total"
                                             name="Total"
                                             type="number"
                                             label="Total"
-                                            fullWidth
-                                            variant="standard"
+                                            variant="filled"
                                             value={
                                                 checkPayment.total === 0
                                                     ? ""
@@ -254,14 +256,14 @@ export default function CreateCheck() {
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
+                                            fullWidth
                                             required
                                             id="zip"
                                             name="zip"
                                             type="number"
                                             label="Zip / Postal code"
-                                            fullWidth
-                                            autoComplete="shipping postal-code"
-                                            variant="standard"
+                                            autoComplete="zip"
+                                            variant="filled"
                                             value={
                                                 checkPayment.zipCode === 0
                                                     ? ""
@@ -291,7 +293,7 @@ export default function CreateCheck() {
                                     <Button
                                         type="submit"
                                         variant="contained"
-                                        style={{
+                                        sx={{
                                             backgroundColor: "#4caf50",
                                             color: "#fff",
                                         }}
@@ -307,6 +309,7 @@ export default function CreateCheck() {
                                                 checkPayment.date !== null
                                             )
                                         }
+                                        onClick={handleSubmit}
                                     >
                                         Complete
                                     </Button>

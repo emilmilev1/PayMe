@@ -3,6 +3,7 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import { format } from "date-fns";
 import {
+    Box,
     Button,
     Dialog,
     DialogActions,
@@ -54,7 +55,14 @@ const TableEachPayment = ({ payment, checkPaymentStore }: Props) => {
         typeof payment.total === "number" ? payment.total.toFixed(2) : 0;
 
     return (
-        <TableRow key={payment.id}>
+        <TableRow
+            key={payment.id}
+            sx={{
+                "&:hover": {
+                    backgroundColor: "rgba(255, 255, 0, 0.3)",
+                },
+            }}
+        >
             <TableCell>{dateEET}</TableCell>
             <TableCell>{timeEET}</TableCell>
             <TableCell>{payment.firstName}</TableCell>
@@ -64,7 +72,11 @@ const TableEachPayment = ({ payment, checkPaymentStore }: Props) => {
             <TableCell>{payment.zipCode}</TableCell>
             <TableCell align="center">
                 <Button
-                    style={{ border: "none", outline: "none", color: "green" }}
+                    style={{
+                        border: "none",
+                        outline: "none",
+                        color: "green",
+                    }}
                     onClick={() => console.log("Details")}
                 >
                     Details
@@ -76,7 +88,11 @@ const TableEachPayment = ({ payment, checkPaymentStore }: Props) => {
                     Edit
                 </Button>
                 <Button
-                    style={{ border: "none", outline: "none", color: "red" }}
+                    style={{
+                        border: "none",
+                        outline: "none",
+                        color: "red",
+                    }}
                     onClick={handleOpenDeleteDialog}
                 >
                     Delete

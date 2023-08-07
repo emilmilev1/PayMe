@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PayMe.Application.CheckPayments;
-using PayMe.Domain;
+using PayMe.Application.Services;
+using PayMe.Domain.Entities;
 
 namespace PayMe.API.Controllers
 {
@@ -27,6 +28,14 @@ namespace PayMe.API.Controllers
         public async Task<IActionResult> CreateCheckPayment(CheckPayment checkPayment)
         {
             return HandleResult(await Mediator!.Send(new Create.Command { CheckPayment = checkPayment }));
+        }
+
+        [HttpGet("total")]
+        public async Task<ActionResult<double>> GetTotalPayments()
+        {
+            var result = await Mediator!.Send(new CheckPaymentTotal.Query());
+            
+            return HandleResult(result);
         }
 
         // [Authorize(Policy = "")]

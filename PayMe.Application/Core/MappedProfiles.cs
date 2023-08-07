@@ -1,6 +1,6 @@
 ﻿using PayMe.Application.CheckPayments;
 using PayMe.Application.Profiles;
-using PayMe.Domain;
+using PayMe.Domain.Entities;
 
 namespace PayMe.Application.Core
 {
@@ -13,7 +13,6 @@ namespace PayMe.Application.Core
             CreateMap<CheckPayment, CheckPaymentDto>()
                 .ForMember(x => x.CheckAttendees, o =>
                     o.MapFrom(y => y.CheckPaymentsUsers));
-            ;
 
             CreateMap<CheckAttendee, CheckAttendeeDto>()
                 .ForMember(d => d.Username, o =>
@@ -27,25 +26,25 @@ namespace PayMe.Application.Core
 
             CreateMap<CheckAttendee, CheckPaymentDto>()
                 .ForMember(x => x.Id, o =>
-                    o.MapFrom(y => y.CheckPayment.Id))
+                    o.MapFrom(y => y.CheckPayment!.Id))
                 .ForMember(x => x.Date, o =>
-                    o.MapFrom(y => y.CheckPayment.Date))
+                    o.MapFrom(y => y.CheckPayment!.Date))
                 .ForMember(x => x.Title, o =>
-                    o.MapFrom(y => y.CheckPayment.Title))
+                    o.MapFrom(y => y.CheckPayment!.Title))
                 .ForMember(x => x.FirstName, o =>
-                    o.MapFrom(y => y.CheckPayment.FirstName))
+                    o.MapFrom(y => y.CheckPayment!.FirstName))
                 .ForMember(x => x.LastName, o =>
-                    o.MapFrom(y => y.CheckPayment.LastName))
+                    o.MapFrom(y => y.CheckPayment!.LastName))
                 .ForMember(x => x.Address, o =>
-                    o.MapFrom(y => y.CheckPayment.Address))
+                    o.MapFrom(y => y.CheckPayment!.Address))
                 .ForMember(x => x.Country, o =>
-                    o.MapFrom(y => y.CheckPayment.Country))
+                    o.MapFrom(y => y.CheckPayment!.Country))
                 .ForMember(x => x.ZipCode, o =>
-                    o.MapFrom(y => y.CheckPayment.ZipCode))
+                    o.MapFrom(y => y.CheckPayment!.ZipCode))
                 .ForMember(x => x.Total, o =>
-                    o.MapFrom(y => y.CheckPayment.Total))
+                    o.MapFrom(y => y.CheckPayment!.Total))
                 .ForMember(x => x.CheckAttendees, o =>
-                    o.MapFrom(p => p.CheckPayment.CheckPaymentsUsers));
+                    o.MapFrom(p => p.CheckPayment!.CheckPaymentsUsers));
 
             CreateMap<AppUser, Profile>()
                 .ForMember(x => x.Username, o =>

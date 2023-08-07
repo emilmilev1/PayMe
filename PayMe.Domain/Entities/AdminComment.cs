@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
 
-namespace PayMe.Domain
+namespace PayMe.Domain.Entities
 {
     /// <summary>
     /// Entity AdminComment

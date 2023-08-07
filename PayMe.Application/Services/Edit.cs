@@ -1,14 +1,14 @@
-﻿using System.Diagnostics;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentValidation;
 using MediatR;
+using PayMe.Application.CheckPayments;
 using PayMe.Application.Core;
 using PayMe.Core;
-using PayMe.Domain;
+using PayMe.Domain.Entities;
 
-namespace PayMe.Application.CheckPayments
+namespace PayMe.Application.Services
 {
-    public class Edit
+    public abstract class Edit
     {
         public class Command : IRequest<Result<Unit>>
         {
@@ -39,7 +39,8 @@ namespace PayMe.Application.CheckPayments
                 if (request.CheckPayment.Id == Guid.Empty)
                     return Result<Unit>.Failure("Invalid Check payment ID!");
 
-                var checkPayment = await _context.CheckPayments.FindAsync(request.CheckPayment.Id);
+                var checkPayment = await _context.CheckPayments.FindAsync(new object?[] { request.CheckPayment.Id },
+                    cancellationToken: cancellationToken);
 
                 if (checkPayment == null)
                 {

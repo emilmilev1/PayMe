@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PayMe.Domain
+namespace PayMe.Domain.Entities
 {
     /// <summary>
     /// Entity RefreshToken

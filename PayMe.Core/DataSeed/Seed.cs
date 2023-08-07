@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using PayMe.Domain;
+using PayMe.Domain.Entities;
 
 namespace PayMe.Core.DataSeed
 {
-    public class Seed
+    public abstract class Seed
     {
         public static async Task SeedData(DataContext context, UserManager<AppUser> userManager)
         {
-            if (!userManager.Users.Any() && !context.CheckPayments!.Any())
+            if (!userManager.Users.Any() && !context.CheckPayments.Any())
             {
                 var users = new List<AppUser>
                 {
@@ -76,7 +76,7 @@ namespace PayMe.Core.DataSeed
                             {
                                 AppUser = users[0],
                             }
-                        },
+                        }
                     },
                     new CheckPayment
                     {

@@ -155,7 +155,7 @@ namespace PayMe.Core.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("PayMe.Domain.AdminComment", b =>
+            modelBuilder.Entity("PayMe.Domain.Entities.AdminComment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -185,7 +185,7 @@ namespace PayMe.Core.Migrations
                     b.ToTable("AdminComments");
                 });
 
-            modelBuilder.Entity("PayMe.Domain.AppUser", b =>
+            modelBuilder.Entity("PayMe.Domain.Entities.AppUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -258,7 +258,7 @@ namespace PayMe.Core.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("PayMe.Domain.CheckAttendee", b =>
+            modelBuilder.Entity("PayMe.Domain.Entities.CheckAttendee", b =>
                 {
                     b.Property<string>("AppUserId")
                         .HasColumnType("nvarchar(450)");
@@ -273,7 +273,7 @@ namespace PayMe.Core.Migrations
                     b.ToTable("CheckPaymentsUsers");
                 });
 
-            modelBuilder.Entity("PayMe.Domain.CheckPayment", b =>
+            modelBuilder.Entity("PayMe.Domain.Entities.CheckPayment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -318,7 +318,7 @@ namespace PayMe.Core.Migrations
                     b.ToTable("CheckPayments");
                 });
 
-            modelBuilder.Entity("PayMe.Domain.Photo", b =>
+            modelBuilder.Entity("PayMe.Domain.Entities.Photo", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -340,7 +340,7 @@ namespace PayMe.Core.Migrations
                     b.ToTable("Photos");
                 });
 
-            modelBuilder.Entity("PayMe.Domain.RefreshToken", b =>
+            modelBuilder.Entity("PayMe.Domain.Entities.RefreshToken", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -379,7 +379,7 @@ namespace PayMe.Core.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("PayMe.Domain.AppUser", null)
+                    b.HasOne("PayMe.Domain.Entities.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -388,7 +388,7 @@ namespace PayMe.Core.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("PayMe.Domain.AppUser", null)
+                    b.HasOne("PayMe.Domain.Entities.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -403,7 +403,7 @@ namespace PayMe.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PayMe.Domain.AppUser", null)
+                    b.HasOne("PayMe.Domain.Entities.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -412,20 +412,20 @@ namespace PayMe.Core.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("PayMe.Domain.AppUser", null)
+                    b.HasOne("PayMe.Domain.Entities.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PayMe.Domain.AdminComment", b =>
+            modelBuilder.Entity("PayMe.Domain.Entities.AdminComment", b =>
                 {
-                    b.HasOne("PayMe.Domain.AppUser", "Author")
+                    b.HasOne("PayMe.Domain.Entities.AppUser", "Author")
                         .WithMany()
                         .HasForeignKey("AuthorId");
 
-                    b.HasOne("PayMe.Domain.CheckPayment", "CheckPayment")
+                    b.HasOne("PayMe.Domain.Entities.CheckPayment", "CheckPayment")
                         .WithMany("AdminComments")
                         .HasForeignKey("CheckPaymentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -436,15 +436,15 @@ namespace PayMe.Core.Migrations
                     b.Navigation("CheckPayment");
                 });
 
-            modelBuilder.Entity("PayMe.Domain.CheckAttendee", b =>
+            modelBuilder.Entity("PayMe.Domain.Entities.CheckAttendee", b =>
                 {
-                    b.HasOne("PayMe.Domain.AppUser", "AppUser")
+                    b.HasOne("PayMe.Domain.Entities.AppUser", "AppUser")
                         .WithMany("CheckPaymentsUsers")
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PayMe.Domain.CheckPayment", "CheckPayment")
+                    b.HasOne("PayMe.Domain.Entities.CheckPayment", "CheckPayment")
                         .WithMany("CheckPaymentsUsers")
                         .HasForeignKey("CheckPaymentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -455,30 +455,30 @@ namespace PayMe.Core.Migrations
                     b.Navigation("CheckPayment");
                 });
 
-            modelBuilder.Entity("PayMe.Domain.CheckPayment", b =>
+            modelBuilder.Entity("PayMe.Domain.Entities.CheckPayment", b =>
                 {
-                    b.HasOne("PayMe.Domain.AppUser", null)
+                    b.HasOne("PayMe.Domain.Entities.AppUser", null)
                         .WithMany("CheckPayments")
                         .HasForeignKey("AppUserId");
                 });
 
-            modelBuilder.Entity("PayMe.Domain.Photo", b =>
+            modelBuilder.Entity("PayMe.Domain.Entities.Photo", b =>
                 {
-                    b.HasOne("PayMe.Domain.AppUser", null)
+                    b.HasOne("PayMe.Domain.Entities.AppUser", null)
                         .WithMany("Photos")
                         .HasForeignKey("AppUserId");
                 });
 
-            modelBuilder.Entity("PayMe.Domain.RefreshToken", b =>
+            modelBuilder.Entity("PayMe.Domain.Entities.RefreshToken", b =>
                 {
-                    b.HasOne("PayMe.Domain.AppUser", "AppUser")
+                    b.HasOne("PayMe.Domain.Entities.AppUser", "AppUser")
                         .WithMany("RefreshTokens")
                         .HasForeignKey("AppUserId");
 
                     b.Navigation("AppUser");
                 });
 
-            modelBuilder.Entity("PayMe.Domain.AppUser", b =>
+            modelBuilder.Entity("PayMe.Domain.Entities.AppUser", b =>
                 {
                     b.Navigation("CheckPayments");
 
@@ -489,7 +489,7 @@ namespace PayMe.Core.Migrations
                     b.Navigation("RefreshTokens");
                 });
 
-            modelBuilder.Entity("PayMe.Domain.CheckPayment", b =>
+            modelBuilder.Entity("PayMe.Domain.Entities.CheckPayment", b =>
                 {
                     b.Navigation("AdminComments");
 

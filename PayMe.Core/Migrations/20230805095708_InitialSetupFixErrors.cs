@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PayMe.Core.Migrations
 {
-    public partial class MigrationProblemSolved : Migration
+    public partial class InitialSetupFixErrors : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -249,7 +249,7 @@ namespace PayMe.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CheckAttendees",
+                name: "CheckPaymentsUsers",
                 columns: table => new
                 {
                     CheckPaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -257,15 +257,15 @@ namespace PayMe.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CheckAttendees", x => new { x.AppUserId, x.CheckPaymentId });
+                    table.PrimaryKey("PK_CheckPaymentsUsers", x => new { x.AppUserId, x.CheckPaymentId });
                     table.ForeignKey(
-                        name: "FK_CheckAttendees_AspNetUsers_AppUserId",
+                        name: "FK_CheckPaymentsUsers_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CheckAttendees_CheckPayments_CheckPaymentId",
+                        name: "FK_CheckPaymentsUsers_CheckPayments_CheckPaymentId",
                         column: x => x.CheckPaymentId,
                         principalTable: "CheckPayments",
                         principalColumn: "Id",
@@ -322,14 +322,14 @@ namespace PayMe.Core.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CheckAttendees_CheckPaymentId",
-                table: "CheckAttendees",
-                column: "CheckPaymentId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_CheckPayments_AppUserId",
                 table: "CheckPayments",
                 column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CheckPaymentsUsers_CheckPaymentId",
+                table: "CheckPaymentsUsers",
+                column: "CheckPaymentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Photos_AppUserId",
@@ -363,7 +363,7 @@ namespace PayMe.Core.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CheckAttendees");
+                name: "CheckPaymentsUsers");
 
             migrationBuilder.DropTable(
                 name: "Photos");

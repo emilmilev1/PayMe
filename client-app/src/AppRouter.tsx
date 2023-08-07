@@ -36,12 +36,12 @@ function AppRouter() {
     const { commonStore, userStore } = useStore();
 
     useEffect(() => {
-        userStore.getUser();
-    }, []);
-
-    useEffect(() => {
         commonStore.setAppLoaded();
-    }, [commonStore]);
+
+        if (userStore.isLoggedIn) {
+            userStore.getUser();
+        }
+    }, [commonStore, userStore]);
 
     return (
         <div className="app">

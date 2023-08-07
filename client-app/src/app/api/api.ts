@@ -130,6 +130,7 @@ const CheckPayments = {
                     return paginatedResult;
                 }
             ),
+    total: () => requests.get("/payments/total"),
     details: (id: string) => requests.get<CheckPaymentData>(`/payments/${id}`),
     create: (checkPayment: CheckPaymentFormValues) =>
         requests.post<void>("/payments", checkPayment),

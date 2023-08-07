@@ -21,8 +21,9 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores/store";
 import { useEffect } from "react";
 import { zonedTimeToUtc } from "date-fns-tz";
+import SortBy from "./SortBy";
 
-const drawerWidth: number = 240;
+const drawerWidth: number = 200;
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
@@ -155,26 +156,48 @@ const Dashboard = () => {
                     }}
                 >
                     <Toolbar />
-                    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+                    <Container maxWidth="lg" sx={{ p: 5 }}>
                         <Grid container spacing={3}>
                             {/* Recent Deposits */}
-                            <Grid item xs={12} md={4} lg={3}>
+                            <Grid
+                                item
+                                xs={12}
+                                md={4}
+                                lg={3}
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    justifyContent: "space-between",
+                                }}
+                            >
                                 <Paper
                                     sx={{
-                                        p: 2,
+                                        p: 4,
+                                        m: 3,
                                         display: "flex",
                                         flexDirection: "column",
-                                        height: 240,
+                                        alignItems: "center",
                                     }}
                                 >
                                     <Deposits />
+                                </Paper>
+                                <Paper
+                                    sx={{
+                                        p: 8,
+                                        m: 3,
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        alignItems: "center",
+                                    }}
+                                >
+                                    <SortBy />
                                 </Paper>
                             </Grid>
                             {/* Recent Orders */}
                             <Grid item xs={12}>
                                 <Paper
                                     sx={{
-                                        p: 10,
+                                        p: 3,
                                         display: "flex",
                                         flexDirection: "column",
                                     }}

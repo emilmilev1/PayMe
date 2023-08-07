@@ -11,12 +11,12 @@ namespace PayMe.Application.Profiles
     /// Service which changes Profile user data
     /// Anything that doesn't update the database is going to be a Query
     /// </summary>
-    public class UpdateDetailsProfileUser
+    public abstract class UpdateDetailsProfileUser
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
+            public string FirstName { get; set; } = null!;
+            public string LastName { get; set; } = null!;
         }
 
         public class CommandValidator : AbstractValidator<Command>

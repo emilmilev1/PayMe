@@ -106,6 +106,7 @@ const SignUp = () => {
                     )}
                     <TextField
                         fullWidth
+                        required
                         id="username"
                         label="Username"
                         name="username"
@@ -129,6 +130,7 @@ const SignUp = () => {
                     />
                     <TextField
                         fullWidth
+                        required
                         id="firstName"
                         label="First Name"
                         name="firstName"
@@ -152,6 +154,7 @@ const SignUp = () => {
                     />
                     <TextField
                         fullWidth
+                        required
                         id="lastName"
                         label="Last Name"
                         name="lastName"
@@ -175,8 +178,9 @@ const SignUp = () => {
                     />
                     <TextField
                         fullWidth
+                        required
                         id="email"
-                        label="Email Address"
+                        label="Email"
                         name="email"
                         autoComplete="email"
                         value={formik.values.email}
@@ -194,6 +198,7 @@ const SignUp = () => {
                     />
                     <TextField
                         fullWidth
+                        required
                         id="password"
                         name="password"
                         label="Password"
@@ -245,6 +250,7 @@ const SignUp = () => {
                     />
                     <TextField
                         fullWidth
+                        required
                         id="rePassword"
                         name="rePassword"
                         label="Confirm Password"

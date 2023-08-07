@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using PayMe.API.Services;
 using PayMe.Core;
 using PayMe.Domain;
+using PayMe.Domain.Entities;
 
 namespace PayMe.API.AppExtensions
 {

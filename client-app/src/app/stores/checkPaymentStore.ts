@@ -68,6 +68,12 @@ export default class CheckPaymentStore {
         );
     }
 
+    getTotalPaymentsAmount = async () => {
+        const resultAPI: unknown = await api.CheckPayments.total();
+
+        return resultAPI;
+    };
+
     loadCheckPayments = async () => {
         this.loadingInitial = true;
 

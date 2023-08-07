@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PayMe.Application.CheckPayments;
 using PayMe.Application.Core;
 using PayMe.Application.Interfaces;
+using PayMe.Application.Services;
 using PayMe.Core;
 using PayMe.Infrastructure.Email;
 using PayMe.Infrastructure.Photos;

@@ -1,13 +1,13 @@
-﻿using System.Diagnostics;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using PayMe.Application.CheckPayments;
 using PayMe.Application.Core;
 using PayMe.Application.Interfaces;
 using PayMe.Core;
-using PayMe.Domain;
+using PayMe.Domain.Entities;
 
-namespace PayMe.Application.CheckPayments
+namespace PayMe.Application.Services
 {
     /// <summary>
     /// We use "Unit" - We do not return any check Payments from this

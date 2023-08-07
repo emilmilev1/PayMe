@@ -56,8 +56,8 @@ export default class UserStore {
             );
             runInAction(() => (this.user = user));
             this.startRefreshTokenTimer(user);
-        } catch (error) {
-            console.error(error);
+        } catch (error: any) {
+            console.error(error.message);
         }
     };
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PayMe.Domain
+namespace PayMe.Domain.Entities
 {
     /// <summary>
     /// Entity CheckPayment
@@ -11,17 +11,17 @@ namespace PayMe.Domain
         public Guid Id { get; set; }
 
         public DateTime Date { get; set; }
-        
-        public string Title { get; set; }
 
-        public string FirstName { get; set; }
+        public string Title { get; set; } = null!;
 
-        public string LastName { get; set; } 
+        public string FirstName { get; set; } = null!;
 
-        public string Address { get; set; } 
+        public string LastName { get; set; } = null!;
 
-        public string Country { get; set; }
-        
+        public string Address { get; set; } = null!;
+
+        public string Country { get; set; } = null!;
+
         public int ZipCode { get; set; }
 
         public double Total { get; set; }

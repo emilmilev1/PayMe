@@ -96,10 +96,10 @@ const ForgotPassword = () => {
                         )}
                         <TextField
                             fullWidth
+                            required
                             id="reset-email"
                             margin="normal"
-                            required
-                            label="Email Address"
+                            label="Email"
                             name="email"
                             autoComplete="email"
                             value={formik.values.email}
@@ -120,6 +120,7 @@ const ForgotPassword = () => {
                         />
                         <TextField
                             fullWidth
+                            required
                             id="newPassword"
                             name="password"
                             label="Password"
@@ -173,6 +174,7 @@ const ForgotPassword = () => {
                         />
                         <TextField
                             fullWidth
+                            required
                             id="rePassword"
                             name="rePassword"
                             label="Confirm Password"

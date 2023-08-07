@@ -1,20 +1,18 @@
-﻿using System.Collections.ObjectModel;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
+using PayMe.Application.CheckPayments;
 using PayMe.Application.Core;
 using PayMe.Application.Interfaces;
 using PayMe.Core;
-using PayMe.Domain;
 
-namespace PayMe.Application.CheckPayments
+namespace PayMe.Application.Services
 {
-    public class List
+    public abstract class List
     {
         public class Query : IRequest<Result<PagedList<CheckPaymentDto>>>
         {
-            public CheckPaymentParams Params { get; set; }
+            public CheckPaymentParams Params { get; set; } = null!;
         }
 
         public class Handler : IRequestHandler<Query, Result<PagedList<CheckPaymentDto>>>

@@ -1,4 +1,5 @@
 ﻿using PayMe.Domain;
+using PayMe.Domain.Entities;
 
 namespace PayMe.Application.Profiles
 {

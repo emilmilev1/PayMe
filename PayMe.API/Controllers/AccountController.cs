@@ -1,18 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using PayMe.API.Models;
 using PayMe.API.Services;
-using PayMe.Domain;
+using PayMe.Domain.Entities;
 using PayMe.Infrastructure.Email;
 
 namespace PayMe.API.Controllers
@@ -58,10 +53,7 @@ namespace PayMe.API.Controllers
 
             if (result.Succeeded)
             {
-                if (user != null)
-                {
-                    await SetRefreshToken(user);
-                }
+                await SetRefreshToken(user);
 
                 return CreateUserObject(user);
             }
@@ -133,7 +125,7 @@ namespace PayMe.API.Controllers
         /// <summary>
         /// Reset a password.
         /// </summary>
-        /// <param name="email">The user's email address.</param>
+        /// <param name="resetPasswordUserDto">A new password passed as an argument</param>
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPut("resetPassword")]
@@ -144,10 +136,10 @@ namespace PayMe.API.Controllers
             {
                 return NotFound("User not found!");
             }
-            
+
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
-            
+
             var decodedTokenBytes = WebEncoders.Base64UrlDecode(token);
             var decodedToken = Encoding.UTF8.GetString(decodedTokenBytes);
 
@@ -237,7 +229,7 @@ namespace PayMe.API.Controllers
                 Username = user.UserName,
                 FirstName = user.FirstName,
                 Token = _tokenService.CreateToken(user),
-                Image = user?.Photos?.FirstOrDefault(x => x.IsMain)?.Url!
+                Image = user.Photos.FirstOrDefault(x => x.IsMain)?.Url!
             };
         }
 
@@ -275,10 +267,7 @@ namespace PayMe.API.Controllers
         {
             var refreshToken = _tokenService.GenerateRefreshToken();
 
-            if (user.RefreshTokens == null)
-            {
-                user.RefreshTokens = new List<RefreshToken>();
-            }
+            user.RefreshTokens = new List<RefreshToken>();
 
             user.RefreshTokens.Add(refreshToken);
 

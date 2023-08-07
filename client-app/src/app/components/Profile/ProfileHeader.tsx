@@ -26,6 +26,9 @@ export const ProfileHeader = () => {
         setOpen(false);
     };
 
+    const isLoggedIn = userStore.isLoggedIn;
+    const username = userStore.user?.username;
+
     return (
         <Segment style={{ position: "relative" }}>
             <Grid>
@@ -41,8 +44,9 @@ export const ProfileHeader = () => {
                                 <Header
                                     as="h1"
                                     content={
-                                        userStore.user?.username ||
-                                        "Missing username"
+                                        isLoggedIn
+                                            ? username
+                                            : "Missing username"
                                     }
                                 />
                             </Item.Content>
