@@ -27,7 +27,11 @@ const Deposits = () => {
         <React.Fragment>
             <Title>Recent Total</Title>
             {totalAmount !== null ? (
-                <Typography component="p" variant="h4" sx={{ p: 1, mt: 2 }}>
+                <Typography
+                    component="p"
+                    variant="h4"
+                    sx={{ p: 1, mt: 2, color: "green" }}
+                >
                     ${totalAmount.toFixed(2)}
                 </Typography>
             ) : (

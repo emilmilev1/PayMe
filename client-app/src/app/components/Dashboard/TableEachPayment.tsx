@@ -20,9 +20,14 @@ import { utcToZonedTime } from "date-fns-tz";
 interface Props {
     payment: CheckPaymentData;
     checkPaymentStore: CheckPaymentStore;
+    paymentNumber: number;
 }
 
-const TableEachPayment = ({ payment, checkPaymentStore }: Props) => {
+const TableEachPayment = ({
+    payment,
+    checkPaymentStore,
+    paymentNumber,
+}: Props) => {
     const [editDialogOpen, setEditDialogOpen] = useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
@@ -47,9 +52,9 @@ const TableEachPayment = ({ payment, checkPaymentStore }: Props) => {
         handleCloseDeleteDialog();
     };
 
-    const paymentDateInBulgaria = utcToZonedTime(payment.date, "Europe/Sofia");
-    const dateEET = format(paymentDateInBulgaria, "dd MMM yyyy");
-    const timeEET = format(paymentDateInBulgaria, "h:mm aa");
+    const paymentDateInBulgaria = utcToZonedTime(payment.date, "EET");
+    const dateEET = format(paymentDateInBulgaria, "dd.MM.yyyy");
+    const timeEET = format(paymentDateInBulgaria, "HH:mm a");
 
     const totalAmount =
         typeof payment.total === "number" ? payment.total.toFixed(2) : 0;
@@ -63,6 +68,7 @@ const TableEachPayment = ({ payment, checkPaymentStore }: Props) => {
                 },
             }}
         >
+            <TableCell>{paymentNumber}</TableCell>
             <TableCell>{dateEET}</TableCell>
             <TableCell>{timeEET}</TableCell>
             <TableCell>{payment.firstName}</TableCell>

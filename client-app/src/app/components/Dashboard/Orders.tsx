@@ -37,6 +37,7 @@ const Orders = () => {
                         </TableCell>
                     </TableRow>
                     <TableRow sx={{ backgroundColor: "rgba(0, 0, 255, 0.1)" }}>
+                        <TableCell>N</TableCell>
                         <TableCell>Date</TableCell>
                         <TableCell>Time</TableCell>
                         <TableCell>First Name</TableCell>

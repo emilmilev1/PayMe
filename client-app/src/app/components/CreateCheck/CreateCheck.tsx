@@ -65,10 +65,7 @@ export default function CreateCheck() {
 
         if (isFormValid) {
             try {
-                const currentTimeInTimeZone = zonedTimeToUtc(
-                    new Date(),
-                    "Europe/Sofia"
-                );
+                const currentTimeInTimeZone = zonedTimeToUtc(new Date(), "EET");
 
                 const newCheckPayment = {
                     ...checkPayment,

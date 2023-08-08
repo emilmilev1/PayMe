@@ -183,7 +183,7 @@ const Dashboard = () => {
                                 </Paper>
                                 <Paper
                                     sx={{
-                                        p: 8,
+                                        p: 4,
                                         m: 3,
                                         display: "flex",
                                         flexDirection: "column",

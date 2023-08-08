@@ -34,9 +34,22 @@ namespace PayMe.Application.Services
                 var query = _context.CheckPayments
                     .Where(chP => chP.CheckPaymentsUsers.Any(
                         cpu => cpu.AppUserId == _userAccessor.GetUserId()))
-                    .OrderBy(d => d.Date)
                     .ProjectTo<CheckPaymentDto>(_mapper.ConfigurationProvider)
                     .AsQueryable();
+
+                switch (request.Params.OrderBy.ToLower())
+                {
+                    case "date":
+                        query = request.Params.IsDescending
+                            ? query.OrderByDescending(payment => payment.Date)
+                            : query.OrderBy(payment => payment.Date);
+                        break;
+                    case "total":
+                        query = request.Params.IsDescending
+                            ? query.OrderByDescending(payment => payment.Total)
+                            : query.OrderBy(payment => payment.Total);
+                        break;
+                }
 
                 return Result<PagedList<CheckPaymentDto>>.Success(
                     await PagedList<CheckPaymentDto>.CreateAsync(

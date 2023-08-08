@@ -58,10 +58,7 @@ const EditPaymentDialog: React.FC<EditPaymentDialogProps> = ({
 
     const handleSaveChanges = async () => {
         try {
-            const currentTimeInTimeZone = zonedTimeToUtc(
-                new Date(),
-                "Europe/Sofia"
-            );
+            const currentTimeInTimeZone = zonedTimeToUtc(new Date(), "EET");
 
             const updatedCurrentPayment = {
                 ...editedPayment,

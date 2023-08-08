@@ -13,7 +13,9 @@ namespace PayMe.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCheckPayments([FromQuery] CheckPaymentParams param)
         {
-            return HandlePagedResult(await Mediator!.Send(new List.Query { Params = param }));
+            var result = await Mediator!.Send(new List.Query { Params = param });
+            
+            return HandlePagedResult(result);
         }
 
         [HttpGet("{id}")]

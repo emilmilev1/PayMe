@@ -13,12 +13,14 @@ import {
     PagingParams,
 } from "../models/pagination";
 import { Profile } from "../models/profile";
+import { zonedTimeToUtc } from "date-fns-tz";
 
 export default class CheckPaymentStore {
     checkPaymentRegistry = new Map<string, CheckPaymentData>();
     selectedCheckPayment: CheckPaymentData | undefined = undefined;
     editMode = false;
     loading = false;
+    creatingPayment = false;
     loadingInitial = false;
     pagination: Pagination | null = null;
     pagingParams = new PagingParams();
@@ -29,11 +31,23 @@ export default class CheckPaymentStore {
         reaction(
             () => this.pagingParams.pageNumber,
             () => {
-                this.checkPaymentRegistry.clear();
-                this.loadCheckPayments();
+                if (!this.creatingPayment) {
+                    this.checkPaymentRegistry.clear();
+                    this.loadCheckPayments();
+                }
             }
         );
     }
+
+    sortingParams = {
+        orderBy: "date",
+        isDescending: false,
+    };
+
+    setSortingParams = (orderBy: string, isDescending: boolean) => {
+        this.sortingParams.orderBy = orderBy;
+        this.sortingParams.isDescending = isDescending;
+    };
 
     setPagingParams = (pagingParams: PagingParams) => {
         this.pagingParams = pagingParams;
@@ -44,28 +58,17 @@ export default class CheckPaymentStore {
 
         params.append("pageNumber", this.pagingParams.pageNumber.toString());
         params.append("pageSize", this.pagingParams.pageSize.toString());
+        params.append("orderBy", this.sortingParams.orderBy.toString());
+        params.append(
+            "isDescending",
+            this.sortingParams.isDescending.toString()
+        );
 
         return params;
     }
 
-    get checkPaymentsByDate() {
-        return Array.from(this.checkPaymentRegistry.values()).sort(
-            (a, b) => a.date!.getTime() - b.date!.getTime()
-        );
-    }
-
-    get groupedPayments() {
-        return Object.entries(
-            this.checkPaymentsByDate.reduce((payments, payment) => {
-                const date = format(payment.date!, "dd MMM yyyy");
-
-                payments[date] = payments[date]
-                    ? [...payments[date], payment]
-                    : [payment];
-
-                return payments;
-            }, {} as { [key: string]: CheckPaymentData[] })
-        );
+    get checkPayments() {
+        return Array.from(this.checkPaymentRegistry.values());
     }
 
     getTotalPaymentsAmount = async () => {
@@ -97,9 +100,9 @@ export default class CheckPaymentStore {
             };
 
             this.setPagination(pagination);
-            this.setLoadingInitial(false);
         } catch (error) {
             console.log(error);
+        } finally {
             this.setLoadingInitial(false);
         }
     };
@@ -157,6 +160,8 @@ export default class CheckPaymentStore {
         const payment = new Profile(user!);
 
         try {
+            this.creatingPayment = true;
+
             await api.CheckPayments.create(checkPayment);
 
             const newCheckPayment = new CheckPayment(checkPayment);
@@ -168,8 +173,12 @@ export default class CheckPaymentStore {
             runInAction(() => {
                 this.selectedCheckPayment = newCheckPayment;
             });
+
+            this.loadCheckPayments();
         } catch (error) {
             console.log(error);
+        } finally {
+            this.creatingPayment = false;
         }
     };
 
@@ -177,7 +186,9 @@ export default class CheckPaymentStore {
         if (editedPayment.id) {
             const updatedPayment: CheckPaymentData = {
                 id: editedPayment.id,
-                date: editedPayment.date || new Date(),
+                date: editedPayment.date
+                    ? zonedTimeToUtc(editedPayment.date, "EET")
+                    : zonedTimeToUtc(new Date(), "EET"),
                 title: editedPayment.title,
                 firstName: editedPayment.firstName,
                 lastName: editedPayment.lastName,
@@ -199,6 +210,7 @@ export default class CheckPaymentStore {
 
     updateCheckPayment = async (checkPayment: CheckPaymentFormValues) => {
         this.loading = true;
+        let updatedCheckPayment: CheckPaymentData | undefined;
 
         try {
             await api.CheckPayments.update(checkPayment);
@@ -220,6 +232,15 @@ export default class CheckPaymentStore {
             });
 
             this.updateEditedPayment(checkPayment);
+
+            if (updatedCheckPayment) {
+                this.checkPaymentRegistry.set(
+                    updatedCheckPayment.id,
+                    updatedCheckPayment
+                );
+            }
+
+            this.loadCheckPayments();
         } catch (error) {
             console.log(error);
         } finally {
@@ -241,11 +262,13 @@ export default class CheckPaymentStore {
                 this.checkPaymentRegistry.delete(id);
                 this.loading = false;
 
-                if (this.checkPaymentsByDate.length === 0 && currentPage > 1) {
+                if (this.checkPayments.length === 0 && currentPage > 1) {
                     this.pagingParams.pageNumber--;
                     this.loadCheckPayments();
                 }
             });
+
+            this.loadCheckPayments();
         } catch (error) {
             console.log(error);
             runInAction(() => {
@@ -256,5 +279,25 @@ export default class CheckPaymentStore {
 
     clearSelectedCheckPayment = () => {
         this.selectedCheckPayment = undefined;
+    };
+
+    sortByLatestPayments = () => {
+        this.setSortingParams("date", true);
+        this.loadCheckPayments();
+    };
+
+    sortByOldestPayments = () => {
+        this.setSortingParams("date", false);
+        this.loadCheckPayments();
+    };
+
+    sortByHighestTotal = () => {
+        this.setSortingParams("total", true);
+        this.loadCheckPayments();
+    };
+
+    sortByLowestTotal = () => {
+        this.setSortingParams("total", false);
+        this.loadCheckPayments();
     };
 }
