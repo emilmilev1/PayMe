@@ -16,6 +16,8 @@ namespace PayMe.Core.DataSeed
                         UserName = "Bob",
                         FirstName = "Bob",
                         LastName = "Brown",
+                        Bio =
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                         Email = "bob@test.com"
                     },
                     new AppUser
@@ -23,6 +25,9 @@ namespace PayMe.Core.DataSeed
                         UserName = "Tom",
                         FirstName = "Tom",
                         LastName = "White",
+                        Bio =
+                            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+
                         Email = "tommy@test.com"
                     },
                     new AppUser
@@ -30,6 +35,9 @@ namespace PayMe.Core.DataSeed
                         UserName = "Bobby",
                         FirstName = "Bobby",
                         LastName = "Bones",
+                        Bio =
+                            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+
                         Email = "bobby@test.com"
                     },
                     new AppUser
@@ -37,6 +45,9 @@ namespace PayMe.Core.DataSeed
                         UserName = "Ivan",
                         FirstName = "Ivan",
                         LastName = "Sprite",
+                        Bio =
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+
                         Email = "ivan@test.com"
                     },
                     new AppUser
@@ -44,6 +55,9 @@ namespace PayMe.Core.DataSeed
                         UserName = "Light",
                         FirstName = "Light",
                         LastName = "Runner",
+                        Bio =
+                            "Ipsum dolor sit amet, consectetur, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+
                         Email = "light@test.com"
                     }
                 };

@@ -11,6 +11,8 @@ namespace PayMe.Domain.Entities
         public string FirstName { get; set; } = null!;
 
         public string LastName { get; set; } = null!;
+
+        public string Bio { get; set; } = null!;
         
         public ICollection<Photo> Photos { get; set; } = new List<Photo>();
 

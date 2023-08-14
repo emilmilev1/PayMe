@@ -31,8 +31,8 @@ export default class ProfileStore {
                 this.profile = profile;
                 this.loadingProfile = false;
             });
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            console.log(error.message);
             runInAction(() => (this.loadingProfile = false));
         }
     };

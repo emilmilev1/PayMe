@@ -45,6 +45,7 @@ export default class UserStore {
         runInAction(() => (this.user = null));
         this.user = null;
         history.push("/");
+        window.location.href = "/";
     };
 
     getUser = async () => {

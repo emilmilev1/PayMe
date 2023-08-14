@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PayMe.Application.Profiles;
+using PayMe.Domain.Entities;
 
 namespace PayMe.API.Controllers
 {

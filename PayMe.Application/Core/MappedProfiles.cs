@@ -21,6 +21,8 @@ namespace PayMe.Application.Core
                     o.MapFrom(y => y.AppUser!.FirstName))
                 .ForMember(x => x.LastName, o =>
                     o.MapFrom(y => y.AppUser!.LastName))
+                .ForMember(d => d.Bio, o =>
+                    o.MapFrom(s => s.AppUser!.Bio))
                 .ForMember(x => x.Image, o =>
                     o.MapFrom(y => y.AppUser!.Photos.FirstOrDefault(x => x.IsMain)!.Url));
 
@@ -49,9 +51,9 @@ namespace PayMe.Application.Core
             CreateMap<AppUser, Profile>()
                 .ForMember(x => x.Username, o =>
                     o.MapFrom(y => y.UserName))
-                .ForMember(x => x.LastName, o =>
-                    o.MapFrom(y => y.FirstName))
                 .ForMember(x => x.FirstName, o =>
+                    o.MapFrom(y => y.FirstName))
+                .ForMember(x => x.LastName, o =>
                     o.MapFrom(y => y.LastName))
                 .ForMember(x => x.Image, o =>
                     o.MapFrom(y => y.Photos.FirstOrDefault(x => x.IsMain)!.Url));

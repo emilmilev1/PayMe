@@ -1,4 +1,4 @@
-import React, { Fragment, lazy, Suspense, useEffect, useState } from "react";
+import React, { Fragment, lazy, Suspense, useEffect } from "react";
 import { CssBaseline } from "@mui/material";
 import { Route, Switch, useLocation } from "react-router-dom";
 import NotFound from "./app/pages/NotFound/NotFound";
@@ -62,15 +62,11 @@ function AppRouter() {
                                     component={Dashboard}
                                 />
                                 <GuardedRoutesAuthorization
-                                    path="/profile"
-                                    component={Profile}
-                                />
-                                <GuardedRoutesAuthorization
                                     key={location.key}
                                     path={"/create-payment"}
                                     component={CreateCheckPage}
                                 />
-                                <GuardedRoutesAuthorization
+                                <Route
                                     path="/profiles/:username"
                                     component={Profile}
                                 />
