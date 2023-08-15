@@ -56,7 +56,8 @@ namespace PayMe.Application.Core
                 .ForMember(x => x.LastName, o =>
                     o.MapFrom(y => y.LastName))
                 .ForMember(x => x.Image, o =>
-                    o.MapFrom(y => y.Photos.FirstOrDefault(x => x.IsMain)!.Url));
+                    o.MapFrom(y => y.Photos.FirstOrDefault(x => x.IsMain)!.Url))
+                .ForMember(dest => dest.Photos, opt => opt.Ignore());
         }
     }
 }

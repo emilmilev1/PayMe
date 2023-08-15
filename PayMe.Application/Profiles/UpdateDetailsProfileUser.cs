@@ -15,16 +15,20 @@ namespace PayMe.Application.Profiles
     {
         public class Command : IRequest<Result<Unit>>
         {
+            public string Username { get; set; } = null!;
             public string FirstName { get; set; } = null!;
             public string LastName { get; set; } = null!;
+            public string Bio { get; set; } = null!;
         }
 
         public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()
             {
+                RuleFor(x => x.Username).NotEmpty();
                 RuleFor(x => x.FirstName).NotEmpty();
                 RuleFor(x => x.LastName).NotEmpty();
+                RuleFor(x => x.Bio).NotEmpty();
             }
         }
 
@@ -44,8 +48,10 @@ namespace PayMe.Application.Profiles
                 var user = await _context.Users.FirstOrDefaultAsync(x =>
                     x.UserName == _userAccessor.GetUsername(), cancellationToken: cancellationToken);
 
+                user!.UserName = request.Username ?? user.UserName;
                 user!.FirstName = request.FirstName ?? user.FirstName;
                 user!.LastName = request.LastName ?? user.LastName;
+                user!.Bio = request.Bio ?? user.Bio;
 
                 _context.Entry(user).State = EntityState.Modified;
 

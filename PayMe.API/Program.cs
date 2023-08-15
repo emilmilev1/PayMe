@@ -5,13 +5,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using PayMe.API.AppExtensions;
-using PayMe.API.LoggingConfig;
 using PayMe.API.Middleware;
-using PayMe.Application.CheckPayments;
 using PayMe.Application.Services;
 using PayMe.Core;
 using PayMe.Core.DataSeed;
-using PayMe.Domain;
 using PayMe.Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -66,7 +63,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-//app.MapFallbackToController("Index", "Fallback");
+app.MapFallbackToController("Index", "Fallback");
 
 using var scope = app.Services.CreateScope();
 

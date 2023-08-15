@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PayMe.Application.Profiles;
-using PayMe.Domain.Entities;
 
 namespace PayMe.API.Controllers
 {
-    public class ProfileController : BaseApiController
+    public class ProfilesController : BaseApiController
     {
         [HttpGet("{username}")]
         public async Task<IActionResult> GetProfile(string username)

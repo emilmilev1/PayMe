@@ -71,8 +71,5 @@
     <_ContentIncludedByDefault Remove="wwwroot\static\media\outline-icons.ddae9b1ba9b0b42f5880.woff" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
 
 </Project>

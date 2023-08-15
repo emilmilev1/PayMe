@@ -33,6 +33,8 @@ const ProfileHeader = ({ profile }: Props) => {
     };
 
     const isLoggedIn = userStore.isLoggedIn;
+    const currentUsername = userStore.user?.username;
+    const currentImage = userStore.user?.image;
 
     return (
         <Segment style={{ position: "relative" }}>
@@ -43,14 +45,14 @@ const ProfileHeader = ({ profile }: Props) => {
                             <Item.Image
                                 avatar
                                 size="small"
-                                src={profile.image || "/user.png"}
+                                src={currentImage || "/user.png"}
                             />
                             <Item.Content verticalAlign="middle">
                                 <Header
                                     as="h1"
                                     content={
                                         isLoggedIn
-                                            ? profile.username
+                                            ? currentUsername
                                             : "Missing username"
                                     }
                                 />

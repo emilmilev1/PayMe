@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PayMe.Application.CheckPayments;
 using PayMe.Application.Core;
 using PayMe.Application.Interfaces;
+using PayMe.Application.Profiles;
 using PayMe.Application.Services;
 using PayMe.Core;
 using PayMe.Infrastructure.Email;
@@ -36,6 +37,7 @@ namespace PayMe.API.AppExtensions
             });
 
             services.AddMediatR(typeof(List.Handler).Assembly);
+            services.AddMediatR(typeof(DetailsProfileUser.Handler).Assembly);
             services.AddAutoMapper(typeof(MappedProfiles).Assembly);
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
