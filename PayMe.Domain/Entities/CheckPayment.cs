@@ -9,6 +9,8 @@ namespace PayMe.Domain.Entities
     public class CheckPayment
     {
         public Guid Id { get; set; }
+        
+        public int PaymentNumber { get; set; }
 
         public DateTime Date { get; set; }
 

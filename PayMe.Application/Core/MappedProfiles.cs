@@ -29,6 +29,8 @@ namespace PayMe.Application.Core
             CreateMap<CheckAttendee, CheckPaymentDto>()
                 .ForMember(x => x.Id, o =>
                     o.MapFrom(y => y.CheckPayment!.Id))
+                .ForMember(x => x.PaymentNumber, o =>
+                    o.MapFrom(y => y.CheckPayment!.PaymentNumber))
                 .ForMember(x => x.Date, o =>
                     o.MapFrom(y => y.CheckPayment!.Date))
                 .ForMember(x => x.Title, o =>
@@ -57,7 +59,8 @@ namespace PayMe.Application.Core
                     o.MapFrom(y => y.LastName))
                 .ForMember(x => x.Image, o =>
                     o.MapFrom(y => y.Photos.FirstOrDefault(x => x.IsMain)!.Url))
-                .ForMember(dest => dest.Photos, opt => opt.Ignore());
+                .ForMember(dest => dest.Photos, o =>
+                    o.MapFrom(src => src.Photos));
         }
     }
 }

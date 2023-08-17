@@ -3,33 +3,32 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import { format } from "date-fns";
 import {
-    Box,
     Button,
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
     DialogTitle,
+    Typography,
 } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import EditPaymentDialog from "./EditPaymentDialog";
 import CheckPaymentStore from "../../stores/checkPaymentStore";
 import { utcToZonedTime } from "date-fns-tz";
+import { useStore } from "../../stores/store";
 
 interface Props {
     payment: CheckPaymentData;
     checkPaymentStore: CheckPaymentStore;
-    paymentNumber: number;
 }
 
-const TableEachPayment = ({
-    payment,
-    checkPaymentStore,
-    paymentNumber,
-}: Props) => {
+const TableEachPayment = ({ payment, checkPaymentStore }: Props) => {
+    const { userStore } = useStore();
+
     const [editDialogOpen, setEditDialogOpen] = useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const [detailsDialogOpen, setDetailsDialogOpen] = useState(false);
 
     const handleOpenEditDialog = () => {
         setEditDialogOpen(true);
@@ -52,6 +51,14 @@ const TableEachPayment = ({
         handleCloseDeleteDialog();
     };
 
+    const handleOpenDetailsDialog = () => {
+        setDetailsDialogOpen(true);
+    };
+
+    const handleCloseDetailsDialog = () => {
+        setDetailsDialogOpen(false);
+    };
+
     const paymentDateInBulgaria = utcToZonedTime(payment.date, "EET");
     const dateEET = format(paymentDateInBulgaria, "dd.MM.yyyy");
     const timeEET = format(paymentDateInBulgaria, "HH:mm a");
@@ -68,7 +75,7 @@ const TableEachPayment = ({
                 },
             }}
         >
-            <TableCell>{paymentNumber}</TableCell>
+            <TableCell>{payment.paymentNumber}</TableCell>
             <TableCell>{dateEET}</TableCell>
             <TableCell>{timeEET}</TableCell>
             <TableCell>{payment.firstName}</TableCell>
@@ -83,7 +90,7 @@ const TableEachPayment = ({
                         outline: "none",
                         color: "green",
                     }}
-                    onClick={() => console.log("Details")}
+                    onClick={handleOpenDetailsDialog}
                 >
                     Details
                 </Button>
@@ -126,6 +133,64 @@ const TableEachPayment = ({
                     </Button>
                     <Button onClick={handleDelete} color="error">
                         Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={detailsDialogOpen}
+                onClose={handleCloseDetailsDialog}
+                maxWidth="sm"
+                fullWidth
+            >
+                <DialogTitle style={{ textAlign: "center" }}>
+                    Details
+                </DialogTitle>
+                <DialogContent style={{ textAlign: "center" }}>
+                    <Typography variant="body1" gutterBottom>
+                        <strong>User Details:</strong>
+                    </Typography>
+                    <Typography variant="body1">
+                        <strong>Username:</strong> {userStore.user?.username}
+                    </Typography>
+                    <Typography variant="body1">
+                        <strong>First Name:</strong> {userStore.user?.firstName}
+                    </Typography>
+                    <Typography variant="body1">
+                        <strong>Last Name:</strong> {userStore.user?.lastName}
+                    </Typography>
+                </DialogContent>
+                <DialogContent style={{ textAlign: "center" }}>
+                    <Typography variant="body1" gutterBottom>
+                        <strong>Payment Details:</strong>
+                    </Typography>
+                    <Typography variant="body1">
+                        <strong>Payment Number:</strong> {payment.paymentNumber}
+                    </Typography>
+                    <Typography variant="body1">
+                        <strong>First Name:</strong> {payment.firstName}
+                    </Typography>
+                    <Typography variant="body1">
+                        <strong>Last Name:</strong> {payment.lastName}
+                    </Typography>
+                    <Typography variant="body1">
+                        <strong>Address:</strong> {payment.address}
+                    </Typography>
+                    <Typography variant="body1">
+                        <strong>Country:</strong> {payment.country}
+                    </Typography>
+                    <Typography variant="body1">
+                        <strong>Zip Code:</strong> {payment.zipCode}
+                    </Typography>
+                    <Typography variant="body1">
+                        <strong>Created On:</strong> {dateEET}
+                    </Typography>
+                    <Typography variant="body1">
+                        <strong>Created On:</strong> {timeEET}
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDetailsDialog} color="primary">
+                        Close
                     </Button>
                 </DialogActions>
             </Dialog>

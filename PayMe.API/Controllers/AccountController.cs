@@ -88,6 +88,7 @@ namespace PayMe.API.Controllers
                 FirstName = registerDto.FirstName,
                 LastName = registerDto.LastName,
                 Email = registerDto.Email,
+                Bio = ""
             };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
@@ -228,6 +229,7 @@ namespace PayMe.API.Controllers
             {
                 Username = user.UserName,
                 FirstName = user.FirstName,
+                LastName = user.LastName,
                 Token = _tokenService.CreateToken(user),
                 Image = user.Photos.FirstOrDefault(x => x.IsMain)?.Url!
             };

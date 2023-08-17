@@ -1,7 +1,8 @@
+import { observer } from "mobx-react-lite";
 import React from "react";
 import { Grid, Header, Tab } from "semantic-ui-react";
 
-export const ArchivedPayments = () => {
+const ArchivedPayments = () => {
     return (
         <Tab.Pane>
             <Grid>
@@ -19,3 +20,5 @@ export const ArchivedPayments = () => {
         </Tab.Pane>
     );
 };
+
+export default observer(ArchivedPayments);

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using PayMe.Domain;
 using PayMe.Domain.Entities;
 
 namespace PayMe.Application.CheckPayments
@@ -9,6 +8,9 @@ namespace PayMe.Application.CheckPayments
         [Key]
         [Required]
         public Guid Id { get; set; }
+        
+        [Required]
+        public int PaymentNumber { get; set; }
 
         [Required]
         public DateTime? Date { get; set; }

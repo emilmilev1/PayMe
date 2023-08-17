@@ -3,12 +3,20 @@ import { Button, Card, Grid, Header, Tab, Image } from "semantic-ui-react";
 import { Photo, Profile } from "../../models/profile";
 import { useStore } from "../../stores/store";
 import PhotoUploadWidget from "../ImageUpload/PhotoUploadWidget";
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+} from "@mui/material";
+import { observer } from "mobx-react-lite";
 
 interface Props {
     profile: Profile;
 }
 
-export const ProfilePhotos = ({ profile }: Props) => {
+const ProfilePhotos = ({ profile }: Props) => {
     const {
         profileStore: {
             isCurrentUser,
@@ -19,8 +27,11 @@ export const ProfilePhotos = ({ profile }: Props) => {
             deletePhoto,
         },
     } = useStore();
+
     const [addPhotoMode, setAddPhotoMode] = useState(false);
     const [target, setTarget] = useState("");
+    const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
+    const [photoToDelete, setPhotoToDelete] = useState<Photo | null>(null);
 
     function handlePhotoUpload(file: Blob) {
         uploadPhoto(file).then(() => setAddPhotoMode(false));
@@ -40,6 +51,19 @@ export const ProfilePhotos = ({ profile }: Props) => {
     ) {
         setTarget(e.currentTarget.name);
         deletePhoto(photo);
+    }
+
+    function handleDeletePhotoClick(photo: Photo) {
+        setPhotoToDelete(photo);
+        setDeleteConfirmationOpen(true);
+    }
+
+    function handleDeleteConfirmationClose(confirmed: boolean) {
+        if (confirmed && photoToDelete) {
+            deletePhoto(photoToDelete);
+        }
+        setPhotoToDelete(null);
+        setDeleteConfirmationOpen(false);
     }
 
     return (
@@ -71,6 +95,7 @@ export const ProfilePhotos = ({ profile }: Props) => {
                                         <Button.Group fluid widths={2}>
                                             <Button
                                                 basic
+                                                variant="contained"
                                                 color="green"
                                                 content="Main"
                                                 name={"main" + photo.id}
@@ -86,6 +111,7 @@ export const ProfilePhotos = ({ profile }: Props) => {
                                             />
                                             <Button
                                                 basic
+                                                variant="contained"
                                                 color="red"
                                                 icon="trash"
                                                 loading={
@@ -93,7 +119,9 @@ export const ProfilePhotos = ({ profile }: Props) => {
                                                     loading
                                                 }
                                                 onClick={(e) =>
-                                                    handleDeletePhoto(photo, e)
+                                                    handleDeletePhotoClick(
+                                                        photo
+                                                    )
                                                 }
                                                 disabled={photo.isMain}
                                                 name={photo.id}
@@ -106,6 +134,33 @@ export const ProfilePhotos = ({ profile }: Props) => {
                     )}
                 </Grid.Column>
             </Grid>
+            <Dialog
+                open={deleteConfirmationOpen}
+                onClose={() => handleDeleteConfirmationClose(false)}
+            >
+                <DialogTitle>Confirm Delete</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Are you sure you want to delete this photo?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={() => handleDeleteConfirmationClose(true)}
+                        color="red"
+                    >
+                        Delete
+                    </Button>
+                    <Button
+                        onClick={() => handleDeleteConfirmationClose(false)}
+                        color="green"
+                    >
+                        Cancel
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Tab.Pane>
     );
 };
+
+export default observer(ProfilePhotos);

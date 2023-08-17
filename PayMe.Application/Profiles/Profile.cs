@@ -15,6 +15,6 @@ namespace PayMe.Application.Profiles
 
         public string Image { get; set; } = null!;
 
-        public ICollection<Photo> Photos { get; set; }
+        public ICollection<Photo> Photos { get; set; } = null!;
     }
 }

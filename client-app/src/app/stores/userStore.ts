@@ -51,6 +51,7 @@ export default class UserStore {
     getUser = async () => {
         try {
             const user = await api.Account.current();
+
             store.commonStore.setToken(
                 user.token,
                 store.commonStore.userRemembered
@@ -104,7 +105,7 @@ export default class UserStore {
 
     setDisplayName = (name: string) => {
         if (this.user) {
-            this.user.firstName = name;
+            this.user.username = name;
         }
     };
 

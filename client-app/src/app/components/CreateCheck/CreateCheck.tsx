@@ -25,6 +25,7 @@ export default function CreateCheck() {
     const [checkPayment, setCheckPayment] = useState<CheckPaymentFormValues>(
         () => ({
             id: "",
+            paymentNumber: 0,
             title: "",
             firstName: "",
             lastName: "",

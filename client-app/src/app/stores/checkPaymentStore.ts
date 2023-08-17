@@ -186,6 +186,7 @@ export default class CheckPaymentStore {
         if (editedPayment.id) {
             const updatedPayment: CheckPaymentData = {
                 id: editedPayment.id,
+                paymentNumber: editedPayment.paymentNumber,
                 date: editedPayment.date
                     ? zonedTimeToUtc(editedPayment.date, "EET")
                     : zonedTimeToUtc(new Date(), "EET"),

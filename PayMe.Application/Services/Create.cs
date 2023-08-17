@@ -43,6 +43,13 @@ namespace PayMe.Application.Services
                 var user = await _context.Users.FirstOrDefaultAsync(x =>
                     x.UserName == _userAccessor.GetUsername(), cancellationToken: cancellationToken);
 
+                var paymentNumbers = await _context.CheckPayments
+                    .Where(cp => cp.CheckPaymentsUsers.Any(cu => cu.AppUserId == user!.Id))
+                    .Select(cp => cp.PaymentNumber)
+                    .ToListAsync(cancellationToken: cancellationToken);
+
+                int nextPaymentNumber = paymentNumbers.DefaultIfEmpty(0).Max() + 1;
+
                 var attendee = new CheckAttendee
                 {
                     AppUser = user,
@@ -50,6 +57,7 @@ namespace PayMe.Application.Services
                 };
 
                 request.CheckPayment.Date = DateTime.Now;
+                request.CheckPayment.PaymentNumber = nextPaymentNumber;
 
                 request.CheckPayment.CheckPaymentsUsers.Add(attendee);
 
