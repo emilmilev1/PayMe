@@ -38,15 +38,17 @@ namespace PayMe.Application.Services
             {
                 if (request.CheckPayment.Id == Guid.Empty)
                     return Result<Unit>.Failure("Invalid Check payment ID!");
+                
+                var originalPaymentId = request.CheckPayment.Id;
 
-                var checkPayment = await _context.CheckPayments.FindAsync(new object?[] { request.CheckPayment.Id },
+                var checkPayment = await _context.CheckPayments.FindAsync(new object?[] { originalPaymentId },
                     cancellationToken: cancellationToken);
 
                 if (checkPayment == null)
                 {
                     return Result<Unit>.Failure("Check payment not found!");
                 }
-
+                
                 request.CheckPayment.Date = DateTime.Now;
 
                 _mapper.Map(request.CheckPayment, checkPayment);
@@ -57,8 +59,30 @@ namespace PayMe.Application.Services
                 {
                     return Result<Unit>.Failure("Failed to update the check payment!");
                 }
+                
+                UpdatePaymentInList(originalPaymentId, request.CheckPayment);
 
                 return Result<Unit>.Success(Unit.Value);
+            }
+            
+            private void UpdatePaymentInList(Guid originalPaymentId, CheckPayment updatedPayment)
+            {
+                var paymentToUpdate = _context.CheckPayments.FirstOrDefault(p => p.Id == originalPaymentId);
+
+                _mapper.Map(paymentToUpdate, updatedPayment);
+                
+                if (paymentToUpdate != null)
+                {
+                    paymentToUpdate.PaymentNumber = updatedPayment.PaymentNumber;
+                    paymentToUpdate.Date = updatedPayment.Date;
+                    paymentToUpdate.Title = updatedPayment.Title;
+                    paymentToUpdate.FirstName = updatedPayment.FirstName;
+                    paymentToUpdate.LastName = updatedPayment.LastName;
+                    paymentToUpdate.Address = updatedPayment.Address;
+                    paymentToUpdate.Country = updatedPayment.Country;
+                    paymentToUpdate.ZipCode = updatedPayment.ZipCode;
+                    paymentToUpdate.Total = updatedPayment.Total;
+                }
             }
         }
     }

@@ -11,11 +11,7 @@ import {
 import { Profile } from "../../models/profile";
 import { observer } from "mobx-react-lite";
 
-interface Props {
-    profile: Profile;
-}
-
-const ProfileHeader = ({ profile }: Props) => {
+const ProfileHeader = () => {
     const { userStore } = useStore();
     const [open, setOpen] = useState(false);
 

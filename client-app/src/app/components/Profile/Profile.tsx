@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { Container, Grid } from "semantic-ui-react";
 import LoadingComponent from "../Loading/Loading";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useStore } from "../../stores/store";
 import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
@@ -9,13 +9,19 @@ import ProfileHeader from "./ProfileHeader";
 import ProfileContent from "./ProfileContent";
 
 const Profile = () => {
+    const history = useHistory();
     const { username } = useParams<{ username: string }>();
-    const { profileStore } = useStore();
+    const { profileStore, userStore } = useStore();
     const { loadingProfile, loadProfile, profile } = profileStore;
+    const { isLoggedIn } = userStore;
 
     useEffect(() => {
-        loadProfile(username);
-    }, [loadProfile, username]);
+        if (!isLoggedIn || username != userStore.user?.username) {
+            history.push("/");
+        } else {
+            loadProfile(username);
+        }
+    }, [loadProfile, username, isLoggedIn, history]);
 
     if (loadingProfile)
         return <LoadingComponent content="Loading profile..." />;
@@ -34,7 +40,7 @@ const Profile = () => {
                 <Grid.Column width={16}>
                     {profile && (
                         <>
-                            <ProfileHeader profile={profile} />
+                            <ProfileHeader />
                             <ProfileContent profile={profile} />
                         </>
                     )}

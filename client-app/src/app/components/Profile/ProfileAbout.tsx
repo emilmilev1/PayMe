@@ -24,12 +24,16 @@ const ProfileAbout = () => {
                         />
                     )}
                 </Grid.Column>
-                <Grid.Column width="16">
+                <Grid.Column width="10">
                     {editMode ? (
                         <ProfileEditForm setEditMode={setEditMode} />
                     ) : (
                         <>
-                            <Typography variant="h5" sx={{ fontWeight: 600 }}>
+                            <Typography
+                                variant="h5"
+                                sx={{ fontWeight: 600 }}
+                                marginBottom={2}
+                            >
                                 Biography
                             </Typography>
                             <div

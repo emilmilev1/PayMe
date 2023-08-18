@@ -211,37 +211,45 @@ export default class CheckPaymentStore {
 
     updateCheckPayment = async (checkPayment: CheckPaymentFormValues) => {
         this.loading = true;
-        let updatedCheckPayment: CheckPaymentData | undefined;
 
         try {
+            const originalIndex = this.checkPayments.findIndex(
+                (payment) => payment.id === checkPayment.id
+            );
+
             await api.CheckPayments.update(checkPayment);
 
-            runInAction(() => {
-                if (checkPayment.id) {
-                    let updatedCheckPayment = {
-                        ...this.getCheckPayment(checkPayment.id),
-                        ...checkPayment,
-                    };
+            if (checkPayment.id) {
+                let existingPayment = this.getCheckPayment(checkPayment.id);
 
-                    this.updateCheckPaymentDetails(
-                        updatedCheckPayment as CheckPaymentData
-                    );
+                if (existingPayment) {
+                    existingPayment.paymentNumber = checkPayment.paymentNumber;
+                    existingPayment.date = checkPayment.date
+                        ? zonedTimeToUtc(checkPayment.date, "EET")
+                        : zonedTimeToUtc(new Date(), "EET");
+                    existingPayment.title = checkPayment.title;
+                    existingPayment.firstName = checkPayment.firstName;
+                    existingPayment.lastName = checkPayment.lastName;
+                    existingPayment.address = checkPayment.address;
+                    existingPayment.country = checkPayment.country;
+                    existingPayment.zipCode = checkPayment.zipCode;
+                    existingPayment.total = checkPayment.total;
+                    existingPayment.checkAttendees =
+                        checkPayment.checkAttendees;
 
-                    this.selectedCheckPayment =
-                        updatedCheckPayment as CheckPaymentData;
+                    this.updateCheckPaymentDetails(existingPayment);
+                    this.selectedCheckPayment = existingPayment;
+
+                    if (originalIndex >= 0) {
+                        this.checkPaymentRegistry.set(
+                            checkPayment.id,
+                            existingPayment
+                        );
+                    }
                 }
-            });
-
-            this.updateEditedPayment(checkPayment);
-
-            if (updatedCheckPayment) {
-                this.checkPaymentRegistry.set(
-                    updatedCheckPayment.id,
-                    updatedCheckPayment
-                );
             }
 
-            this.loadCheckPayments();
+            this.updateEditedPayment(checkPayment);
         } catch (error) {
             console.log(error);
         } finally {

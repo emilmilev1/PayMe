@@ -66,7 +66,7 @@ function AppRouter() {
                                     path={"/create-payment"}
                                     component={CreateCheckPage}
                                 />
-                                <Route
+                                <GuardedRoutesAuthorization
                                     path="/profiles/:username"
                                     component={Profile}
                                 />
@@ -82,7 +82,6 @@ function AppRouter() {
                                     path="/reset-password"
                                     component={ForgotPassword}
                                 />
-
                                 <Route
                                     path="/account/registerSuccess"
                                     component={RegisterSuccess}

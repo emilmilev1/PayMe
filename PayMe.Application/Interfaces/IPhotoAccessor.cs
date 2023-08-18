@@ -7,6 +7,6 @@ namespace PayMe.Application.Interfaces
     {
         Task<PhotoUpload> AddPhoto(IFormFile file);
         
-        Task<string?> DeletePhoto(string publicId);
+        Task<string> DeletePhoto(string publicId);
     }
 }
