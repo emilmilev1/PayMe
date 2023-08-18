@@ -31,14 +31,73 @@ const Pagination = ({
     const getPages = () => {
         const elements = [];
 
-        for (let i = 1; i <= totalPages; i++) {
+        if (totalPages <= 10) {
+            for (let i = 1; i <= totalPages; i++) {
+                elements.push(
+                    <div
+                        className={`${currentPage === i ? styles.active : ""}`}
+                        onClick={() => handlePageChange(i)}
+                        key={i}
+                    >
+                        {i}
+                    </div>
+                );
+            }
+        } else {
+            const startPage = Math.max(currentPage - 2, 1);
+            const endPage = Math.min(currentPage + 1, totalPages);
+
             elements.push(
                 <div
-                    className={`${currentPage === i ? styles.active : ""}`}
-                    onClick={() => handlePageChange(i)}
-                    key={i}
+                    className={`${currentPage === 1 ? styles.active : ""}`}
+                    onClick={() => handlePageChange(1)}
+                    key={1}
                 >
-                    {i < 10 ? `${i}` : i}
+                    1
+                </div>
+            );
+
+            if (startPage > 2) {
+                elements.push(
+                    <div key="dots1" className={styles.dots}>
+                        ...
+                    </div>
+                );
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                if (i !== 1 && i !== totalPages) {
+                    elements.push(
+                        <div
+                            className={`${
+                                currentPage === i ? styles.active : ""
+                            }`}
+                            onClick={() => handlePageChange(i)}
+                            key={i}
+                        >
+                            {i}
+                        </div>
+                    );
+                }
+            }
+
+            if (endPage < totalPages - 1) {
+                elements.push(
+                    <div key="dots2" className={styles.dots}>
+                        ...
+                    </div>
+                );
+            }
+
+            elements.push(
+                <div
+                    className={`${
+                        currentPage === totalPages ? styles.active : ""
+                    }`}
+                    onClick={() => handlePageChange(totalPages)}
+                    key={totalPages}
+                >
+                    {totalPages}
                 </div>
             );
         }
