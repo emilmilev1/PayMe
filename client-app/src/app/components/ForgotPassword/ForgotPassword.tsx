@@ -76,7 +76,10 @@ const ForgotPassword = () => {
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 8,
+                        backgroundColor: "white",
+                        borderRadius: "10px",
+                        padding: "30px",
+                        marginTop: "60px",
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",

@@ -82,11 +82,14 @@ const SignUp = () => {
     };
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container maxWidth={false}>
             <CssBaseline />
             <Box
                 sx={{
-                    marginTop: 5,
+                    backgroundColor: "white",
+                    borderRadius: "10px",
+                    marginTop: "30px",
+                    padding: "30px",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",

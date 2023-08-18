@@ -32,9 +32,19 @@ const ProfilePhotos = ({ profile }: Props) => {
     const [target, setTarget] = useState("");
     const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
     const [photoToDelete, setPhotoToDelete] = useState<Photo | null>(null);
+    const [setMainConfirmationOpen, setSetMainConfirmationOpen] =
+        useState(false);
+    const [photoToSetMain, setPhotoToSetMain] = useState<Photo | null>(null);
 
+    // Upload a photo
     function handlePhotoUpload(file: Blob) {
         uploadPhoto(file).then(() => setAddPhotoMode(false));
+    }
+
+    // Set main photo
+    function handleSetMainConfirmationOpen(photo: Photo) {
+        setPhotoToSetMain(photo);
+        setSetMainConfirmationOpen(true);
     }
 
     function handleSetMainPhoto(
@@ -42,17 +52,10 @@ const ProfilePhotos = ({ profile }: Props) => {
         e: SyntheticEvent<HTMLButtonElement>
     ) {
         setTarget(e.currentTarget.name);
-        setMainPhoto(photo);
+        handleSetMainConfirmationOpen(photo);
     }
 
-    function handleDeletePhoto(
-        photo: Photo,
-        e: SyntheticEvent<HTMLButtonElement>
-    ) {
-        setTarget(e.currentTarget.name);
-        deletePhoto(photo);
-    }
-
+    // Delete a photo
     function handleDeletePhotoClick(photo: Photo) {
         setPhotoToDelete(photo);
         setDeleteConfirmationOpen(true);
@@ -154,6 +157,35 @@ const ProfilePhotos = ({ profile }: Props) => {
                     <Button
                         onClick={() => handleDeleteConfirmationClose(false)}
                         color="green"
+                    >
+                        Cancel
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={setMainConfirmationOpen}
+                onClose={() => setSetMainConfirmationOpen(false)}
+            >
+                <DialogTitle>Confirm Main Photo</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Are you sure you want to set this photo as your main
+                        photo?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={() => {
+                            setMainPhoto(photoToSetMain!);
+                            setSetMainConfirmationOpen(false);
+                        }}
+                        color="green"
+                    >
+                        Set as Main
+                    </Button>
+                    <Button
+                        onClick={() => setSetMainConfirmationOpen(false)}
+                        color="red"
                     >
                         Cancel
                     </Button>

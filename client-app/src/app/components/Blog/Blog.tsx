@@ -52,17 +52,19 @@ export default function Blog() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Container maxWidth="lg" sx={{ mt: 5 }}>
+            <Container maxWidth="lg" sx={{ mt: 5, mb: 20 }}>
                 <main>
                     <Typography
+                        component="h1"
+                        variant="h2"
                         align="center"
-                        component="h4"
-                        variant="h4"
-                        sx={{ mb: 5 }}
+                        color="text.primary"
+                        sx={{ fontWeight: "500", mb: 5 }}
+                        gutterBottom
                     >
                         Blog
                     </Typography>
-                    <Grid container spacing={4}>
+                    <Grid container spacing={8}>
                         {featuredPosts.map((post) => (
                             <FeaturedPost key={post.title} post={post} />
                         ))}

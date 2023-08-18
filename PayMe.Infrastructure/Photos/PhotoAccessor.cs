@@ -55,7 +55,7 @@ namespace PayMe.Infrastructure.Photos
             };
         }
 
-        public async Task<string?> DeletePhoto(string publicId)
+        public async Task<string> DeletePhoto(string publicId)
         {
             var deleteParams = new DeletionParams(publicId);
 
@@ -66,7 +66,7 @@ namespace PayMe.Infrastructure.Photos
                 return result.Result;
             }
 
-            return null;
+            return null!;
         }
     }
 }

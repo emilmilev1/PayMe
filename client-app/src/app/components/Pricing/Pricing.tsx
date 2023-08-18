@@ -53,7 +53,7 @@ function PricingContent() {
                     components with little customization.
                 </Typography>
             </Container>
-            <Container maxWidth="md" component="main">
+            <Container maxWidth="md" component="main" sx={{ marginBottom: 20 }}>
                 <Grid container spacing={5} alignItems="flex-end">
                     {tiers.map((tier) => (
                         <Grid

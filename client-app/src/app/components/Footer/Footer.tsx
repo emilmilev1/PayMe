@@ -25,7 +25,7 @@ const FooterSection = styled(Grid)(({ theme }) => ({
 
 const Footer: React.FC = () => {
     return (
-        <FooterContainer maxWidth="xl">
+        <FooterContainer maxWidth={false} sx={{ color: "#6a6fff" }}>
             <Grid container spacing={3}>
                 <FooterSection item xs={12} md={3}>
                     <Typography variant="h5" gutterBottom>
@@ -87,7 +87,6 @@ const Footer: React.FC = () => {
                     </div>
                 </FooterSection>
                 <FooterSection item xs={12} md={3}>
-                    {/* Move the social media buttons here */}
                     <div className="d-flex pt-2 justify-content-center">
                         <Button
                             variant="outlined"

@@ -24,11 +24,23 @@ const Navbar = () => {
     };
 
     return (
-        <AppBar position="static">
-            <Container maxWidth="xl">
-                <Toolbar disableGutters>
+        <AppBar
+            position="static"
+            sx={{
+                backgroundColor: "#6a6fff",
+            }}
+        >
+            <Container maxWidth={false}>
+                <Toolbar
+                    disableGutters
+                    sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        flexDirection: "row",
+                    }}
+                >
                     <Typography
-                        variant="h5"
+                        variant="h4"
                         noWrap
                         component="a"
                         href="/"
@@ -37,10 +49,10 @@ const Navbar = () => {
                             mr: 2,
                             display: { xs: "none", md: "flex" },
                             fontFamily: "monospace",
-                            fontWeight: "bold",
+                            fontWeight: "bolder",
                             letterSpacing: ".3rem",
                             "&:hover": {
-                                color: "lawngreen",
+                                color: "orange",
                             },
                             textDecoration: "none",
                         }}
@@ -62,6 +74,7 @@ const Navbar = () => {
                                 m: 2,
                                 color: "white",
                                 display: "block",
+                                fontSize: "1rem",
                                 "&:hover": {
                                     color: "white",
                                     backgroundColor: "rgba(255, 255, 255, 0.2)",
@@ -76,6 +89,7 @@ const Navbar = () => {
                                 m: 2,
                                 color: "white",
                                 display: "block",
+                                fontSize: "1rem",
                                 "&:hover": {
                                     color: "white",
                                     backgroundColor: "rgba(255, 255, 255, 0.2)",
@@ -90,6 +104,7 @@ const Navbar = () => {
                                 m: 2,
                                 color: "white",
                                 display: "block",
+                                fontSize: "1rem",
                                 "&:hover": {
                                     color: "white",
                                     backgroundColor: "rgba(255, 255, 255, 0.2)",
@@ -104,6 +119,7 @@ const Navbar = () => {
                                 m: 2,
                                 color: "white",
                                 display: "block",
+                                fontSize: "1rem",
                                 "&:hover": {
                                     color: "white",
                                     backgroundColor: "rgba(255, 255, 255, 0.2)",
@@ -114,7 +130,6 @@ const Navbar = () => {
                             About Us
                         </Button>
                     </Box>
-
                     <Box sx={{ flexGrow: 0 }}>
                         <IconButton onClick={handleProfileClick} sx={{ p: 0 }}>
                             <Avatar

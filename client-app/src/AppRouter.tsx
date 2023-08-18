@@ -16,6 +16,7 @@ import {
 import ScrollToTopButton from "./app/layout/ScrollToTopButton";
 
 const Homepage = lazy(() => import("./app/pages/Homepage/Homepage"));
+const About = lazy(() => import("./app/pages/About/About"));
 const Blog = lazy(() => import("./app/pages/Blog/Blog"));
 const Dashboard = lazy(() => import("./app/components/Dashboard/Dashboard"));
 const ForgotPassword = lazy(() => import("./app/pages/ResetPass/ResetPass"));
@@ -57,6 +58,7 @@ function AppRouter() {
                                 <Route exact path="/" component={Homepage} />
                                 <Route path="/blog" component={Blog} />
                                 <Route path="/pricing" component={Pricing} />
+                                <Route path="/about-us" component={About} />
                                 <GuardedRoutesAuthorization
                                     path="/dashboard"
                                     component={Dashboard}
