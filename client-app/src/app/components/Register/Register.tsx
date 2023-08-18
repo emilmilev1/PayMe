@@ -89,7 +89,7 @@ const SignUp = () => {
                     backgroundColor: "white",
                     borderRadius: "10px",
                     marginTop: "30px",
-                    padding: "30px",
+                    padding: "0px 30px 30px 30px",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",

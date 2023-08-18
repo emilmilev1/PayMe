@@ -59,6 +59,7 @@ export default function PhotoUploadWidget({ loading, uploadPhoto }: Props) {
                             <Button
                                 disabled={loading}
                                 onClick={() => setFiles([])}
+                                negative
                                 icon="close"
                             />
                         </Button.Group>

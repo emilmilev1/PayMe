@@ -45,13 +45,22 @@ const Header = () => {
                             variant="contained"
                             component="a"
                             href="/dashboard"
-                            color="success"
+                            color="warning"
                             sx={{
-                                minWidth: 100,
-                                minHeight: 40,
+                                minWidth: 200,
+                                minHeight: 70,
+                                borderRadius: "40px",
+                                fontSize: "1.5rem",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                "&:hover": {
+                                    backgroundColor: "#FFA500",
+                                    color: "white",
+                                },
                             }}
                         >
-                            Dashboard
+                            Get Started
                         </Button>
                     )}
                 </Stack>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using PayMe.Domain.Entities;
 
 namespace PayMe.Core.DataSeed
@@ -59,6 +60,16 @@ namespace PayMe.Core.DataSeed
                             "Ipsum dolor sit amet, consectetur, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 
                         Email = "light@test.com"
+                    },
+                    new AppUser
+                    {
+                        UserName = "peshkata23",
+                        FirstName = "Pesho",
+                        LastName = "Peshev",
+                        Bio =
+                            "Ipsum dolor sit amet, consectetur, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                        // TODO: Add your demo email here
+                        Email = "demo email"
                     }
                 };
 
@@ -170,6 +181,38 @@ namespace PayMe.Core.DataSeed
                         }
                     },
                 };
+
+                var newCheckPayments = new List<CheckPayment>();
+
+                for (int i = 1; i <= 85; i++)
+                {
+                    double updatedTotal = 100 + i;
+                    int updatedZipCode = 1000 + i;
+
+                    var newCheckPayment = new CheckPayment
+                    {
+                        PaymentNumber = i,
+                        Date = DateTime.Now,
+                        Title = $"Payment {i}",
+                        FirstName = "John",
+                        LastName = "Doe",
+                        Address = $"New York, 5678{i}",
+                        Country = "USA",
+                        Total = updatedTotal,
+                        ZipCode = updatedZipCode,
+                        CheckPaymentsUsers = new List<CheckAttendee>
+                        {
+                            new CheckAttendee
+                            {
+                                AppUser = users[5],
+                            }
+                        }
+                    };
+
+                    newCheckPayments.Add(newCheckPayment);
+                }
+
+                await context.CheckPayments.AddRangeAsync(newCheckPayments);
 
                 await context.CheckPayments.AddRangeAsync(checkPayments);
                 await context.SaveChangesAsync();

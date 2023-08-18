@@ -42,7 +42,11 @@ const ForgotPassword = () => {
                 if (userStore.doesUserEmailExist) {
                     await userStore.changePassword(data.email, data.password);
                 } else {
-                    console.log("Email does not exist");
+                    setSignUpError(true);
+                    setErrors({ error: "Email does not exist" });
+                    setTimeout(() => {
+                        setSignUpError(false);
+                    }, 3500);
                 }
             } catch (error: any) {
                 setSignUpError(true);
@@ -78,7 +82,7 @@ const ForgotPassword = () => {
                     sx={{
                         backgroundColor: "white",
                         borderRadius: "10px",
-                        padding: "30px",
+                        padding: "0px 30px 30px 30px",
                         marginTop: "60px",
                         display: "flex",
                         flexDirection: "column",

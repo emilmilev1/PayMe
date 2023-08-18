@@ -75,12 +75,38 @@ const ProfilePhotos = ({ profile }: Props) => {
                 <Grid.Column width="16">
                     <Header floated="left" icon="user" content={`Photos`} />
                     {isCurrentUser && (
-                        <Button
-                            floated="right"
-                            basic
-                            content={addPhotoMode ? "Cancel" : "Add Photo"}
-                            onClick={() => setAddPhotoMode(!addPhotoMode)}
-                        />
+                        <div style={{ float: "right" }}>
+                            {addPhotoMode ? (
+                                <Button
+                                    variant="contained"
+                                    color="red"
+                                    style={{
+                                        marginRight: "10px",
+                                        outline: "none",
+                                        background: "red",
+                                    }}
+                                    onClick={() =>
+                                        setAddPhotoMode(!addPhotoMode)
+                                    }
+                                >
+                                    Cancel
+                                </Button>
+                            ) : (
+                                <Button
+                                    variant="contained"
+                                    color="green"
+                                    style={{
+                                        outline: "none",
+                                        background: "green",
+                                    }}
+                                    onClick={() =>
+                                        setAddPhotoMode(!addPhotoMode)
+                                    }
+                                >
+                                    Add Photo
+                                </Button>
+                            )}
+                        </div>
                     )}
                 </Grid.Column>
                 <Grid.Column width="16">
@@ -97,23 +123,23 @@ const ProfilePhotos = ({ profile }: Props) => {
                                     {isCurrentUser && (
                                         <Button.Group fluid widths={9}>
                                             <Button
-                                                basic
                                                 variant="contained"
                                                 color="green"
                                                 content="Main"
                                                 name={"main" + photo.id}
-                                                disabled={photo.isMain}
                                                 loading={
                                                     target ===
                                                         "main" + photo.id &&
                                                     loading
+                                                }
+                                                disabled={
+                                                    photo.isMain || loading
                                                 }
                                                 onClick={(e) =>
                                                     handleSetMainPhoto(photo, e)
                                                 }
                                             />
                                             <Button
-                                                basic
                                                 variant="contained"
                                                 color="red"
                                                 icon="trash"
@@ -121,12 +147,14 @@ const ProfilePhotos = ({ profile }: Props) => {
                                                     target === photo.id &&
                                                     loading
                                                 }
+                                                disabled={
+                                                    photo.isMain || loading
+                                                }
                                                 onClick={(e) =>
                                                     handleDeletePhotoClick(
                                                         photo
                                                     )
                                                 }
-                                                disabled={photo.isMain}
                                                 name={photo.id}
                                             />
                                         </Button.Group>

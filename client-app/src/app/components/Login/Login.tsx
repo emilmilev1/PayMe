@@ -77,7 +77,7 @@ const SignIn = () => {
                 sx={{
                     backgroundColor: "white",
                     borderRadius: "10px",
-                    padding: "30px",
+                    padding: "0px 30px 30px 30px",
                     marginTop: "60px",
                     display: "flex",
                     flexDirection: "column",

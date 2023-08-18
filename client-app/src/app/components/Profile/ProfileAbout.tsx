@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Button, Grid, Header, Tab } from "semantic-ui-react";
+import { Grid, Header, Tab } from "semantic-ui-react";
 import { useStore } from "../../stores/store";
 import ProfileEditForm from "./ProfileEditForm";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 
 const ProfileAbout = () => {
@@ -16,12 +16,34 @@ const ProfileAbout = () => {
                 <Grid.Column width="16">
                     <Header floated="left" icon="user" content={"About"} />
                     {isCurrentUser && (
-                        <Button
-                            floated="right"
-                            basic
-                            content={editMode ? "Cancel" : "Edit Profile"}
-                            onClick={() => setEditMode(!editMode)}
-                        />
+                        <div style={{ float: "right" }}>
+                            {editMode ? (
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    style={{
+                                        marginRight: "10px",
+                                        outline: "none",
+                                        background: "red",
+                                    }}
+                                    onClick={() => setEditMode(false)}
+                                >
+                                    Cancel
+                                </Button>
+                            ) : (
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    style={{
+                                        outline: "none",
+                                        background: "green",
+                                    }}
+                                    onClick={() => setEditMode(true)}
+                                >
+                                    Edit Profile
+                                </Button>
+                            )}
+                        </div>
                     )}
                 </Grid.Column>
                 <Grid.Column width="10">

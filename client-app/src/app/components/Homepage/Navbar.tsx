@@ -11,6 +11,28 @@ import { useStore } from "../../stores/store";
 import { observer } from "mobx-react-lite";
 import { useHistory } from "react-router-dom";
 
+const DashboardComponent = () => {
+    const { userStore } = useStore();
+
+    return userStore.isLoggedIn ? (
+        <Button
+            sx={{
+                m: 2,
+                color: "white",
+                display: "block",
+                fontSize: "1rem",
+                "&:hover": {
+                    color: "white",
+                    backgroundColor: "rgba(255, 255, 255, 0.2)",
+                },
+            }}
+            href="/dashboard"
+        >
+            Dashboard
+        </Button>
+    ) : null;
+};
+
 const Navbar = () => {
     const { userStore } = useStore();
     const history = useHistory();
@@ -69,21 +91,7 @@ const Navbar = () => {
                             justifyContent: "center",
                         }}
                     >
-                        <Button
-                            sx={{
-                                m: 2,
-                                color: "white",
-                                display: "block",
-                                fontSize: "1rem",
-                                "&:hover": {
-                                    color: "white",
-                                    backgroundColor: "rgba(255, 255, 255, 0.2)",
-                                },
-                            }}
-                            href="/dashboard"
-                        >
-                            Dashboard
-                        </Button>
+                        <DashboardComponent />
                         <Button
                             sx={{
                                 m: 2,
@@ -130,8 +138,21 @@ const Navbar = () => {
                             About Us
                         </Button>
                     </Box>
-                    <Box sx={{ flexGrow: 0 }}>
-                        <IconButton onClick={handleProfileClick} sx={{ p: 0 }}>
+                    <Box>
+                        <IconButton
+                            onClick={handleProfileClick}
+                            sx={{
+                                p: 0,
+                                outline: "none",
+                                "&:focus": {
+                                    outline: "none",
+                                },
+                                "&:focus-visible": {
+                                    outline: "none",
+                                    boxShadow: "none",
+                                },
+                            }}
+                        >
                             <Avatar
                                 alt="User"
                                 src={userStore.user?.image || "/user.png"}
