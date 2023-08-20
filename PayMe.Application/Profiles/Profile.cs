@@ -11,6 +11,8 @@ namespace PayMe.Application.Profiles
 
         public string LastName { get; set; } = null!;
 
+        public int Age { get; set; }
+
         public string Bio { get; set; } = null!;
 
         public string Image { get; set; } = null!;

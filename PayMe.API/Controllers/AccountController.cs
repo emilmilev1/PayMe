@@ -87,6 +87,7 @@ namespace PayMe.API.Controllers
                 UserName = registerDto.Username,
                 FirstName = registerDto.FirstName,
                 LastName = registerDto.LastName,
+                Age = registerDto.Age,
                 Email = registerDto.Email,
                 Bio = ""
             };
@@ -210,7 +211,7 @@ namespace PayMe.API.Controllers
         [HttpGet]
         public async Task<ActionResult<ProfileUserDto>> GetCurrentUser()
         {
-            var user = await _userManager.Users.Include(p => p.Photos)
+            var user = await _userManager.Users 
                 .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
 
             await SetRefreshToken(user!);
@@ -230,6 +231,9 @@ namespace PayMe.API.Controllers
                 Username = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
+                Age = user.Age,
+                Bio = user.Bio,
+                RoleName = user.RoleName,
                 Token = _tokenService.CreateToken(user),
                 Image = user.Photos.FirstOrDefault(x => x.IsMain)?.Url!
             };
@@ -244,7 +248,7 @@ namespace PayMe.API.Controllers
         public async Task<ActionResult<ProfileUserDto>> RefreshToken()
         {
             var refreshToken = Request.Cookies["refreshToken"];
-
+            
             var user = await _userManager.Users
                 .Include(r => r.RefreshTokens)
                 .Include(p => p.Photos)

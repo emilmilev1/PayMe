@@ -2,7 +2,9 @@ export interface User {
     username: string;
     firstName: string;
     lastName: string;
+    age: number;
     bio: string;
+    roleName: string;
     token: string;
     image?: string;
 }

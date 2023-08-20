@@ -12,8 +12,8 @@ using PayMe.Core;
 namespace PayMe.Core.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230805095708_InitialSetupFixErrors")]
-    partial class InitialSetupFixErrors
+    [Migration("20230820053954_InitialSetup")]
+    partial class InitialSetup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -157,36 +157,6 @@ namespace PayMe.Core.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("PayMe.Domain.Entities.AdminComment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("AuthorId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Body")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("CheckPaymentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
-
-                    b.HasIndex("CheckPaymentId");
-
-                    b.ToTable("AdminComments");
-                });
-
             modelBuilder.Entity("PayMe.Domain.Entities.AppUser", b =>
                 {
                     b.Property<string>("Id")
@@ -194,6 +164,13 @@ namespace PayMe.Core.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Bio")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -236,6 +213,10 @@ namespace PayMe.Core.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -285,9 +266,6 @@ namespace PayMe.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Country")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -303,6 +281,9 @@ namespace PayMe.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PaymentNumber")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -314,8 +295,6 @@ namespace PayMe.Core.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
 
                     b.ToTable("CheckPayments");
                 });
@@ -421,23 +400,6 @@ namespace PayMe.Core.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PayMe.Domain.Entities.AdminComment", b =>
-                {
-                    b.HasOne("PayMe.Domain.Entities.AppUser", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorId");
-
-                    b.HasOne("PayMe.Domain.Entities.CheckPayment", "CheckPayment")
-                        .WithMany("AdminComments")
-                        .HasForeignKey("CheckPaymentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Author");
-
-                    b.Navigation("CheckPayment");
-                });
-
             modelBuilder.Entity("PayMe.Domain.Entities.CheckAttendee", b =>
                 {
                     b.HasOne("PayMe.Domain.Entities.AppUser", "AppUser")
@@ -455,13 +417,6 @@ namespace PayMe.Core.Migrations
                     b.Navigation("AppUser");
 
                     b.Navigation("CheckPayment");
-                });
-
-            modelBuilder.Entity("PayMe.Domain.Entities.CheckPayment", b =>
-                {
-                    b.HasOne("PayMe.Domain.Entities.AppUser", null)
-                        .WithMany("CheckPayments")
-                        .HasForeignKey("AppUserId");
                 });
 
             modelBuilder.Entity("PayMe.Domain.Entities.Photo", b =>
@@ -482,8 +437,6 @@ namespace PayMe.Core.Migrations
 
             modelBuilder.Entity("PayMe.Domain.Entities.AppUser", b =>
                 {
-                    b.Navigation("CheckPayments");
-
                     b.Navigation("CheckPaymentsUsers");
 
                     b.Navigation("Photos");
@@ -493,8 +446,6 @@ namespace PayMe.Core.Migrations
 
             modelBuilder.Entity("PayMe.Domain.Entities.CheckPayment", b =>
                 {
-                    b.Navigation("AdminComments");
-
                     b.Navigation("CheckPaymentsUsers");
                 });
 #pragma warning restore 612, 618

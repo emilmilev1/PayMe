@@ -4,7 +4,9 @@ export interface Profile {
     username: string;
     firstName: string;
     lastName: string;
+    age: number;
     bio: string;
+    roleName: string;
     image?: string;
     photos?: Photo[];
 }

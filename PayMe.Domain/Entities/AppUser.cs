@@ -12,7 +12,11 @@ namespace PayMe.Domain.Entities
 
         public string LastName { get; set; } = null!;
 
+        public int Age { get; set; }
+
         public string Bio { get; set; } = null!;
+
+        public string RoleName { get; set; } = null!;
 
         public ICollection<Photo> Photos { get; set; } = new List<Photo>();
 

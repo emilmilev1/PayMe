@@ -6,41 +6,41 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import FeaturedPost from "./FeaturedPost";
 import { Typography } from "@mui/material";
 
-const generatedFirstPicture = "https://picsum.photos/200/300";
-const generatedSecondPicture = "https://picsum.photos/200/300";
-const generatedThirdPicture = "https://picsum.photos/200/300";
-const generatedFourthPicture = "https://picsum.photos/200/300";
+const generatedFirstPicture = "https://picsum.photos/201/300";
+const generatedSecondPicture = "https://picsum.photos/202/300";
+const generatedThirdPicture = "https://picsum.photos/203/300";
+const generatedFourthPicture = "https://picsum.photos/204/300";
 
 const featuredPosts = [
     {
-        title: "Featured post",
+        title: "Nature and Numbers",
         date: "Sept 5",
         description:
-            "This is a wider card with supporting text below as a natural lead-in to additional content.",
+            "Nature and numbers share an intricate harmony, where mathematical patterns reveal themselves in the beauty of the natural world.",
         image: generatedFirstPicture,
         imageLabel: "Image Text 1",
     },
     {
         title: "Bank",
-        date: "Nov 11",
+        date: "Aug 14",
         description:
-            "This is a wider card with supporting text below as a natural lead-in to additional content.",
+            "Banks serve as financial institutions that provide a range of services, including managing money, offering loans, and facilitating transactions for individuals and businesses.",
         image: generatedSecondPicture,
         imageLabel: "Image Text 2",
     },
     {
         title: "Money",
-        date: "Nov 11",
+        date: "Dec 22",
         description:
-            "This is a wider card with supporting text below as a natural lead-in to additional content.",
+            "Money is a universally recognized medium of exchange and store of value that facilitates economic transactions and trade.",
         image: generatedThirdPicture,
         imageLabel: "Image Text 3",
     },
     {
         title: "Finance",
-        date: "Nov 11",
+        date: "Jan 1",
         description:
-            "This is a wider card with supporting text below as a natural lead-in to additional content.",
+            "Finance involves the management of funds, assets, and liabilities to make informed decisions about investments, budgets, and financial planning.",
         image: generatedFourthPicture,
         imageLabel: "Image Text 4",
     },

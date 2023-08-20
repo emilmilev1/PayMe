@@ -10,10 +10,14 @@ import {
     Button,
     Container,
     CssBaseline,
+    FormControl,
     Grid,
     IconButton,
     InputAdornment,
+    InputLabel,
     Link,
+    MenuItem,
+    Select,
     TextField,
     Typography,
 } from "@mui/material";
@@ -25,7 +29,9 @@ interface FormValues {
     username: string;
     firstName: string;
     lastName: string;
+    age: number;
     email: string;
+    roleName: string;
     password: string;
     rePassword: string;
     error: string | null;
@@ -42,7 +48,9 @@ const SignUp = () => {
             username: "",
             firstName: "",
             lastName: "",
+            age: 0,
             email: "",
+            roleName: "",
             password: "",
             rePassword: "",
             error: null,
@@ -68,6 +76,7 @@ const SignUp = () => {
             firstName: Yup.string().required("First name is required!"),
             lastName: Yup.string().required("Last name is required!"),
             email: Yup.string().required("Email is required!").email(),
+            roleName: Yup.string().required("Role is required!"),
             password: Yup.string()
                 .required("Please enter your password.")
                 .min(8, "Your password is too short."),
@@ -182,6 +191,23 @@ const SignUp = () => {
                     <TextField
                         fullWidth
                         required
+                        id="age"
+                        name="age"
+                        type="number"
+                        label="Age"
+                        value={formik.values.age}
+                        onChange={formik.handleChange}
+                        error={formik.touched.age && Boolean(formik.errors.age)}
+                        helperText={formik.touched.age && formik.errors.age}
+                        sx={{
+                            background: "white",
+                            borderRadius: "5px",
+                            mt: 2,
+                        }}
+                    />
+                    <TextField
+                        fullWidth
+                        required
                         id="email"
                         label="Email"
                         name="email"
@@ -199,6 +225,20 @@ const SignUp = () => {
                             mt: 2,
                         }}
                     />
+                    <FormControl fullWidth sx={{ mt: 2 }}>
+                        <InputLabel required>Role</InputLabel>
+                        <Select
+                            required
+                            name="roleName"
+                            value={formik.values.roleName}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                        >
+                            <MenuItem value="Child">Child</MenuItem>
+                            <MenuItem value="Adult">Adult</MenuItem>
+                            <MenuItem value="Student">Student</MenuItem>
+                        </Select>
+                    </FormControl>
                     <TextField
                         fullWidth
                         required

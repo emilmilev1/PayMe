@@ -26,34 +26,21 @@ function PricingContent() {
                 }}
             />
             <CssBaseline />
-            <Container
-                disableGutters
-                maxWidth="sm"
-                component="main"
-                sx={{ pt: 8, pb: 6 }}
+            <Typography
+                component="h1"
+                variant="h2"
+                align="center"
+                color="text.primary"
+                sx={{ fontWeight: "500", pt: 4, pb: 6 }}
+                gutterBottom
             >
-                <Typography
-                    component="h1"
-                    variant="h2"
-                    align="center"
-                    color="text.primary"
-                    sx={{ fontWeight: "500" }}
-                    gutterBottom
-                >
-                    Pricing
-                </Typography>
-                <Typography
-                    variant="h5"
-                    align="center"
-                    color="text.secondary"
-                    component="p"
-                >
-                    Quickly build an effective pricing table for your potential
-                    customers with this layout. It&apos;s built with default MUI
-                    components with little customization.
-                </Typography>
-            </Container>
-            <Container maxWidth="md" component="main" sx={{ marginBottom: 20 }}>
+                Pricing
+            </Typography>
+            <Container
+                maxWidth="md"
+                component="main"
+                sx={{ marginBottom: 20, minHeight: "100vh" }}
+            >
                 <Grid container spacing={5} alignItems="flex-end">
                     {tiers.map((tier) => (
                         <Grid
@@ -66,7 +53,6 @@ function PricingContent() {
                             <Card>
                                 <CardHeader
                                     title={tier.title}
-                                    subheader={tier.subheader}
                                     titleTypographyProps={{
                                         align: "center",
                                     }}
@@ -121,18 +107,6 @@ function PricingContent() {
                                         ))}
                                     </ul>
                                 </CardContent>
-                                <CardActions>
-                                    <Button
-                                        fullWidth
-                                        variant={
-                                            tier.buttonVariant as
-                                                | "outlined"
-                                                | "contained"
-                                        }
-                                    >
-                                        {tier.buttonText}
-                                    </Button>
-                                </CardActions>
                             </Card>
                         </Grid>
                     ))}

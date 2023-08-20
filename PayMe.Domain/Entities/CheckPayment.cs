@@ -29,7 +29,5 @@ namespace PayMe.Domain.Entities
         public double Total { get; set; }
 
         public ICollection<CheckAttendee> CheckPaymentsUsers { get; set; } = new List<CheckAttendee>();
-
-        public ICollection<AdminComment> AdminComments { get; set; } = new List<AdminComment>();
     }
 }

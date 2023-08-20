@@ -16,8 +16,6 @@ namespace PayMe.Core
 
         public DbSet<Photo> Photos { get; set; } = null!;
 
-        public DbSet<AdminComment> AdminComments { get; set; } = null!;
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -34,11 +32,6 @@ namespace PayMe.Core
                 .HasOne(a => a.CheckPayment)
                 .WithMany(b => b.CheckPaymentsUsers)
                 .HasForeignKey(c => c.CheckPaymentId);
-
-            builder.Entity<AdminComment>()
-                .HasOne(a => a.CheckPayment)
-                .WithMany(b => b.AdminComments)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

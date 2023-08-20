@@ -31,19 +31,19 @@ var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
- app.UseXContentTypeOptions();
- app.UseReferrerPolicy(opt => opt.NoReferrer());
- app.UseXXssProtection(opt => opt.EnabledWithBlockMode());
- app.UseXfo(opt => opt.Deny());
- app.UseCsp(opt => opt
-     .BlockAllMixedContent()
-     .StyleSources(s => s.Self().CustomSources("https://fonts.googleapis.com"))
-     .FontSources(s => s.Self().CustomSources("https://fonts.gstatic.com", "data:"))
-     .FormActions(s => s.Self())
-     .FrameAncestors(s => s.Self())
-     .ImageSources(s => s.Self().CustomSources("blob:", "https://res.cloudinary.com"))
-     .ScriptSources(s => s.Self())
- );
+app.UseXContentTypeOptions();
+app.UseReferrerPolicy(opt => opt.NoReferrer());
+app.UseXXssProtection(opt => opt.EnabledWithBlockMode());
+app.UseXfo(opt => opt.Deny());
+app.UseCsp(opt => opt
+    .BlockAllMixedContent()
+    .StyleSources(s => s.Self().CustomSources("https://fonts.googleapis.com"))
+    .FontSources(s => s.Self().CustomSources("https://fonts.gstatic.com", "data:"))
+    .FormActions(s => s.Self())
+    .FrameAncestors(s => s.Self())
+    .ImageSources(s => s.Self().CustomSources("blob:", "https://res.cloudinary.com"))
+    .ScriptSources(s => s.Self())
+);
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
@@ -73,10 +73,17 @@ try
 {
     var context = services.GetRequiredService<DataContext>();
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
+    var adminManager = services.GetRequiredService<UserManager<AppUser>>();
+    
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
     await context.Database.MigrateAsync();
 
+    await Seed.SeedAdminData(roleManager);
+    
     await Seed.SeedData(context, userManager);
+    Seed.SeedAdminUser(adminManager).Wait();
+    Seed.SeedAdministratorsUsers(adminManager).Wait();
 }
 catch (Exception ex)
 {

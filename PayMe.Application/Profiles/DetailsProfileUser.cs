@@ -35,7 +35,7 @@ namespace PayMe.Application.Profiles
             public async Task<Result<Profile>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var currentUser = _userAccessor.GetUsername();
-
+                
                 if (currentUser == null)
                 {
                     return Result<Profile>.Failure("No logged-in user.");

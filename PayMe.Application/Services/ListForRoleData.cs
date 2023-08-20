@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using PayMe.Application.CheckPayments;
@@ -8,7 +8,7 @@ using PayMe.Core;
 
 namespace PayMe.Application.Services
 {
-    public abstract class ListAllCheckPayments
+    public class ListForRoleData
     {
         public class Query : IRequest<Result<PagedList<CheckPaymentDto>>>
         {
@@ -33,7 +33,8 @@ namespace PayMe.Application.Services
             {
                 var query = _context.CheckPayments
                     .Where(chP => chP.CheckPaymentsUsers.Any(
-                        cpu => cpu.AppUserId == _userAccessor.GetUserId()))
+                        cpu => cpu.AppUser!.RoleName == request.Params.RoleName &&
+                               cpu.AppUser.UserName == _userAccessor.GetUsername()))
                     .ProjectTo<CheckPaymentDto>(_mapper.ConfigurationProvider)
                     .AsQueryable();
 

@@ -8,7 +8,7 @@ using PayMe.Core;
 
 namespace PayMe.Application.Services
 {
-    public abstract class ListAllCheckPayments
+    public abstract class ListUserData
     {
         public class Query : IRequest<Result<PagedList<CheckPaymentDto>>>
         {
