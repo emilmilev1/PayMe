@@ -12,7 +12,7 @@ using PayMe.Core;
 namespace PayMe.Core.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230820053954_InitialSetup")]
+    [Migration("20230820105220_InitialSetup")]
     partial class InitialSetup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
