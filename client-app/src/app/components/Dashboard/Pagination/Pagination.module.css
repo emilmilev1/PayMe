@@ -2,24 +2,28 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
+    padding: 0px;
     border-radius: 20px;
+    width: auto;
     color: aliceblue;
     background-color: #28e6b7;
 }
+
 @media (min-width: 576px) {
     .pagination {
         max-width: 540px;
     }
 }
+
 @media (min-width: 768px) {
     .pagination {
         max-width: 720px;
     }
 }
+
 @media (min-width: 1200px) {
     .pagination {
-        max-width: 1060px;
+        max-width: 1110px;
     }
 }
 

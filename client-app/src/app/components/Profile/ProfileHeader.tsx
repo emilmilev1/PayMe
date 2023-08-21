@@ -8,8 +8,10 @@ import {
     DialogContentText,
     DialogTitle,
 } from "@mui/material";
+import { Profile } from "../../models/profile";
+import { observer } from "mobx-react-lite";
 
-export const ProfileHeader = () => {
+const ProfileHeader = () => {
     const { userStore } = useStore();
     const [open, setOpen] = useState(false);
 
@@ -26,6 +28,10 @@ export const ProfileHeader = () => {
         setOpen(false);
     };
 
+    const isLoggedIn = userStore.isLoggedIn;
+    const currentUsername = userStore.user?.username;
+    const currentImage = userStore.user?.image;
+
     return (
         <Segment style={{ position: "relative" }}>
             <Grid>
@@ -35,10 +41,17 @@ export const ProfileHeader = () => {
                             <Item.Image
                                 avatar
                                 size="small"
-                                src={"/PayMe.png"}
+                                src={currentImage || "/user.png"}
                             />
                             <Item.Content verticalAlign="middle">
-                                <Header as="h1" content={"Pesho"} />
+                                <Header
+                                    as="h1"
+                                    content={
+                                        isLoggedIn
+                                            ? currentUsername
+                                            : "Missing username"
+                                    }
+                                />
                             </Item.Content>
                         </Item>
                     </Item.Group>
@@ -74,3 +87,5 @@ export const ProfileHeader = () => {
         </Segment>
     );
 };
+
+export default observer(ProfileHeader);

@@ -1,18 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using PayMe.API.Models;
 using PayMe.API.Services;
-using PayMe.Domain;
+using PayMe.Domain.Entities;
 using PayMe.Infrastructure.Email;
 
 namespace PayMe.API.Controllers
@@ -59,6 +54,7 @@ namespace PayMe.API.Controllers
             if (result.Succeeded)
             {
                 await SetRefreshToken(user);
+
                 return CreateUserObject(user);
             }
 
@@ -79,7 +75,7 @@ namespace PayMe.API.Controllers
                 ModelState.AddModelError("email", "Email taken!");
                 return ValidationProblem();
             }
-            
+
             if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
             {
                 ModelState.AddModelError("username", "Username taken!");
@@ -91,7 +87,9 @@ namespace PayMe.API.Controllers
                 UserName = registerDto.Username,
                 FirstName = registerDto.FirstName,
                 LastName = registerDto.LastName,
+                Age = registerDto.Age,
                 Email = registerDto.Email,
+                Bio = ""
             };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
@@ -110,6 +108,50 @@ namespace PayMe.API.Controllers
             await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
 
             return Ok("Registration success - please verify email");
+        }
+
+        [AllowAnonymous]
+        [HttpGet("doesEmailExist")]
+        public async Task<IActionResult> CheckEmailExists(string email)
+        {
+            var userEmail = await _userManager.FindByEmailAsync(email);
+
+            if (userEmail != null)
+            {
+                return Ok(new { doesEmailExist = true });
+            }
+
+            return Ok(new { doesEmailExist = false });
+        }
+
+        /// <summary>
+        /// Reset a password.
+        /// </summary>
+        /// <param name="resetPasswordUserDto">A new password passed as an argument</param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpPut("resetPassword")]
+        public async Task<ActionResult<ResetPasswordUserDto>> ResetPassword(ResetPasswordUserDto resetPasswordUserDto)
+        {
+            var user = await _userManager.Users.SingleOrDefaultAsync(x => x.Email == resetPasswordUserDto.Email);
+            if (user == null)
+            {
+                return NotFound("User not found!");
+            }
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+
+            var decodedTokenBytes = WebEncoders.Base64UrlDecode(token);
+            var decodedToken = Encoding.UTF8.GetString(decodedTokenBytes);
+
+            var result = await _userManager.ResetPasswordAsync(user, decodedToken, resetPasswordUserDto.Password);
+            if (!result.Succeeded)
+            {
+                return BadRequest("Password reset failed");
+            }
+
+            return Ok("Password reset successfully!");
         }
 
         /// <summary>
@@ -134,7 +176,7 @@ namespace PayMe.API.Controllers
 
             return Ok("Email confirmed - you can now login");
         }
-        
+
         /// <summary>
         /// Resend the verification of the email used to register again
         /// </summary>
@@ -153,7 +195,8 @@ namespace PayMe.API.Controllers
             token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
             var verifyUrl = $"{origin}/account/verifyEmail?token={token}&email={user.Email}";
-            var message = $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify email</a></p>";
+            var message =
+                $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify email</a></p>";
 
             await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
 
@@ -168,11 +211,11 @@ namespace PayMe.API.Controllers
         [HttpGet]
         public async Task<ActionResult<ProfileUserDto>> GetCurrentUser()
         {
-            var user = await _userManager.Users.Include(p => p.Photos)
+            var user = await _userManager.Users 
                 .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
 
             await SetRefreshToken(user!);
-            
+
             return CreateUserObject(user!);
         }
 
@@ -187,8 +230,12 @@ namespace PayMe.API.Controllers
             {
                 Username = user.UserName,
                 FirstName = user.FirstName,
+                LastName = user.LastName,
+                Age = user.Age,
+                Bio = user.Bio,
+                RoleName = user.RoleName,
                 Token = _tokenService.CreateToken(user),
-                Image = user?.Photos?.FirstOrDefault(x => x.IsMain)?.Url!
+                Image = user.Photos.FirstOrDefault(x => x.IsMain)?.Url!
             };
         }
 
@@ -201,7 +248,7 @@ namespace PayMe.API.Controllers
         public async Task<ActionResult<ProfileUserDto>> RefreshToken()
         {
             var refreshToken = Request.Cookies["refreshToken"];
-
+            
             var user = await _userManager.Users
                 .Include(r => r.RefreshTokens)
                 .Include(p => p.Photos)
@@ -225,6 +272,8 @@ namespace PayMe.API.Controllers
         private async Task SetRefreshToken(AppUser user)
         {
             var refreshToken = _tokenService.GenerateRefreshToken();
+
+            user.RefreshTokens = new List<RefreshToken>();
 
             user.RefreshTokens.Add(refreshToken);
 

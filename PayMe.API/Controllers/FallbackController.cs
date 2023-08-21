@@ -8,8 +8,10 @@ namespace PayMe.API.Controllers
     {
         public IActionResult Index()
         {
-            return PhysicalFile(Path.Combine(Directory.GetCurrentDirectory(),
-                "wwwroot", "index.html"), "text/HTML");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(),
+                "wwwroot", "index.html");
+
+            return PhysicalFile(filePath, "text/HTML");
         }
     }
 }

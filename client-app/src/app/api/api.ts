@@ -130,6 +130,7 @@ const CheckPayments = {
                     return paginatedResult;
                 }
             ),
+    total: () => requests.get("/payments/total"),
     details: (id: string) => requests.get<CheckPaymentData>(`/payments/${id}`),
     create: (checkPayment: CheckPaymentFormValues) =>
         requests.post<void>("/payments", checkPayment),
@@ -144,6 +145,10 @@ const Account = {
         requests.post<User>("/account/login", user),
     register: (user: UserFormValues) =>
         requests.post<User>("/account/register", user),
+    doesEmailExist: (email: string) =>
+        requests.get(`/account/doesEmailExist?email=${email}`),
+    resetPassword: (email: string, password: string) =>
+        requests.put<void>("/account/resetPassword", { email, password }),
     refreshToken: () => requests.post<User>("/account/refreshToken", {}),
     verifyEmail: (token: string, email: string) =>
         requests.post<void>(

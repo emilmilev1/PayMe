@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using PayMe.API.Services;
 using PayMe.Core;
 using PayMe.Domain;
+using PayMe.Domain.Entities;
 
 namespace PayMe.API.AppExtensions
 {
@@ -22,7 +23,7 @@ namespace PayMe.API.AppExtensions
                 .AddEntityFrameworkStores<DataContext>()
                 .AddSignInManager<SignInManager<AppUser>>()
                 .AddDefaultTokenProviders();
-
+            
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

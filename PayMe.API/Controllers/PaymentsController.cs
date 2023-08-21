@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PayMe.Application.CheckPayments;
-using PayMe.Domain;
+using PayMe.Application.Services;
+using PayMe.Domain.Entities;
 
 namespace PayMe.API.Controllers
 {
@@ -13,7 +15,9 @@ namespace PayMe.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCheckPayments([FromQuery] CheckPaymentParams param)
         {
-            return HandlePagedResult(await Mediator!.Send(new List.Query { Params = param }));
+            var result = await Mediator!.Send(new ListUserData.Query { Params = param });
+
+            return HandlePagedResult(result);
         }
 
         [HttpGet("{id}")]
@@ -30,7 +34,14 @@ namespace PayMe.API.Controllers
             return HandleResult(await Mediator!.Send(new Create.Command { CheckPayment = checkPayment }));
         }
 
-        // [Authorize(Policy = "")]
+        [HttpGet("total")]
+        public async Task<ActionResult<double>> GetTotalPayments()
+        {
+            var result = await Mediator!.Send(new CheckPaymentTotal.Query());
+
+            return HandleResult(result);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> EditCheckPayment(Guid id, CheckPayment checkPayment)
         {
@@ -39,7 +50,6 @@ namespace PayMe.API.Controllers
             return HandleResult(await Mediator!.Send(new Edit.Command { CheckPayment = checkPayment }));
         }
 
-        // [Authorize(Policy = "")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCheckPayment(Guid id)
         {

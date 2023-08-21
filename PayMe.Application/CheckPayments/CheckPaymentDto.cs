@@ -1,18 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using PayMe.Domain;
+using PayMe.Domain.Entities;
 
 namespace PayMe.Application.CheckPayments
 {
     public class CheckPaymentDto
     {
-        public CheckPaymentDto(ICollection<CheckAttendee> checkAttendees)
-        {
-            CheckAttendees = checkAttendees;
-        }
-
         [Key]
         [Required]
         public Guid Id { get; set; }
+        
+        [Required]
+        public int PaymentNumber { get; set; }
 
         [Required]
         public DateTime? Date { get; set; }
@@ -45,6 +43,6 @@ namespace PayMe.Application.CheckPayments
         [Range(0.00, 100000.00, ErrorMessage = "Total should be a positive number!")]
         public double Total { get; set; }
         
-        public ICollection<CheckAttendee> CheckAttendees { get; set; }
+        public ICollection<CheckAttendee> CheckAttendees { get; set; } = new List<CheckAttendee>();
     }
 }

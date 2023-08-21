@@ -2,13 +2,13 @@
 using PayMe.Application.Core;
 using PayMe.Core;
 
-namespace PayMe.Application.CheckPayments
+namespace PayMe.Application.Services
 {
-    public class Delete
+    public abstract class Delete
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public Guid Id { get; set; }
+            public Guid Id { get; init; }
         }
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
@@ -22,7 +22,18 @@ namespace PayMe.Application.CheckPayments
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var checkPayment = await _context.CheckPayments.FindAsync(request.Id);
+                if (request.Id == Guid.Empty)
+                {
+                    return Result<Unit>.Failure("Invalid Id value.");
+                }
+
+                var checkPayment = await _context.CheckPayments
+                    .FindAsync(new object?[] { request.Id },
+                        cancellationToken);
+                if (checkPayment == null)
+                {
+                    return Result<Unit>.Failure("Check payment not found.");
+                }
 
                 _context.Remove(checkPayment);
 

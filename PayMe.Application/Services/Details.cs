@@ -2,13 +2,14 @@
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using PayMe.Application.CheckPayments;
 using PayMe.Application.Core;
 using PayMe.Application.Interfaces;
 using PayMe.Core;
 
-namespace PayMe.Application.CheckPayments
+namespace PayMe.Application.Services
 {
-    public class Details
+    public abstract class Details
     {
         public class Query : IRequest<Result<CheckPaymentDto>>
         {
@@ -32,7 +33,12 @@ namespace PayMe.Application.CheckPayments
             {
                 var payment = await _context.CheckPayments
                     .ProjectTo<CheckPaymentDto>(_mapper.ConfigurationProvider)
-                    .FirstOrDefaultAsync(x => x.Id == request.Id);
+                    .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken: cancellationToken);
+
+                if (payment == null)
+                {
+                    return Result<CheckPaymentDto>.Failure("CheckPayment not found");
+                }
 
                 return Result<CheckPaymentDto>.Success(payment);
             }

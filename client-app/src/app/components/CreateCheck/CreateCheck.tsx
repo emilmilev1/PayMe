@@ -1,13 +1,9 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { Dayjs } from "dayjs";
-
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import { Box, Container, Paper } from "@mui/material";
-import { Button } from "semantic-ui-react";
-
+import { Box, Button, CircularProgress, Container, Paper } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -16,58 +12,79 @@ import { CheckPaymentFormValues } from "../../models/checkPaymentStore";
 import { useHistory, useParams } from "react-router-dom";
 import { useStore } from "../../stores/store";
 import { v4 as uuid } from "uuid";
+import { toast } from "react-toastify";
+import { format, zonedTimeToUtc } from "date-fns-tz";
 
 export default function CreateCheck() {
     const history = useHistory();
-
     const { checkPaymentStore } = useStore();
-    const { createCheckPayment, updateCheckPayment, loadCheckPayment } =
-        checkPaymentStore;
+
+    const { createCheckPayment, loadCheckPayment } = checkPaymentStore;
     const { id } = useParams<{ id: string }>();
 
     const [checkPayment, setCheckPayment] = useState<CheckPaymentFormValues>(
-        new CheckPaymentFormValues()
+        () => ({
+            id: "",
+            paymentNumber: 0,
+            title: "",
+            firstName: "",
+            lastName: "",
+            address: "",
+            total: 0,
+            country: "",
+            zipCode: 0,
+            date: new Date(),
+            isHost: undefined,
+            hostUsername: "",
+            checkAttendees: [],
+        })
     );
 
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [address, setAddress] = useState("");
-    const [date, setDateValue] = useState<Dayjs | null>(null);
-    const [total, setTotal] = useState("");
-    const [zipCode, setZipCode] = useState("");
-
-    const body = {
-        firstName,
-        lastName,
-        address,
-        date,
-        total,
-        zipCode,
-    };
+    const [selectedCountry, setSelectedCountry] = useState<string>("");
 
     useEffect(() => {
-        if (id)
-            loadCheckPayment(id).then((checkPayment) =>
-                setCheckPayment(new CheckPaymentFormValues(checkPayment))
-            );
+        if (id) {
+            loadCheckPayment(id).then((checkPayment) => {
+                setCheckPayment(new CheckPaymentFormValues(checkPayment));
+                setSelectedCountry(checkPayment!.country);
+            });
+        }
     }, [id, loadCheckPayment]);
 
-    function handleSubmit(checkPayment: CheckPaymentFormValues) {
-        if (!checkPayment.id) {
-            let newCheckPayment = {
-                ...checkPayment,
-                id: uuid(),
-            };
+    const isFormValid =
+        checkPayment.firstName &&
+        checkPayment.lastName &&
+        checkPayment.title &&
+        checkPayment.address &&
+        checkPayment.total >= 0 &&
+        checkPayment.zipCode >= 0 &&
+        selectedCountry !== "" &&
+        checkPayment.date !== null;
 
-            createCheckPayment(newCheckPayment).then(() =>
-                history.push(`/CheckPayments/${newCheckPayment.id}`)
-            );
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+
+        if (isFormValid) {
+            try {
+                const currentTimeInTimeZone = zonedTimeToUtc(new Date(), "EET");
+
+                const newCheckPayment = {
+                    ...checkPayment,
+                    id: uuid(),
+                    country: selectedCountry,
+                    date: currentTimeInTimeZone,
+                };
+
+                await createCheckPayment(newCheckPayment);
+                toast.success("Payment created successfully!");
+                history.push(`/dashboard`);
+            } catch (error) {
+                toast.error("Error occurred while creating payment.");
+            }
         } else {
-            updateCheckPayment(checkPayment).then(() =>
-                history.push(`/CheckPayments/${checkPayment.id}`)
-            );
+            toast.error("Please fill in all required fields.");
         }
-    }
+    };
 
     return (
         <React.Fragment>
@@ -80,66 +97,102 @@ export default function CreateCheck() {
                 >
                     Create Payment
                 </Typography>
-                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        alignItems: "center",
+                    }}
+                >
                     <Container sx={{ padding: 5 }}>
                         <Paper
                             variant="outlined"
-                            sx={{
-                                my: { xs: 3, md: 6 },
-                                p: { xs: 2, md: 3 },
-                            }}
+                            sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
                         >
                             <Typography variant="h6" gutterBottom>
                                 User Data
                             </Typography>
-                            <form>
+                            <form onSubmit={handleSubmit}>
                                 <Grid container spacing={3}>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
+                                            fullWidth
                                             required
                                             id="firstNameSender"
                                             name="firstNameSender"
                                             label="First name"
-                                            fullWidth
-                                            autoComplete="given-name"
-                                            variant="standard"
-                                            value={firstName}
+                                            autoComplete="firstNameSender"
+                                            variant="filled"
+                                            value={checkPayment.firstName}
                                             onChange={(e) =>
-                                                setFirstName(e.target.value)
+                                                setCheckPayment({
+                                                    ...checkPayment,
+                                                    firstName: e.target.value,
+                                                })
                                             }
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
+                                            fullWidth
                                             required
                                             id="lastNameSender"
                                             name="lastNameSender"
                                             label="Last name"
-                                            fullWidth
-                                            autoComplete="family-name"
-                                            variant="standard"
-                                            value={lastName}
+                                            autoComplete="lastNameSender"
+                                            variant="filled"
+                                            value={checkPayment.lastName}
                                             onChange={(e) =>
-                                                setLastName(e.target.value)
-                                            }
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            id="address2"
-                                            name="address2"
-                                            label="Address line"
-                                            fullWidth
-                                            autoComplete="shipping address-line2"
-                                            variant="standard"
-                                            value={address}
-                                            onChange={(e) =>
-                                                setAddress(e.target.value)
+                                                setCheckPayment({
+                                                    ...checkPayment,
+                                                    lastName: e.target.value,
+                                                })
                                             }
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <CountrySelect />
+                                        <TextField
+                                            fullWidth
+                                            required
+                                            id="title"
+                                            name="title"
+                                            label="Title"
+                                            autoComplete="title"
+                                            variant="filled"
+                                            value={checkPayment.title}
+                                            onChange={(e) =>
+                                                setCheckPayment({
+                                                    ...checkPayment,
+                                                    title: e.target.value,
+                                                })
+                                            }
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            fullWidth
+                                            required
+                                            id="address2"
+                                            name="address2"
+                                            label="Address line"
+                                            autoComplete="address2"
+                                            variant="filled"
+                                            value={checkPayment.address}
+                                            onChange={(e) =>
+                                                setCheckPayment({
+                                                    ...checkPayment,
+                                                    address: e.target.value,
+                                                })
+                                            }
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={5}>
+                                        <CountrySelect
+                                            setSelectedCountry={
+                                                setSelectedCountry
+                                            }
+                                            selectedCountry={selectedCountry}
+                                        />
                                     </Grid>
                                 </Grid>
                                 <Typography
@@ -149,58 +202,116 @@ export default function CreateCheck() {
                                 >
                                     Payment data
                                 </Typography>
-                                <Grid container spacing={3}>
+                                <Grid container spacing={5}>
                                     <Grid item xs={12} sm={6}>
                                         <DatePicker
+                                            disabled
                                             label="Date Payment"
-                                            value={date}
-                                            onChange={(newValue) => {
-                                                setDateValue(newValue);
-                                            }}
+                                            value={checkPayment.date}
+                                            onChange={(newValue) =>
+                                                setCheckPayment({
+                                                    ...checkPayment,
+                                                    date:
+                                                        newValue instanceof Date
+                                                            ? newValue
+                                                            : null,
+                                                })
+                                            }
                                             renderInput={(params) => (
-                                                <TextField {...params} />
+                                                <TextField
+                                                    required
+                                                    {...params}
+                                                />
                                             )}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
-                                            id="state"
+                                            fullWidth
+                                            required
+                                            id="total"
                                             name="Total"
                                             type="number"
                                             label="Total"
-                                            fullWidth
-                                            variant="standard"
-                                            value={total}
+                                            variant="filled"
+                                            value={
+                                                checkPayment.total === 0
+                                                    ? ""
+                                                    : checkPayment.total
+                                            }
                                             onChange={(e) =>
-                                                setTotal(e.target.value)
+                                                setCheckPayment({
+                                                    ...checkPayment,
+                                                    total:
+                                                        e.target.value === ""
+                                                            ? 0
+                                                            : parseFloat(
+                                                                  e.target.value
+                                                              ),
+                                                })
                                             }
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
+                                            fullWidth
                                             required
                                             id="zip"
                                             name="zip"
+                                            type="number"
                                             label="Zip / Postal code"
-                                            fullWidth
-                                            autoComplete="shipping postal-code"
-                                            variant="standard"
-                                            value={zipCode}
+                                            autoComplete="zip"
+                                            variant="filled"
+                                            value={
+                                                checkPayment.zipCode === 0
+                                                    ? ""
+                                                    : checkPayment.zipCode
+                                            }
                                             onChange={(e) =>
-                                                setZipCode(e.target.value)
+                                                setCheckPayment({
+                                                    ...checkPayment,
+                                                    zipCode:
+                                                        e.target.value === ""
+                                                            ? 0
+                                                            : parseInt(
+                                                                  e.target.value
+                                                              ),
+                                                })
                                             }
                                         />
                                     </Grid>
                                 </Grid>
-                                <Button
-                                    positive
-                                    floated="right"
-                                    type="submit"
-                                    content="Complete"
-                                    to="/dashboard"
-                                    variant="contained"
-                                    sx={{ mb: 5, ml: 1 }}
-                                />
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        justifyContent: "right",
+                                        alignItems: "center",
+                                    }}
+                                >
+                                    <Button
+                                        type="submit"
+                                        variant="contained"
+                                        sx={{
+                                            backgroundColor: "#4caf50",
+                                            color: "#fff",
+                                        }}
+                                        disabled={
+                                            !(
+                                                checkPayment.firstName &&
+                                                checkPayment.lastName &&
+                                                checkPayment.title &&
+                                                checkPayment.address &&
+                                                checkPayment.total > 0 &&
+                                                checkPayment.zipCode > 0 &&
+                                                selectedCountry !== "" &&
+                                                checkPayment.date !== null
+                                            )
+                                        }
+                                        onClick={handleSubmit}
+                                    >
+                                        Complete
+                                    </Button>
+                                </Box>
                             </form>
                         </Paper>
                     </Container>

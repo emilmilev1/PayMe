@@ -12,11 +12,11 @@ namespace PayMe.Application.Profiles
     /// Service which shows Profile user data
     /// Anything that doesn't update the database is going to be a Query
     /// </summary>
-    public class DetailsProfileUser
+    public abstract class DetailsProfileUser
     {
         public class Query : IRequest<Result<Profile>>
         {
-            public string Username { get; set; }
+            public string Username { get; set; } = null!;
         }
 
         public class Handler : IRequestHandler<Query, Result<Profile>>
@@ -34,14 +34,25 @@ namespace PayMe.Application.Profiles
 
             public async Task<Result<Profile>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var user = await _context.Users
+                var currentUser = _userAccessor.GetUsername();
+                
+                if (currentUser == null)
+                {
+                    return Result<Profile>.Failure("No logged-in user.");
+                }
+
+                var profile = await _context.Users
                     .ProjectTo<Profile>(_mapper.ConfigurationProvider,
                         new { currentUsername = _userAccessor.GetUsername() })
-                    .SingleOrDefaultAsync(x => x.Username == request.Username, cancellationToken: cancellationToken);
+                    .SingleOrDefaultAsync(x => x.Username == request.Username,
+                        cancellationToken: cancellationToken);
 
-                if (user == null) return null;
+                if (profile == null)
+                {
+                    return Result<Profile>.Failure("Profile not found.");
+                }
 
-                return Result<Profile>.Success(user);
+                return Result<Profile>.Success(profile);
             }
         }
     }

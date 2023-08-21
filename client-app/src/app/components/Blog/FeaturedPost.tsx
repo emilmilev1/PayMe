@@ -16,7 +16,7 @@ interface FeaturedPostProps {
     };
 }
 
-export default function FeaturedPost(props: FeaturedPostProps) {
+const FeaturedPost = (props: FeaturedPostProps) => {
     const { post } = props;
 
     return (
@@ -50,4 +50,6 @@ export default function FeaturedPost(props: FeaturedPostProps) {
             </CardActionArea>
         </Grid>
     );
-}
+};
+
+export default FeaturedPost;

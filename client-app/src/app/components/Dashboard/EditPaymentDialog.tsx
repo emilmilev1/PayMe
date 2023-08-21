@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Dialog,
     DialogTitle,
@@ -6,33 +6,24 @@ import {
     DialogActions,
     Button,
     TextField,
+    Grid,
 } from "@mui/material";
 import { toast } from "react-toastify";
 import { observer } from "mobx-react-lite";
 import CheckPaymentStore from "../../stores/checkPaymentStore";
-import { Profile } from "../../models/profile";
-import { format } from "date-fns";
-import { CheckPaymentFormValues } from "../../models/checkPaymentStore";
-
-interface PaymentDataEdit {
-    id: string;
-    date: Date;
-    title: string;
-    firstName: string;
-    lastName: string;
-    address: string;
-    country: string;
-    zipCode: number;
-    total: number;
-    isHost: boolean;
-    hostUsername: string;
-    checkAttendees: Profile[];
-}
+import {
+    CheckPaymentData,
+    CheckPaymentFormValues,
+} from "../../models/checkPaymentStore";
+import { useHistory } from "react-router";
+import { useStore } from "../../stores/store";
+import CountrySelect from "../CountrySelect/CountrySelect";
+import { zonedTimeToUtc } from "date-fns-tz";
 
 interface EditPaymentDialogProps {
     open: boolean;
     onClose: () => void;
-    payment: PaymentDataEdit;
+    payment: CheckPaymentData;
     checkPaymentStore: CheckPaymentStore;
 }
 
@@ -46,33 +37,44 @@ const EditPaymentDialog: React.FC<EditPaymentDialogProps> = ({
         ...payment,
     });
 
+    const history = useHistory();
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setEditedPayment((prevPayment) => ({
-            ...prevPayment,
-            [name]: value,
-        }));
+        if (name === "total") {
+            const parsedValue = parseFloat(value);
+            setEditedPayment((prevPayment) => ({
+                ...prevPayment,
+                [name]:
+                    !isNaN(parsedValue) && parsedValue > 0 ? parsedValue : 0,
+            }));
+        } else {
+            setEditedPayment((prevPayment) => ({
+                ...prevPayment,
+                [name]: value,
+            }));
+        }
     };
 
     const handleSaveChanges = async () => {
         try {
-            const currentTime = format(new Date(), "HH:mm");
-            const currentDate = new Date();
+            const currentTimeInTimeZone = zonedTimeToUtc(new Date(), "EET");
 
-            setEditedPayment((prevPayment: CheckPaymentFormValues) => ({
-                ...prevPayment,
-                date: currentDate,
-                time: currentTime,
-            }));
+            const updatedCurrentPayment = {
+                ...editedPayment,
+                country: editedPayment.country,
+                date: currentTimeInTimeZone,
+            };
 
-            await checkPaymentStore.updateCheckPayment(editedPayment);
-            checkPaymentStore.updateEditedPayment(editedPayment);
+            await checkPaymentStore.updateCheckPayment(updatedCurrentPayment);
+            checkPaymentStore.updateEditedPayment(updatedCurrentPayment);
 
-            //console.log("Edited Payment:", editedPayment);
-            toast.success("Payment edited successfully");
+            toast.success("Payment updated successfully");
+            history.push(`/dashboard`);
             onClose();
         } catch (error) {
-            toast.error("Failed to edit payment");
+            toast.error("Failed to update payment");
+            history.push(`/dashboard`);
             console.log(error);
         }
     };
@@ -81,6 +83,14 @@ const EditPaymentDialog: React.FC<EditPaymentDialogProps> = ({
         <Dialog open={open} onClose={onClose}>
             <DialogTitle>Edit Payment</DialogTitle>
             <DialogContent>
+                <TextField
+                    label="Title"
+                    name="title"
+                    value={editedPayment.title}
+                    onChange={handleInputChange}
+                    fullWidth
+                    margin="normal"
+                />
                 <TextField
                     label="First Name"
                     name="firstName"
@@ -105,14 +115,17 @@ const EditPaymentDialog: React.FC<EditPaymentDialogProps> = ({
                     fullWidth
                     margin="normal"
                 />
-                <TextField
-                    label="Country"
-                    name="country"
-                    value={editedPayment.country}
-                    onChange={handleInputChange}
-                    fullWidth
-                    margin="normal"
-                />
+                <Grid item xs={12} sm={5} pt={2} pb={2}>
+                    <CountrySelect
+                        setSelectedCountry={(country) =>
+                            setEditedPayment((prevPayment) => ({
+                                ...prevPayment,
+                                country: country,
+                            }))
+                        }
+                        selectedCountry={editedPayment.country}
+                    />
+                </Grid>
                 <TextField
                     label="Zip Code"
                     name="zipCode"
@@ -136,6 +149,17 @@ const EditPaymentDialog: React.FC<EditPaymentDialogProps> = ({
                     onClick={handleSaveChanges}
                     variant="contained"
                     color="primary"
+                    disabled={
+                        !(
+                            editedPayment.firstName &&
+                            editedPayment.lastName &&
+                            editedPayment.title &&
+                            editedPayment.address &&
+                            editedPayment.total > 0 &&
+                            editedPayment.zipCode > 0 &&
+                            editedPayment.country !== ""
+                        )
+                    }
                 >
                     Save Changes
                 </Button>

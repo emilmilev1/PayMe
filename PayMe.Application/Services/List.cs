@@ -1,20 +1,18 @@
-﻿using System.Collections.ObjectModel;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
+using PayMe.Application.CheckPayments;
 using PayMe.Application.Core;
 using PayMe.Application.Interfaces;
 using PayMe.Core;
-using PayMe.Domain;
 
-namespace PayMe.Application.CheckPayments
+namespace PayMe.Application.Services
 {
-    public class List
+    public abstract class ListAllCheckPayments
     {
         public class Query : IRequest<Result<PagedList<CheckPaymentDto>>>
         {
-            public CheckPaymentParams Params { get; set; }
+            public CheckPaymentParams Params { get; set; } = null!;
         }
 
         public class Handler : IRequestHandler<Query, Result<PagedList<CheckPaymentDto>>>
@@ -34,10 +32,27 @@ namespace PayMe.Application.CheckPayments
                 CancellationToken cancellationToken)
             {
                 var query = _context.CheckPayments
-                    //.Where(d => d.Date >= request.Params.StartDate)
-                    .OrderBy(d => d.Date)
+                    .Where(chP => chP.CheckPaymentsUsers.Any(
+                        cpu => cpu.AppUserId == _userAccessor.GetUserId()))
                     .ProjectTo<CheckPaymentDto>(_mapper.ConfigurationProvider)
                     .AsQueryable();
+
+                if (!string.IsNullOrEmpty(request.Params.OrderBy))
+                {
+                    switch (request.Params.OrderBy.ToLower())
+                    {
+                        case "date":
+                            query = request.Params.IsDescending.HasValue && request.Params.IsDescending.Value
+                                ? query.OrderByDescending(payment => payment.Date)
+                                : query.OrderBy(payment => payment.Date);
+                            break;
+                        case "total":
+                            query = request.Params.IsDescending.HasValue && request.Params.IsDescending.Value
+                                ? query.OrderByDescending(payment => payment.Total)
+                                : query.OrderBy(payment => payment.Total);
+                            break;
+                    }
+                }
 
                 return Result<PagedList<CheckPaymentDto>>.Success(
                     await PagedList<CheckPaymentDto>.CreateAsync(

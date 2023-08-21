@@ -3,6 +3,10 @@ import { User } from "./user";
 export interface Profile {
     username: string;
     firstName: string;
+    lastName: string;
+    age: number;
+    bio: string;
+    roleName: string;
     image?: string;
     photos?: Photo[];
 }
@@ -10,13 +14,14 @@ export interface Profile {
 export class Profile implements Profile {
     constructor(user: User) {
         this.username = user.username;
-        this.firstName = user.firstName;
         this.image = user.image;
     }
 }
 
 export interface Photo {
     id: string;
+    title: string;
     url: string;
     isMain: boolean;
+    date: Date;
 }

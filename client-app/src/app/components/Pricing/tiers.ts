@@ -1,39 +1,17 @@
 export const tiers = [
     {
-        title: "Free",
+        title: "Child",
         price: "0",
-        description: [
-            "10 users included",
-            "2 GB of storage",
-            "Help center access",
-            "Email support",
-        ],
-        buttonText: "Sign up for free",
-        buttonVariant: "outlined",
+        description: ["Additional security", "Children Administrator support"],
     },
     {
-        title: "Pro",
-        subheader: "Most popular",
+        title: "Student",
         price: "15",
-        description: [
-            "20 users included",
-            "10 GB of storage",
-            "Help center access",
-            "Priority email support",
-        ],
-        buttonText: "Get started",
-        buttonVariant: "contained",
+        description: ["Help center access", "Students Administrator support"],
     },
     {
-        title: "Enterprise",
+        title: "Adult",
         price: "30",
-        description: [
-            "50 users included",
-            "30 GB of storage",
-            "Help center access",
-            "Phone & email support",
-        ],
-        buttonText: "Contact us",
-        buttonVariant: "outlined",
+        description: ["Less ads", "Adults Administrator support"],
     },
 ];

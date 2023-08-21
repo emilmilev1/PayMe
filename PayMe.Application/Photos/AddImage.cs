@@ -5,6 +5,7 @@ using PayMe.Application.Core;
 using PayMe.Application.Interfaces;
 using PayMe.Core;
 using PayMe.Domain;
+using PayMe.Domain.Entities;
 
 namespace PayMe.Application.Photos
 {
@@ -33,7 +34,7 @@ namespace PayMe.Application.Photos
                 var user = await _context.Users.Include(p => p.Photos)
                     .FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername(), cancellationToken: cancellationToken);
 
-                if (user == null) return null;
+                if (user == null) return null!;
 
                 var photoUploadResult = await _photoAccessor.AddPhoto(request.File);
 

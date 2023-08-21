@@ -16,6 +16,7 @@ import {
 import ScrollToTopButton from "./app/layout/ScrollToTopButton";
 
 const Homepage = lazy(() => import("./app/pages/Homepage/Homepage"));
+const About = lazy(() => import("./app/pages/About/About"));
 const Blog = lazy(() => import("./app/pages/Blog/Blog"));
 const Dashboard = lazy(() => import("./app/components/Dashboard/Dashboard"));
 const ForgotPassword = lazy(() => import("./app/pages/ResetPass/ResetPass"));
@@ -36,12 +37,12 @@ function AppRouter() {
     const { commonStore, userStore } = useStore();
 
     useEffect(() => {
-        userStore.getUser();
-    }, [userStore]);
-
-    useEffect(() => {
         commonStore.setAppLoaded();
-    }, [commonStore]);
+
+        if (userStore.isLoggedIn) {
+            userStore.getUser();
+        }
+    }, [commonStore, userStore]);
 
     return (
         <div className="app">
@@ -57,13 +58,10 @@ function AppRouter() {
                                 <Route exact path="/" component={Homepage} />
                                 <Route path="/blog" component={Blog} />
                                 <Route path="/pricing" component={Pricing} />
+                                <Route path="/about-us" component={About} />
                                 <GuardedRoutesAuthorization
                                     path="/dashboard"
                                     component={Dashboard}
-                                />
-                                <GuardedRoutesAuthorization
-                                    path="/profile"
-                                    component={Profile}
                                 />
                                 <GuardedRoutesAuthorization
                                     key={location.key}
@@ -86,7 +84,6 @@ function AppRouter() {
                                     path="/reset-password"
                                     component={ForgotPassword}
                                 />
-
                                 <Route
                                     path="/account/registerSuccess"
                                     component={RegisterSuccess}

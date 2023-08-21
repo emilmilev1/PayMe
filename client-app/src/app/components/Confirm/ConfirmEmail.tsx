@@ -13,8 +13,6 @@ const ConfirmEmail = () => {
     const email = useQuery().get("email") as string;
     const token = useQuery().get("token") as string;
 
-    console.log(userStore.user?.token);
-
     const Status = {
         Verifying: "Verifying",
         Failed: "Failed",
@@ -55,6 +53,10 @@ const ConfirmEmail = () => {
         history.push("/login");
     };
 
+    const handleHomepage = () => {
+        history.push("/");
+    };
+
     return (
         <Segment placeholder textAlign="center">
             <Segment.Inline>
@@ -89,6 +91,12 @@ const ConfirmEmail = () => {
                                         content="Resend email"
                                     />
                                 ) : null}
+                                <Button
+                                    primary
+                                    onClick={handleHomepage}
+                                    content="PayMe Homepage"
+                                    size="huge"
+                                />
                             </div>
                         )}
                     </div>

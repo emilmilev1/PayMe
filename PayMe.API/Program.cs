@@ -5,16 +5,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using PayMe.API.AppExtensions;
-using PayMe.API.LoggingConfig;
 using PayMe.API.Middleware;
-using PayMe.Application.CheckPayments;
+using PayMe.Application.Services;
 using PayMe.Core;
 using PayMe.Core.DataSeed;
-using PayMe.Domain;
+using PayMe.Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
-ConfigureLogging.ConfigureLoggingService(builder.Logging);
+//ConfigureLogging.ConfigureLoggingService(builder.Logging);
 
 builder.Services.AddControllers(opt =>
 {
@@ -46,6 +45,9 @@ app.UseCsp(opt => opt
     .ScriptSources(s => s.Self())
 );
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 if (!app.Environment.IsDevelopment())
 {
     app.Use(async (context, next) =>
@@ -54,9 +56,6 @@ if (!app.Environment.IsDevelopment())
         await next.Invoke();
     });
 }
-
-app.UseDefaultFiles();
-app.UseStaticFiles();
 
 app.UseCors("CorsPolicy");
 
@@ -74,10 +73,17 @@ try
 {
     var context = services.GetRequiredService<DataContext>();
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
+    var adminManager = services.GetRequiredService<UserManager<AppUser>>();
+    
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
     await context.Database.MigrateAsync();
 
+    await Seed.SeedAdminData(roleManager);
+    
     await Seed.SeedData(context, userManager);
+    Seed.SeedAdminUser(adminManager).Wait();
+    Seed.SeedAdministratorsUsers(adminManager).Wait();
 }
 catch (Exception ex)
 {

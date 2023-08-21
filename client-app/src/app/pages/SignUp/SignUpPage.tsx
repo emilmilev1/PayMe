@@ -2,52 +2,27 @@ import { Fragment } from "react";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Homepage/Navbar";
 import SignUp from "../../components/Register/Register";
-import {
-    Avatar,
-    Box,
-    Container,
-    CssBaseline,
-    Grid,
-    PaletteMode,
-    ThemeProvider,
-    Typography,
-    createTheme,
-} from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { Link } from "react-router-dom";
-
-const theme = createTheme();
+import { Box, Container } from "@mui/material";
 
 const SignUpPage = () => {
     return (
         <>
             <Navbar />
             <Fragment>
-                <ThemeProvider theme={theme}>
-                    <Container component="main" maxWidth="xs">
-                        <CssBaseline />
-                        <Box
-                            sx={{
-                                marginTop: 8,
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                            }}
-                        >
-                            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                                <LockOutlinedIcon />
-                            </Avatar>
-                            <Box component="div" sx={{ mt: 3 }}>
-                                <SignUp />
-                                <Grid container justifyContent="flex-end">
-                                    <Grid item>
-                                        <Link to="/login">Sign in?</Link>
-                                    </Grid>
-                                </Grid>
-                            </Box>
+                <Container maxWidth="xs">
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            flexDirection: "column",
+                            minHeight: "calc(150vh - 100px)",
+                        }}
+                    >
+                        <Box component="div" sx={{ mt: 1 }}>
+                            <SignUp />
                         </Box>
-                    </Container>
-                </ThemeProvider>
+                    </Box>
+                </Container>
             </Fragment>
             <Footer />
         </>

@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using PayMe.Domain;
+using PayMe.Domain.Entities;
 
 namespace PayMe.Application.CheckPayments
 {

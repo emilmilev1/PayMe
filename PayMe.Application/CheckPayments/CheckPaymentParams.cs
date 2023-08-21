@@ -4,6 +4,9 @@ namespace PayMe.Application.CheckPayments
 {
     public class CheckPaymentParams : PagedParams
     {
-        public DateTime StartDate { get; set; } = DateTime.UtcNow;
+        public string? OrderBy { get; set; }
+        public bool? IsDescending { get; set; }
+        
+        public string RoleName { get; set; } = null!;
     }
 }

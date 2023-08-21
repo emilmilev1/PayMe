@@ -31,8 +31,8 @@ export default class ProfileStore {
                 this.profile = profile;
                 this.loadingProfile = false;
             });
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            console.log(error.message);
             runInAction(() => (this.loadingProfile = false));
         }
     };
@@ -88,15 +88,18 @@ export default class ProfileStore {
         this.loading = true;
 
         try {
-            await api.Profiles.deletePhoto(photo.id);
-
             runInAction(() => {
                 if (this.profile) {
                     this.profile.photos = this.profile.photos?.filter(
                         (p) => p.id !== photo.id
                     );
-                    this.loading = false;
                 }
+            });
+
+            await api.Profiles.deletePhoto(photo.id);
+
+            runInAction(() => {
+                this.loading = false;
             });
         } catch (error) {
             runInAction(() => (this.loading = false));
@@ -112,10 +115,10 @@ export default class ProfileStore {
 
             runInAction(() => {
                 if (
-                    profile.firstName &&
-                    profile.firstName !== store.userStore.user?.firstName
+                    profile.username &&
+                    profile.username !== store.userStore.user?.username
                 ) {
-                    store.userStore.setDisplayName(profile.firstName);
+                    store.userStore.setDisplayName(profile.username);
                 }
 
                 this.profile = { ...this.profile, ...(profile as Profile) };

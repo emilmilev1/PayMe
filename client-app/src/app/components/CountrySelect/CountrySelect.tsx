@@ -3,7 +3,19 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
-export default function CountrySelect() {
+interface CountrySelectProps {
+    setSelectedCountry: (country: string) => void;
+    selectedCountry: string;
+}
+
+export default function CountrySelect({
+    setSelectedCountry,
+    selectedCountry,
+}: CountrySelectProps) {
+    const handleCountryChange = (e: React.ChangeEvent<{ value: unknown }>) => {
+        setSelectedCountry(e.target.value as string);
+    };
+
     return (
         <Autocomplete
             id="country-select-demo"
@@ -11,6 +23,12 @@ export default function CountrySelect() {
             options={countries}
             autoHighlight
             getOptionLabel={(option) => option.label}
+            value={
+                countries.find(
+                    (country) => country.label === selectedCountry
+                ) || null
+            }
+            onChange={(event, value) => setSelectedCountry(value?.label || "")}
             renderOption={(props, option) => (
                 <Box
                     component="li"
@@ -31,9 +49,11 @@ export default function CountrySelect() {
                 <TextField
                     {...params}
                     label="Choose a country"
+                    value={selectedCountry}
+                    onChange={handleCountryChange}
                     inputProps={{
                         ...params.inputProps,
-                        autoComplete: "new-password", // disable autocomplete and autofill
+                        autoComplete: "new-password",
                     }}
                 />
             )}

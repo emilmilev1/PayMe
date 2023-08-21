@@ -1,8 +1,15 @@
 import React from "react";
 import { toast } from "react-toastify";
-import { Button, Header, Icon, Segment } from "semantic-ui-react";
+import {
+    Button,
+    Header,
+    HeaderSubheader,
+    Icon,
+    Segment,
+} from "semantic-ui-react";
 import useQuery from "../../utils/hooks";
 import api from "../../api/api";
+import { useStore } from "../../stores/store";
 
 const RegisterSuccess = () => {
     const email = useQuery().get("email") as string;
@@ -21,12 +28,8 @@ const RegisterSuccess = () => {
         <Segment placeholder textAlign="center">
             <Header icon color="green">
                 <Icon name="check" />
-                Successfully registered!
+                Successfully registered! You can close this tab!
             </Header>
-            <p>
-                Please check your email (including junk email) for the
-                verification email
-            </p>
             {email && (
                 <>
                     <p>

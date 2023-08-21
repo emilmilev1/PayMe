@@ -4,7 +4,7 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Title from "./Title";
-import { Button } from "@mui/material";
+import { Box, Button, TableBody, Typography } from "@mui/material";
 import { useStore } from "../../stores/store";
 import { observer } from "mobx-react-lite";
 import { Fragment, useEffect } from "react";
@@ -36,37 +36,8 @@ const Orders = () => {
                             <Title>Recent Payments</Title>
                         </TableCell>
                     </TableRow>
-                    <TableRow>
-                        <TableCell align="right" colSpan={9}>
-                            <div>
-                                <Button
-                                    style={{ border: "none", outline: "none" }}
-                                    onClick={() =>
-                                        console.log("Sort by current month")
-                                    }
-                                >
-                                    Sort by current month
-                                </Button>
-                                <Button
-                                    style={{ border: "none", outline: "none" }}
-                                    onClick={() =>
-                                        console.log("Sort by Highest")
-                                    }
-                                >
-                                    Sort by Highest Total
-                                </Button>
-                                <Button
-                                    style={{ border: "none", outline: "none" }}
-                                    onClick={() =>
-                                        console.log("Sort by Lowest")
-                                    }
-                                >
-                                    Sort by Lowest Total
-                                </Button>
-                            </div>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
+                    <TableRow sx={{ backgroundColor: "rgba(0, 0, 255, 0.1)" }}>
+                        <TableCell>N</TableCell>
                         <TableCell>Date</TableCell>
                         <TableCell>Time</TableCell>
                         <TableCell>First Name</TableCell>
@@ -79,12 +50,20 @@ const Orders = () => {
                     </TableRow>
                 </TableHead>
                 <OrdersListItems />
+                {pagination?.totalItems === 0 && (
+                    <TableRow>
+                        <TableCell align="center" colSpan={9}>
+                            <Title>No payments to display</Title>
+                        </TableCell>
+                    </TableRow>
+                )}
             </Table>
             <Pagination
                 currentPage={pagingParams.pageNumber}
                 totalPages={pagination ? pagination.totalPages : 0}
                 totalItems={pagination ? pagination.totalItems : 0}
                 onPageChange={handlePageChange}
+                itemsPerPage={pagination ? pagination.itemsPerPage : 0}
             />
         </Fragment>
     );

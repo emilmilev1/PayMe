@@ -3,10 +3,16 @@ import { history } from "../..";
 import { User, UserFormValues } from "../models/user";
 import { store } from "./store";
 import api from "../api/api";
+import { toast } from "react-toastify";
+
+interface DoesEmailExistResponse {
+    doesEmailExist: boolean;
+}
 
 export default class UserStore {
     user: User | null = null;
     refreshTokenTimeout: any;
+    doesUserEmailExist: boolean = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -16,17 +22,14 @@ export default class UserStore {
         return store.commonStore.token !== null;
     }
 
-    login = async (creds: UserFormValues) => {
+    login = async (creds: UserFormValues, rememberMe: boolean) => {
         try {
             const user = await api.Account.login(creds);
-            console.log(user);
-
-            store.commonStore.setToken(user.token);
+            store.commonStore.setToken(user.token, rememberMe);
             this.startRefreshTokenTimer(user);
             runInAction(() => (this.user = user));
-            console.log("this user: " + this.user);
-
             store.modalStore.closeModal();
+            store.commonStore.setAppLoaded();
             history.push("/dashboard");
         } catch (error) {
             throw error;
@@ -35,27 +38,34 @@ export default class UserStore {
 
     logout = () => {
         store.modalStore.closeModal();
-        store.commonStore.setToken(null);
+        store.commonStore.setToken(null, false);
+        window.sessionStorage.removeItem("jwt");
         window.localStorage.removeItem("jwt");
+        window.localStorage.removeItem("rememberMe");
+        runInAction(() => (this.user = null));
         this.user = null;
         history.push("/");
+        window.location.href = "/";
     };
 
     getUser = async () => {
         try {
             const user = await api.Account.current();
-            store.commonStore.setToken(user.token);
+
+            store.commonStore.setToken(
+                user.token,
+                store.commonStore.userRemembered
+            );
             runInAction(() => (this.user = user));
             this.startRefreshTokenTimer(user);
-        } catch (error) {
-            console.error(error);
+        } catch (error: any) {
+            console.error(error.message);
         }
     };
 
     register = async (creds: UserFormValues) => {
         try {
             await api.Account.register(creds);
-
             store.modalStore.closeModal();
             history.push(`/account/registerSuccess?email=${creds.email}`);
         } catch (error) {
@@ -63,12 +73,40 @@ export default class UserStore {
         }
     };
 
+    doesEmailExist = async (email: string) => {
+        try {
+            const responseData = await api.Account.doesEmailExist(email);
+            const doesEmailResponse = responseData as DoesEmailExistResponse;
+            const doesEmailExistResult = doesEmailResponse.doesEmailExist;
+            runInAction(() => {
+                this.doesUserEmailExist = doesEmailExistResult;
+            });
+        } catch (error) {
+            console.error("Error checking email existence:", error);
+        }
+    };
+
+    changePassword = async (email: string, password: string) => {
+        try {
+            await api.Account.resetPassword(email, password);
+            toast.success("Password changed successfully!");
+            history.push("/login");
+        } catch (error) {
+            console.error("Error changing password:", error);
+            toast.error("Password change failed. Please try again.");
+        }
+    };
+
     setImage = (image: string) => {
-        if (this.user) this.user.image = image;
+        if (this.user) {
+            this.user.image = image;
+        }
     };
 
     setDisplayName = (name: string) => {
-        if (this.user) this.user.firstName = name;
+        if (this.user) {
+            this.user.username = name;
+        }
     };
 
     refreshToken = async () => {
@@ -77,7 +115,10 @@ export default class UserStore {
         try {
             const user = await api.Account.refreshToken();
             runInAction(() => (this.user = user));
-            store.commonStore.setToken(user.token);
+            store.commonStore.setToken(
+                user.token,
+                store.commonStore.userRemembered
+            );
             this.startRefreshTokenTimer(user);
         } catch (error) {
             console.log(error);

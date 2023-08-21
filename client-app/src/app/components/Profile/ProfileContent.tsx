@@ -1,14 +1,29 @@
 import React from "react";
 import { Tab } from "semantic-ui-react";
-import { ProfileAbout } from "./ProfileAbout";
-import { ProfilePhotos } from "./ProfilePhotos";
+import { useStore } from "../../stores/store";
+import { Profile } from "../../models/profile";
+import { observer } from "mobx-react-lite";
+import ProfilePhotos from "./ProfilePhotos";
+import ProfileAbout from "./ProfileAbout";
+import ArchivedPayments from "./ArchivedPayments";
 
-export const ProfileContent = () => {
+interface Props {
+    profile: Profile;
+}
+
+const ProfileContent = ({ profile }: Props) => {
     const panes = [
-        { menuItem: "About", render: () => <ProfileAbout /> },
+        {
+            menuItem: "About Me",
+            render: () => <ProfileAbout />,
+        },
         {
             menuItem: "Photos",
-            render: () => <ProfilePhotos />,
+            render: () => <ProfilePhotos profile={profile} />,
+        },
+        {
+            menuItem: "Archived Payments",
+            render: () => <ArchivedPayments />,
         },
     ];
 
@@ -20,3 +35,5 @@ export const ProfileContent = () => {
         />
     );
 };
+
+export default observer(ProfileContent);

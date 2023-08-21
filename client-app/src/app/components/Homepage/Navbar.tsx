@@ -4,15 +4,34 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import AdbIcon from "@mui/icons-material/Adb";
 import { useStore } from "../../stores/store";
 import { observer } from "mobx-react-lite";
 import { useHistory } from "react-router-dom";
+
+const DashboardComponent = () => {
+    const { userStore } = useStore();
+
+    return userStore.isLoggedIn ? (
+        <Button
+            sx={{
+                m: 2,
+                color: "white",
+                display: "block",
+                fontSize: "1rem",
+                "&:hover": {
+                    color: "white",
+                    backgroundColor: "rgba(255, 255, 255, 0.2)",
+                },
+            }}
+            href="/dashboard"
+        >
+            Dashboard
+        </Button>
+    ) : null;
+};
 
 const Navbar = () => {
     const { userStore } = useStore();
@@ -27,11 +46,23 @@ const Navbar = () => {
     };
 
     return (
-        <AppBar position="static">
-            <Container maxWidth="xl">
-                <Toolbar disableGutters>
+        <AppBar
+            position="static"
+            sx={{
+                backgroundColor: "#6a6fff",
+            }}
+        >
+            <Container maxWidth={false}>
+                <Toolbar
+                    disableGutters
+                    sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        flexDirection: "row",
+                    }}
+                >
                     <Typography
-                        variant="h5"
+                        variant="h4"
                         noWrap
                         component="a"
                         href="/"
@@ -40,10 +71,10 @@ const Navbar = () => {
                             mr: 2,
                             display: { xs: "none", md: "flex" },
                             fontFamily: "monospace",
-                            fontWeight: "bold",
+                            fontWeight: "bolder",
                             letterSpacing: ".3rem",
                             "&:hover": {
-                                color: "lawngreen",
+                                color: "orange",
                             },
                             textDecoration: "none",
                         }}
@@ -60,25 +91,13 @@ const Navbar = () => {
                             justifyContent: "center",
                         }}
                     >
+                        <DashboardComponent />
                         <Button
                             sx={{
                                 m: 2,
                                 color: "white",
                                 display: "block",
-                                "&:hover": {
-                                    color: "white",
-                                    backgroundColor: "rgba(255, 255, 255, 0.2)",
-                                },
-                            }}
-                            href="/dashboard"
-                        >
-                            Dashboard
-                        </Button>
-                        <Button
-                            sx={{
-                                m: 2,
-                                color: "white",
-                                display: "block",
+                                fontSize: "1rem",
                                 "&:hover": {
                                     color: "white",
                                     backgroundColor: "rgba(255, 255, 255, 0.2)",
@@ -93,6 +112,7 @@ const Navbar = () => {
                                 m: 2,
                                 color: "white",
                                 display: "block",
+                                fontSize: "1rem",
                                 "&:hover": {
                                     color: "white",
                                     backgroundColor: "rgba(255, 255, 255, 0.2)",
@@ -107,6 +127,7 @@ const Navbar = () => {
                                 m: 2,
                                 color: "white",
                                 display: "block",
+                                fontSize: "1rem",
                                 "&:hover": {
                                     color: "white",
                                     backgroundColor: "rgba(255, 255, 255, 0.2)",
@@ -117,9 +138,21 @@ const Navbar = () => {
                             About Us
                         </Button>
                     </Box>
-
-                    <Box sx={{ flexGrow: 0 }}>
-                        <IconButton onClick={handleProfileClick} sx={{ p: 0 }}>
+                    <Box>
+                        <IconButton
+                            onClick={handleProfileClick}
+                            sx={{
+                                p: 0,
+                                outline: "none",
+                                "&:focus": {
+                                    outline: "none",
+                                },
+                                "&:focus-visible": {
+                                    outline: "none",
+                                    boxShadow: "none",
+                                },
+                            }}
+                        >
                             <Avatar
                                 alt="User"
                                 src={userStore.user?.image || "/user.png"}
