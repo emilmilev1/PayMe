@@ -6,6 +6,7 @@ using PayMe.Application.Interfaces;
 using PayMe.Application.Profiles;
 using PayMe.Application.Services;
 using PayMe.Core;
+using PayMe.Domain.Entities;
 using PayMe.Infrastructure.Email;
 using PayMe.Infrastructure.Photos;
 using PayMe.Infrastructure.Security;
@@ -43,7 +44,7 @@ namespace PayMe.API.AppExtensions
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
             services.AddScoped<EmailSender>();
             services.Configure<CloudinaryData>(config.GetSection("Cloudinary"));
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<DataContext>()
                 .AddDefaultTokenProviders();
 

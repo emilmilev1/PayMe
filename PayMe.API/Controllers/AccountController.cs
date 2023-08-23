@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using PayMe.API.Models;
 using PayMe.API.Services;
+using PayMe.Application.Interfaces;
 using PayMe.Domain.Entities;
 using PayMe.Infrastructure.Email;
 
@@ -42,7 +43,9 @@ namespace PayMe.API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<ProfileUserDto>> Login(LoginDto loginDto)
         {
-            var user = await _userManager.Users.Include(p => p.Photos)
+            var user = await _userManager
+                .Users
+                .Include(p => p.Photos)
                 .FirstOrDefaultAsync(y => y.Email == loginDto.Email);
 
             if (user == null) return Unauthorized("Invalid email");
@@ -208,15 +211,54 @@ namespace PayMe.API.Controllers
         /// </summary>
         /// <returns></returns>
         [Authorize]
-        [HttpGet]
+        [HttpGet("account")]
         public async Task<ActionResult<ProfileUserDto>> GetCurrentUser()
         {
-            var user = await _userManager.Users 
+            var user = await _userManager.Users
                 .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
 
-            await SetRefreshToken(user!);
+            //if (user == null) return Unauthorized("Invalid email");
 
-            return CreateUserObject(user!);
+            await SetRefreshToken(user);
+
+            return CreateUserObject(user);
+        }
+        
+        [Authorize]
+        [HttpGet("accountTest")]
+        public async Task<IActionResult> GetCurrentUserTest()
+        {
+            var user = await _userManager
+                .Users
+                .Include(p => p.Photos)
+                .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
+            Console.WriteLine("user: " + user);
+            // if (user == null)
+            // {
+            //     return Unauthorized("Invalid email");
+            // }
+            
+            await SetRefreshToken(user);
+
+            // var user = await _userManager
+            //     .Users
+            //     .Include(p => p.Photos)
+            //     .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
+            //
+            // Console.WriteLine("user: " + user);
+            //
+            // if (user == null)
+            // {
+            //     return Unauthorized("Invalid email");
+            // }
+
+            // object user = new
+            // {
+            //     Name = "Pesho",
+            //     Age = 12
+            // };
+            
+            return Ok(user);
         }
 
         /// <summary>
@@ -243,12 +285,12 @@ namespace PayMe.API.Controllers
         /// Refresh expired token service
         /// </summary>
         /// <returns></returns>
-        [Authorize]
+        [AllowAnonymous]
         [HttpPost("refreshToken")]
         public async Task<ActionResult<ProfileUserDto>> RefreshToken()
         {
             var refreshToken = Request.Cookies["refreshToken"];
-            
+
             var user = await _userManager.Users
                 .Include(r => r.RefreshTokens)
                 .Include(p => p.Photos)
@@ -272,8 +314,6 @@ namespace PayMe.API.Controllers
         private async Task SetRefreshToken(AppUser user)
         {
             var refreshToken = _tokenService.GenerateRefreshToken();
-
-            user.RefreshTokens = new List<RefreshToken>();
 
             user.RefreshTokens.Add(refreshToken);
 

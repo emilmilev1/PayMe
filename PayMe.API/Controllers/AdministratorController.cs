@@ -13,6 +13,7 @@ namespace PayMe.API.Controllers
     /// We use FromQuery attribute
     /// </summary>
     [ApiController]
+    [Authorize(Roles = "Child, Adult, Student")]
     [Route("api/[controller]")]
     public class AdministratorController : BaseApiController
     {

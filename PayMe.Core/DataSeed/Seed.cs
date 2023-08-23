@@ -248,7 +248,7 @@ namespace PayMe.Core.DataSeed
             if (existingAdmin == null)
             {
                 await userManager.CreateAsync(adminUser, "AdminPassword123");
-                await userManager.AddToRoleAsync(adminUser, "Admin");
+                await userManager.AddToRoleAsync(adminUser, adminUser.RoleName);
             }
         }
 
