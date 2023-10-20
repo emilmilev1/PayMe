@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 using PayMe.Domain.Entities;
 
 namespace PayMe.Core.DataSeed
 {
     public abstract class Seed
     {
-        public static async Task SeedData(DataContext context, UserManager<AppUser> userManager)
+        public static async Task SeedData(
+            DataContext context,
+            RoleManager<IdentityRole> roleManager,
+            UserManager<AppUser> userManager)
         {
             if (!userManager.Users.Any() && !context.CheckPayments.Any())
             {
@@ -20,7 +24,8 @@ namespace PayMe.Core.DataSeed
                         Bio =
                             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                         Email = "bob@test.com",
-                        RoleName = "Student"
+                        RoleName = "Student",
+                        EmailConfirmed = true
                     },
                     new AppUser
                     {
@@ -32,7 +37,8 @@ namespace PayMe.Core.DataSeed
                             "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 
                         Email = "tommy@test.com",
-                        RoleName = "Adult"
+                        RoleName = "Adult",
+                        EmailConfirmed = true
                     },
                     new AppUser
                     {
@@ -44,7 +50,8 @@ namespace PayMe.Core.DataSeed
                             "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 
                         Email = "bobby@test.com",
-                        RoleName = "Child"
+                        RoleName = "Child",
+                        EmailConfirmed = true
                     },
                     new AppUser
                     {
@@ -56,7 +63,8 @@ namespace PayMe.Core.DataSeed
                             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 
                         Email = "ivan@test.com",
-                        RoleName = "Child"
+                        RoleName = "Child",
+                        EmailConfirmed = true
                     },
                     new AppUser
                     {
@@ -68,30 +76,38 @@ namespace PayMe.Core.DataSeed
                             "Ipsum dolor sit amet, consectetur, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 
                         Email = "light@test.com",
-                        RoleName = "Student"
+                        RoleName = "Student",
+                        EmailConfirmed = true
                     },
                     new AppUser
                     {
-                        UserName = "peshkata23",
+                        UserName = "peshkata239",
                         FirstName = "Pesho",
                         LastName = "Peshev",
                         Age = 30,
                         Bio =
                             "Ipsum dolor sit amet, consectetur, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                        Email = "emo.2012012@gmail.com",
-                        RoleName = "Adult"
+                        Email = "peshoTest9999888@test.com",
+                        RoleName = "Adult",
+                        EmailConfirmed = true
+                    },
+                    new AppUser
+                    {
+                        UserName = "vankata239",
+                        FirstName = "Vanko",
+                        LastName = "Vanchev",
+                        Age = 7,
+                        Bio =
+                            "Ipsum dolor sit amet, consectetur, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                        Email = "peshoTest9999888@test.com",
+                        RoleName = "Child",
+                        EmailConfirmed = true
                     }
-                    // TODO: Add your demo email here
                 };
 
                 foreach (var user in users)
                 {
                     await userManager.CreateAsync(user, "QWErty123!");
-                }
-
-                foreach (var user in users)
-                {
-                    user.EmailConfirmed = true;
                 }
 
                 var checkPayments = new List<CheckPayment>
@@ -177,12 +193,12 @@ namespace PayMe.Core.DataSeed
                         PaymentNumber = 1,
                         Date = DateTime.Now.AddMonths(-7).AddDays(-9).AddHours(-9),
                         Title = "Payment 5",
-                        FirstName = "Peter4",
-                        LastName = "Petrov4",
-                        Address = "Sofia, 123444",
+                        FirstName = "Peter5",
+                        LastName = "Petrov5",
+                        Address = "Sofia, 55",
                         Country = "Bulgaria",
-                        Total = 99994.45,
-                        ZipCode = 4543,
+                        Total = 55655.45,
+                        ZipCode = 5543,
                         CheckPaymentsUsers = new List<CheckAttendee>
                         {
                             new CheckAttendee
@@ -191,7 +207,28 @@ namespace PayMe.Core.DataSeed
                             }
                         }
                     },
+                    new CheckPayment
+                    {
+                        PaymentNumber = 1,
+                        Date = DateTime.Now.AddMonths(-7).AddDays(-9).AddHours(-9),
+                        Title = "Payment 6",
+                        FirstName = "Peter6",
+                        LastName = "Petrov6",
+                        Address = "Sofia, 1234446",
+                        Country = "Bulgaria",
+                        Total = 6666.45,
+                        ZipCode = 66667,
+                        CheckPaymentsUsers = new List<CheckAttendee>
+                        {
+                            new CheckAttendee
+                            {
+                                AppUser = users[5],
+                            }
+                        }
+                    },
                 };
+
+                await context.CheckPayments.AddRangeAsync(checkPayments);
 
                 var newCheckPayments = new List<CheckPayment>();
 
@@ -215,7 +252,7 @@ namespace PayMe.Core.DataSeed
                         {
                             new CheckAttendee
                             {
-                                AppUser = users[5],
+                                AppUser = users[6],
                             }
                         }
                     };
@@ -225,90 +262,118 @@ namespace PayMe.Core.DataSeed
 
                 await context.CheckPayments.AddRangeAsync(newCheckPayments);
 
-                await context.CheckPayments.AddRangeAsync(checkPayments);
+                // Seed the roles
+                await SeedRoles(roleManager);
+
+                // Seed the main admin user
+                await SeedAdminUser(userManager);
+
+                // Seed the administrators for each role
+                await SeedAdministratorsUsers(userManager);
+
                 await context.SaveChangesAsync();
             }
         }
 
-        public static async Task SeedAdminUser(UserManager<AppUser> userManager)
+        private static async Task SeedRoles(RoleManager<IdentityRole> roleManager)
         {
-            var adminUser = new AppUser
-            {
-                UserName = "admin23",
-                Email = "admin@example.com",
-                FirstName = "Admin",
-                LastName = "User",
-                Bio = "",
-                Age = 99,
-                RoleName = "Admin"
-            };
+            String[] roleNames = new[] { "Admin", "Child", "Adult", "Student" };
+            IdentityResult roleResult;
 
-            var existingAdmin = await userManager.FindByNameAsync(adminUser.UserName);
-
-            if (existingAdmin == null)
-            {
-                await userManager.CreateAsync(adminUser, "AdminPassword123");
-                await userManager.AddToRoleAsync(adminUser, adminUser.RoleName);
-            }
-        }
-
-        public static async Task SeedAdministratorsUsers(UserManager<AppUser> userManager)
-        {
-            var adminUsers = new List<AppUser>
-            {
-                new AppUser
-                {
-                    UserName = "child",
-                    Email = "admin_child@example.com",
-                    FirstName = "Admin",
-                    LastName = "Child",
-                    Bio = "",
-                    Age = 99,
-                    RoleName = "Child"
-                },
-                new AppUser
-                {
-                    UserName = "adult",
-                    Email = "admin_adult@example.com",
-                    FirstName = "Admin",
-                    LastName = "Adult",
-                    Bio = "",
-                    Age = 99,
-                    RoleName = "Adult"
-                },
-                new AppUser
-                {
-                    UserName = "student",
-                    Email = "admin_student@example.com",
-                    FirstName = "Admin",
-                    LastName = "Student",
-                    Bio = "",
-                    Age = 99,
-                    RoleName = "Student"
-                }
-            };
-
-            foreach (var adminUser in adminUsers)
-            {
-                var existingAdmin = await userManager.FindByNameAsync(adminUser.UserName);
-
-                if (existingAdmin == null)
-                {
-                    await userManager.CreateAsync(adminUser, "AdministratorsPassword123");
-                    await userManager.AddToRoleAsync(adminUser, adminUser.RoleName);
-                }
-            }
-        }
-
-        public static async Task SeedAdminData(RoleManager<IdentityRole> roleManager)
-        {
-            var roleNames = new[] { "Admin", "Child", "Adult", "Student" };
             foreach (var roleName in roleNames)
             {
                 var roleExists = await roleManager.RoleExistsAsync(roleName);
                 if (!roleExists)
                 {
-                    await roleManager.CreateAsync(new IdentityRole(roleName));
+                    roleResult = await roleManager.CreateAsync(new IdentityRole(roleName));
+                    
+                    if (roleResult.Succeeded)
+                    {
+                        var newlyCreatedRole = await roleManager.FindByNameAsync(roleName);
+                        await roleManager.AddClaimAsync(newlyCreatedRole, new Claim(ClaimTypes.Role, roleName));
+                    }
+                }
+            }
+        }
+
+        private static async Task SeedAdminUser(UserManager<AppUser> userManager)
+        {
+            var adminUser = await userManager.FindByEmailAsync("admin@example.com");
+
+            if (adminUser == null)
+            {
+                var newAdmin = new AppUser
+                {
+                    UserName = "admin23",
+                    Email = "admin@example.com",
+                    FirstName = "Admin",
+                    LastName = "User",
+                    Bio = "",
+                    Age = 99,
+                    RoleName = "Admin",
+                    EmailConfirmed = true,
+                };
+
+                var createAdminResult = await userManager.CreateAsync(newAdmin, "YourAdminPassword123!");
+
+                if (createAdminResult.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(newAdmin, "Admin");
+                }
+            }
+        }
+
+        private static async Task SeedAdministratorsUsers(UserManager<AppUser> userManager)
+        {
+            var roleAdministrators = new List<AppUser>
+            {
+                new AppUser
+                {
+                    UserName = "Child_Admin_1",
+                    Email = "child_admin@example.com",
+                    FirstName = "Child_Admin_2",
+                    LastName = "Child_Admin_3",
+                    Bio = "",
+                    Age = 5,
+                    RoleName = "Child",
+                    EmailConfirmed = true
+                },
+                new AppUser
+                {
+                    UserName = "Student_Admin_1",
+                    Email = "student_admin@example.com",
+                    FirstName = "Student_Admin_2",
+                    LastName = "Student_Admin_3",
+                    Bio = "",
+                    Age = 24,
+                    RoleName = "Student",
+                    EmailConfirmed = true
+                },
+                new AppUser
+                {
+                    UserName = "Adult_Admin_1",
+                    Email = "adult_admin@example.com",
+                    FirstName = "Adult_Admin_2",
+                    LastName = "Adult_Admin_3",
+                    Bio = "",
+                    Age = 56,
+                    RoleName = "Adult",
+                    EmailConfirmed = true
+                }
+            };
+
+            foreach (var roleAdministrator in roleAdministrators)
+            {
+                var existingAdministrator = await userManager.FindByEmailAsync(roleAdministrator.Email);
+
+                if (existingAdministrator == null)
+                {
+                    var createUserResult = await userManager.CreateAsync(roleAdministrator, "AdministratorPass123!");
+
+                    if (createUserResult.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(roleAdministrator, roleAdministrator.RoleName);
+                    }
                 }
             }
         }

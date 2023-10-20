@@ -19,7 +19,7 @@ namespace PayMe.Core
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            
+
             builder.Entity<CheckAttendee>(x =>
                 x.HasKey(a => new { a.AppUserId, a.CheckPaymentId }));
 
@@ -27,7 +27,7 @@ namespace PayMe.Core
                 .HasOne(x => x.AppUser)
                 .WithMany(b => b.CheckPaymentsUsers)
                 .HasForeignKey(c => c.AppUserId);
-            
+
             builder.Entity<CheckAttendee>()
                 .HasOne(a => a.CheckPayment)
                 .WithMany(b => b.CheckPaymentsUsers)

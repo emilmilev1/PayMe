@@ -20,6 +20,7 @@ namespace PayMe.API.Controllers
             return HandlePagedResult(result);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCheckPayment(Guid id)
         {
@@ -28,12 +29,14 @@ namespace PayMe.API.Controllers
             return HandleResult(result);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateCheckPayment(CheckPayment checkPayment)
         {
             return HandleResult(await Mediator!.Send(new Create.Command { CheckPayment = checkPayment }));
         }
 
+        [Authorize]
         [HttpGet("total")]
         public async Task<ActionResult<double>> GetTotalPayments()
         {
@@ -42,6 +45,7 @@ namespace PayMe.API.Controllers
             return HandleResult(result);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> EditCheckPayment(Guid id, CheckPayment checkPayment)
         {
@@ -50,6 +54,7 @@ namespace PayMe.API.Controllers
             return HandleResult(await Mediator!.Send(new Edit.Command { CheckPayment = checkPayment }));
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCheckPayment(Guid id)
         {

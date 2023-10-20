@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
-using PayMe.Domain;
 using PayMe.Domain.Entities;
 
 namespace PayMe.API.Services
@@ -25,9 +20,10 @@ namespace PayMe.API.Services
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Email, user.Email),
+                new(ClaimTypes.Name, user.UserName),
+                new(ClaimTypes.NameIdentifier, user.Id),
+                new(ClaimTypes.Email, user.Email),
+                new(ClaimTypes.Role, user.RoleName)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenKey"]!));
@@ -41,7 +37,6 @@ namespace PayMe.API.Services
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
-
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
@@ -52,10 +47,12 @@ namespace PayMe.API.Services
             var randomNumber = new byte[32];
 
             using var rng = RandomNumberGenerator.Create();
-
             rng.GetBytes(randomNumber);
 
-            return new RefreshToken { Token = Convert.ToBase64String(randomNumber) };
+            return new RefreshToken
+            {
+                Token = Convert.ToBase64String(randomNumber)
+            };
         }
     }
 }

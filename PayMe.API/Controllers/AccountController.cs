@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using PayMe.API.Models;
 using PayMe.API.Services;
-using PayMe.Application.Interfaces;
 using PayMe.Domain.Entities;
 using PayMe.Infrastructure.Email;
 
@@ -19,16 +18,19 @@ namespace PayMe.API.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly Token _tokenService;
         private readonly EmailSender _emailSender;
 
         public AccountController(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
+            IHttpContextAccessor httpContextAccessor,
             Token tokenService,
             EmailSender emailSender)
         {
             _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
             _signInManager = signInManager;
             _tokenService = tokenService;
             _emailSender = emailSender;
@@ -46,7 +48,7 @@ namespace PayMe.API.Controllers
             var user = await _userManager
                 .Users
                 .Include(p => p.Photos)
-                .FirstOrDefaultAsync(y => y.Email == loginDto.Email);
+                .FirstOrDefaultAsync(x => x.Email == loginDto.Email);
 
             if (user == null) return Unauthorized("Invalid email");
 
@@ -54,14 +56,11 @@ namespace PayMe.API.Controllers
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
-            if (result.Succeeded)
-            {
-                await SetRefreshToken(user);
+            if (!result.Succeeded) return Unauthorized("Invalid password");
 
-                return CreateUserObject(user);
-            }
+            await SetRefreshToken(user);
 
-            return Unauthorized("Invalid password");
+            return CreateUserObject(user);
         }
 
         /// <summary>
@@ -90,6 +89,7 @@ namespace PayMe.API.Controllers
                 UserName = registerDto.Username,
                 FirstName = registerDto.FirstName,
                 LastName = registerDto.LastName,
+                RoleName = registerDto.RoleName,
                 Age = registerDto.Age,
                 Email = registerDto.Email,
                 Bio = ""
@@ -211,54 +211,23 @@ namespace PayMe.API.Controllers
         /// </summary>
         /// <returns></returns>
         [Authorize]
-        [HttpGet("account")]
+        [HttpGet("authorizedAccount")]
         public async Task<ActionResult<ProfileUserDto>> GetCurrentUser()
         {
-            var user = await _userManager.Users
-                .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
+            var emailClaim = User.FindFirstValue(ClaimTypes.Email);
+            //var emailClaimTest = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            //var userDemo = await _userManager.FindByEmailAsync(emailClaim);
 
-            //if (user == null) return Unauthorized("Invalid email");
+            var user = await _userManager
+                .Users
+                .Include(p => p.Photos)
+                .FirstOrDefaultAsync(x => x.Email == emailClaim);
+            
+            if (user == null) return Unauthorized("User not found");
 
             await SetRefreshToken(user);
 
             return CreateUserObject(user);
-        }
-        
-        [Authorize]
-        [HttpGet("accountTest")]
-        public async Task<IActionResult> GetCurrentUserTest()
-        {
-            var user = await _userManager
-                .Users
-                .Include(p => p.Photos)
-                .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
-            Console.WriteLine("user: " + user);
-            // if (user == null)
-            // {
-            //     return Unauthorized("Invalid email");
-            // }
-            
-            await SetRefreshToken(user);
-
-            // var user = await _userManager
-            //     .Users
-            //     .Include(p => p.Photos)
-            //     .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
-            //
-            // Console.WriteLine("user: " + user);
-            //
-            // if (user == null)
-            // {
-            //     return Unauthorized("Invalid email");
-            // }
-
-            // object user = new
-            // {
-            //     Name = "Pesho",
-            //     Age = 12
-            // };
-            
-            return Ok(user);
         }
 
         /// <summary>
@@ -271,6 +240,7 @@ namespace PayMe.API.Controllers
             return new ProfileUserDto
             {
                 Username = user.UserName,
+                Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Age = user.Age,
@@ -291,7 +261,8 @@ namespace PayMe.API.Controllers
         {
             var refreshToken = Request.Cookies["refreshToken"];
 
-            var user = await _userManager.Users
+            var user = await _userManager
+                .Users
                 .Include(r => r.RefreshTokens)
                 .Include(p => p.Photos)
                 .FirstOrDefaultAsync(x =>

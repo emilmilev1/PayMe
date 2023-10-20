@@ -6,7 +6,6 @@ namespace PayMe.Application.CheckPayments
     {
         public string? OrderBy { get; set; }
         public bool? IsDescending { get; set; }
-        
-        public string RoleName { get; set; } = null!;
+        public string? RoleName { get; set; } = null!;
     }
 }

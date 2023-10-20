@@ -15,12 +15,16 @@ namespace PayMe.Application.Core
                     o.MapFrom(y => y.CheckPaymentsUsers));
 
             CreateMap<CheckAttendee, CheckAttendeeDto>()
+                .ForMember(d => d.RoleName, o => 
+                    o.MapFrom(s => s.AppUser!.RoleName))
                 .ForMember(d => d.Username, o =>
                     o.MapFrom(s => s.AppUser!.UserName))
                 .ForMember(x => x.FirstName, o =>
                     o.MapFrom(y => y.AppUser!.FirstName))
                 .ForMember(x => x.LastName, o =>
                     o.MapFrom(y => y.AppUser!.LastName))
+                .ForMember(d => d.Age, o =>
+                    o.MapFrom(s => s.AppUser!.Age))
                 .ForMember(d => d.Bio, o =>
                     o.MapFrom(s => s.AppUser!.Bio))
                 .ForMember(x => x.Image, o =>
@@ -51,12 +55,20 @@ namespace PayMe.Application.Core
                     o.MapFrom(p => p.CheckPayment!.CheckPaymentsUsers));
 
             CreateMap<AppUser, Profile>()
+                .ForMember(d => d.RoleName, o => 
+                    o.MapFrom(s => s.RoleName))
+                .ForMember(x => x.Email, o =>
+                    o.MapFrom(y => y.Email))
                 .ForMember(x => x.Username, o =>
                     o.MapFrom(y => y.UserName))
                 .ForMember(x => x.FirstName, o =>
                     o.MapFrom(y => y.FirstName))
                 .ForMember(x => x.LastName, o =>
                     o.MapFrom(y => y.LastName))
+                .ForMember(x => x.Bio, o =>
+                    o.MapFrom(y => y.Bio))
+                .ForMember(x => x.Age, o =>
+                    o.MapFrom(y => y.Age))
                 .ForMember(x => x.Image, o =>
                     o.MapFrom(y => y.Photos.FirstOrDefault(x => x.IsMain)!.Url))
                 .ForMember(dest => dest.Photos, o =>

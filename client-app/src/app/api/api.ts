@@ -140,7 +140,7 @@ const CheckPayments = {
 };
 
 const Account = {
-    current: () => requests.get<User>("/account"),
+    current: () => requests.get<User>("/account/authorizedAccount"),
     login: (user: UserFormValues) =>
         requests.post<User>("/account/login", user),
     register: (user: UserFormValues) =>

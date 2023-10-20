@@ -59,11 +59,13 @@ if (!app.Environment.IsDevelopment())
 
 app.UseCors("CorsPolicy");
 
+app.UseRouting();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-//app.MapFallbackToController("Index", "Fallback");
+app.MapFallbackToController("Index", "Fallback");
 
 using var scope = app.Services.CreateScope();
 
@@ -73,23 +75,17 @@ try
 {
     var context = services.GetRequiredService<DataContext>();
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
-    var adminManager = services.GetRequiredService<UserManager<AppUser>>();
-    
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
     await context.Database.MigrateAsync();
 
-    await Seed.SeedAdminData(roleManager);
-    
-    await Seed.SeedData(context, userManager);
-    Seed.SeedAdminUser(adminManager).Wait();
-    Seed.SeedAdministratorsUsers(adminManager).Wait();
+    await Seed.SeedData(context, roleManager, userManager);
 }
 catch (Exception ex)
 {
     var logger = services.GetRequiredService<ILogger<Program>>();
 
-    logger.LogError(ex, "Error during migration!");
+    logger.LogError(ex, "An error occurred during migration!");
 }
 
 await app.RunAsync();

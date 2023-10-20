@@ -8,13 +8,14 @@ namespace PayMe.Domain.Entities
     public class RefreshToken
     {
         public int Id { get; set; }
-        
         public AppUser AppUser { get; set; } = null!;
-
         public string Token { get; set; } = null!;
-        public DateTime Expires { get; set; } = DateTime.UtcNow.AddDays(7);
-        public bool IsExpired => DateTime.UtcNow >= Expires;
+        private DateTime Expires { get; set; } = DateTime.UtcNow.AddDays(7);
+        private bool IsExpired => DateTime.UtcNow >= Expires;
         public DateTime? Revoked { get; set; }
-        public bool IsActive => Revoked == null && !IsExpired;
+
+        public bool IsActive => Revoked == null &&
+                                !IsExpired &&
+                                DateTime.UtcNow <= Expires;
     }
 }

@@ -32,7 +32,7 @@ namespace PayMe.API.AppExtensions
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials()
-                        .WithExposedHeaders("www-authenticate", "pagination")
+                        .WithExposedHeaders("WWW-Authenticate", "Pagination")
                         .WithOrigins("http://localhost:3000");
                 });
             });
@@ -47,6 +47,13 @@ namespace PayMe.API.AppExtensions
             services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<DataContext>()
                 .AddDefaultTokenProviders();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("RequireChildRole", policy => policy.RequireRole("Child"));
+                options.AddPolicy("RequireStudentRole", policy => policy.RequireRole("Student"));
+                options.AddPolicy("RequireAdultRole", policy => policy.RequireRole("Adult"));
+            });
 
             return services;
         }

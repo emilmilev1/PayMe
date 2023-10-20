@@ -6,7 +6,6 @@ export interface Profile {
     lastName: string;
     age: number;
     bio: string;
-    roleName: string;
     image?: string;
     photos?: Photo[];
 }

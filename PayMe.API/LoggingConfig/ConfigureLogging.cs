@@ -10,7 +10,7 @@ public static class ConfigureLogging
         loggingBuilder.Services.AddSingleton<ILoggerFactory>(new NullLoggerFactory());
 
         // Set the minimum logging level
-        loggingBuilder.SetMinimumLevel(LogLevel.Warning);
+        loggingBuilder.SetMinimumLevel(LogLevel.Information);
 
         // Add loggers as needed
         loggingBuilder.AddConsole();

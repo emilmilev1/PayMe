@@ -16,7 +16,7 @@ namespace PayMe.API.Models
 
         [Required] public int Age { get; set; }
         
-        [Required] public string RoleName { get; set; } = null!;
+        public string RoleName { get; set; } = null!;
 
         [Required] [EmailAddress] public string Email { get; set; } = null!;
 

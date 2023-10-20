@@ -1,11 +1,9 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using PayMe.API.Services;
 using PayMe.Core;
-using PayMe.Domain;
 using PayMe.Domain.Entities;
 
 namespace PayMe.API.AppExtensions
@@ -15,7 +13,7 @@ namespace PayMe.API.AppExtensions
         public static IServiceCollection AddIdentityServices(this IServiceCollection services,
             IConfiguration config)
         {
-            services.AddIdentityCore<AppUser>(opt => 
+            services.AddIdentityCore<AppUser>(opt =>
                 {
                     opt.Password.RequireNonAlphanumeric = false;
                     opt.SignIn.RequireConfirmedEmail = true;
@@ -23,10 +21,14 @@ namespace PayMe.API.AppExtensions
                 .AddEntityFrameworkStores<DataContext>()
                 .AddSignInManager<SignInManager<AppUser>>()
                 .AddDefaultTokenProviders();
-            
+
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(opt =>
                 {
                     opt.TokenValidationParameters = new TokenValidationParameters
@@ -41,11 +43,18 @@ namespace PayMe.API.AppExtensions
 
                     opt.Events = new JwtBearerEvents
                     {
+                        OnAuthenticationFailed = context =>
+                        {
+                            Console.WriteLine($"Authentication failed: {context.Exception?.Message}!");
+                            return Task.CompletedTask;
+                        },
                         OnMessageReceived = context =>
                         {
                             var accessToken = context.Request.Query["access_token"];
-
-                            if (!string.IsNullOrEmpty(accessToken))
+                            var path = context.HttpContext.Request.Path;
+                            
+                            if (!string.IsNullOrEmpty(accessToken) && 
+                                (path.StartsWithSegments("/your-hub-route")))
                             {
                                 context.Token = accessToken;
                             }
