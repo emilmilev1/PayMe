@@ -1,15 +1,26 @@
 # PayMe
 
-PayMe is a fullstack application written on ASP.NET Core and React with Typescript and MUI.
-There are four roles, an admin and three administrators roles(Child, Student and Adult). 
-And there are three types of users(Child, Student and Adult). 
+## Overview
+PayMe is a comprehensive fullstack application designed to facilitate transactions and interactions among different user roles. Built using **ASP.NET Core** for the backend and **React** with **TypeScript** and **Material-UI (MUI)** for the frontend, PayMe offers a modern and efficient user experience. The application is structured to accommodate four roles, including one admin and three user types: Child, Student, and Adult.
 
-# Architecture
+## Features
+- **User Roles**:
+  - **Admin**: Manages the overall system, overseeing user roles and permissions.
+  - **Child**: Limited access for younger users, tailored to their specific needs.
+  - **Student**: Focused on educational or learning-related functionalities.
+  - **Adult**: Offers a broader range of features suitable for adult users.
 
-The project has a solid, well-organized architecture with a clearly defined control flow. This setup enhances readability, ensures smooth interaction between components and simplifies maintenance. There is a structured approach, each part of the system functions independently, making it easier to test, modify and optimize without affecting other areas.
+- **User Types**:
+  - **Child**: Represents younger users who can interact with age-appropriate content.
+  - **Student**: Tailored for individuals engaged in learning activities, with features aimed at educational enhancement.
+  - **Adult**: Provides advanced functionalities for mature users, including financial management tools.
 
-# Technologies
+## Architecture
+The architecture of PayMe is designed with a focus on clarity and efficiency:
+- **Well-Organized Structure**: The application follows a modular approach, where each component operates independently. This separation of concerns enhances code readability and maintainability.
+- **Control Flow**: The control flow is clearly defined, ensuring that data and commands are processed in an orderly manner. This organization allows for easy navigation through the application and straightforward interaction between different parts of the system.
+- **Independent Functionality**: Each section of the application can be tested and modified independently, minimizing the risk of unintended effects on other components. This modular design simplifies debugging and optimization.
 
-- ASP.NET Core Api
-- React
-- Typescript
+## Technologies
+- **Backend**: Developed using **ASP.NET Core**, providing a robust and scalable API that handles data management and user interactions.
+- **Frontend**: Built with **React**, leveraging the power of **TypeScript** for type safety and maintainability. **Material-UI (MUI)** is used to create a responsive and visually appealing user interface, enhancing the overall user experience.
